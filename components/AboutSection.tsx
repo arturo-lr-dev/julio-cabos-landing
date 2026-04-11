@@ -1,5 +1,6 @@
 import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
+import FadeIn from "./FadeIn";
 import { siteContent } from "@/lib/data";
 
 export default function AboutSection() {
@@ -8,17 +9,19 @@ export default function AboutSection() {
   return (
     <SectionWrapper id="sobre-mi">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <div className="relative aspect-[3/4] overflow-hidden bg-surface">
-          <Image
-            src={about.image}
-            alt="Julio Cabos"
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            loading="lazy"
-          />
-        </div>
-        <div>
+        <FadeIn>
+          <div className="relative aspect-[3/4] overflow-hidden bg-surface">
+            <Image
+              src={about.image}
+              alt="Julio Cabos"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+            />
+          </div>
+        </FadeIn>
+        <FadeIn delay={150}>
           <h2 className="text-3xl md:text-4xl font-light tracking-tight">
             {about.title}
           </h2>
@@ -38,7 +41,7 @@ export default function AboutSection() {
           >
             {about.cta}
           </a>
-        </div>
+        </FadeIn>
       </div>
     </SectionWrapper>
   );
