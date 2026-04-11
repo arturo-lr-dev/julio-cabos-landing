@@ -1,4 +1,5 @@
 import SectionWrapper from "./SectionWrapper";
+import FadeIn from "./FadeIn";
 import { siteContent } from "@/lib/data";
 
 export default function TextBlock() {
@@ -6,7 +7,7 @@ export default function TextBlock() {
 
   return (
     <SectionWrapper narrow>
-      <div className="text-center">
+      <FadeIn className="text-center">
         {message.text.map((line, i) =>
           line === "" ? (
             <br key={i} />
@@ -19,7 +20,7 @@ export default function TextBlock() {
             </p>
           )
         )}
-      </div>
+      </FadeIn>
     </SectionWrapper>
   );
 }
