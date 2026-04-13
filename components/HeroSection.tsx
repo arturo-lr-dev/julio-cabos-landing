@@ -19,8 +19,8 @@ export default function HeroSection() {
       </div>
 
       {/* Atmospheric overlays — deep base + warm vignette */}
-      <div className="absolute inset-0 bg-background/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/55" />
+      <div className="absolute inset-0 bg-background/0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/45 to-background/55" />
       <div
         className="absolute inset-0 opacity-20 mix-blend-multiply"
         style={{
