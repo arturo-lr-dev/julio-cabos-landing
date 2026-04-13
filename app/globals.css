@@ -1,22 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f0f0f;
-  --foreground: #f5f5f5;
-  --foreground-muted: #a3a3a3;
-  --accent: #d6b36a;
-  --accent-hover: #c4a25a;
-  --surface: #1a1a1a;
+  /* Deep, warm black — closer to ink than to digital black */
+  --background: #0a0a0a;
+  --background-elevated: #131211;
+  --surface: #161513;
+
+  /* Warm cream rather than pure white — feels like printed paper */
+  --foreground: #f0ece4;
+  --foreground-muted: #8a857d;
+  --foreground-faint: #4a4842;
+
+  /* Restrained warm gold — used sparingly, never decoratively */
+  --accent: #c9a668;
+  --accent-hover: #b8945a;
+
+  /* Hairlines — barely visible rules, like in printed catalogues */
+  --rule: rgba(240, 236, 228, 0.08);
+  --rule-strong: rgba(240, 236, 228, 0.16);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-elevated: var(--background-elevated);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-faint: var(--foreground-faint);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-surface: var(--surface);
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
 html {
@@ -27,13 +44,64 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
+/* Subtle film grain — almost imperceptible, adds atmosphere */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.93  0 0 0 0 0.89  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Display utilities */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.02em;
+}
+
+.font-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+}
+
+/* Editorial caption — small caps with letter-spacing, the kind of label
+   you'd find on the spine of an art book */
+.eyebrow {
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-feature-settings: "tnum", "ss01";
+}
+
+/* Tabular figures for indices */
+.tnum {
+  font-feature-settings: "tnum", "lnum";
+}
+
+/* Hairline rules */
+.rule-t { border-top: 1px solid var(--rule); }
+.rule-b { border-bottom: 1px solid var(--rule); }
+.rule-l { border-left: 1px solid var(--rule); }
 
 /* Fade-in on scroll */
 .fade-in {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.65, 0.3, 1),
+              transform 0.9s cubic-bezier(0.2, 0.65, 0.3, 1);
 }
 
 .fade-in-visible {
@@ -41,33 +109,84 @@ body {
   transform: translateY(0);
 }
 
-/* Hero entrance */
+/* Hero entrance — slower, more considered */
 @keyframes hero-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .hero-animate {
-  animation: hero-fade-up 1s ease-out forwards;
+  animation: hero-fade-up 1.2s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
 }
-
 .hero-animate-delay-1 {
-  animation: hero-fade-up 1s ease-out 0.2s forwards;
+  animation: hero-fade-up 1.2s cubic-bezier(0.2, 0.65, 0.3, 1) 0.25s forwards;
   opacity: 0;
 }
-
 .hero-animate-delay-2 {
-  animation: hero-fade-up 1s ease-out 0.4s forwards;
+  animation: hero-fade-up 1.2s cubic-bezier(0.2, 0.65, 0.3, 1) 0.45s forwards;
+  opacity: 0;
+}
+.hero-animate-delay-3 {
+  animation: hero-fade-up 1.2s cubic-bezier(0.2, 0.65, 0.3, 1) 0.7s forwards;
   opacity: 0;
 }
 
-.hero-animate-delay-3 {
-  animation: hero-fade-up 1s ease-out 0.6s forwards;
-  opacity: 0;
+/* Slow ambient background pulse for hero image */
+@keyframes ken-burns {
+  0%   { transform: scale(1.04) translate(0, 0); }
+  100% { transform: scale(1.10) translate(-1%, -1%); }
+}
+.ken-burns {
+  animation: ken-burns 24s ease-in-out infinite alternate;
+}
+
+/* Scroll cue */
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+.scroll-hint {
+  animation: scroll-hint 2.4s ease-in-out infinite;
+}
+
+/* Underline reveal for nav links */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }

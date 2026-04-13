@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { label: "Galería", href: "#galeria" },
-  { label: "Formación", href: "#formacion" },
-  { label: "Sobre mí", href: "#sobre-mi" },
-  { label: "Contacto", href: "#contacto" },
+  { num: "02", label: "Galería", href: "#galeria" },
+  { num: "03", label: "Formación", href: "#formacion" },
+  { num: "04", label: "Sobre Julio", href: "#sobre-mi" },
+  { num: "05", label: "Contacto", href: "#contacto" },
 ];
 
 export default function Header() {
@@ -14,7 +14,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -29,18 +29,21 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled || menuOpen
-            ? "bg-background/80 backdrop-blur-md"
+            ? "bg-background/85 backdrop-blur-xl border-b border-rule"
             : "bg-transparent"
         }`}
       >
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
-          <a
-            href="#"
-            className="text-foreground text-sm md:text-base font-light tracking-widest uppercase"
-          >
-            Julio Cabos
+          {/* Wordmark */}
+          <a href="#" className="group flex items-baseline gap-2">
+            <span className="font-display text-foreground text-xl md:text-2xl leading-none">
+              Julio
+            </span>
+            <span className="font-display-italic text-accent text-xl md:text-2xl leading-none">
+              Cabos
+            </span>
           </a>
 
           {/* Desktop nav */}
@@ -49,9 +52,12 @@ export default function Header() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-foreground-muted text-sm font-light tracking-wide hover:text-foreground transition-colors"
+                  className="group inline-flex items-baseline gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  {link.label}
+                  <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors">
+                    {link.num}
+                  </span>
+                  <span className="font-light tracking-wide">{link.label}</span>
                 </a>
               </li>
             ))}
@@ -88,32 +94,42 @@ export default function Header() {
 
       {/* Fullscreen mobile menu */}
       <div
-        className={`fixed inset-0 z-40 bg-background flex flex-col items-center justify-center transition-opacity duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-background flex flex-col px-6 pt-28 pb-12 transition-opacity duration-500 md:hidden ${
           menuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <ul className="flex flex-col items-center gap-10">
+        <ul className="flex flex-col gap-2">
           {navLinks.map((link, i) => (
-            <li key={link.href}>
+            <li
+              key={link.href}
+              className="rule-b py-5"
+              style={{
+                transitionDelay: menuOpen ? `${i * 75}ms` : "0ms",
+                opacity: menuOpen ? 1 : 0,
+                transform: menuOpen ? "translateY(0)" : "translateY(16px)",
+                transition:
+                  "opacity 0.5s ease-out, transform 0.5s ease-out",
+              }}
+            >
               <a
                 href={link.href}
-                className="text-foreground text-2xl font-light tracking-widest uppercase hover:text-accent transition-colors duration-300"
-                style={{
-                  transitionDelay: menuOpen ? `${i * 75}ms` : "0ms",
-                  opacity: menuOpen ? 1 : 0,
-                  transform: menuOpen ? "translateY(0)" : "translateY(16px)",
-                  transition:
-                    "color 0.3s, opacity 0.4s ease-out, transform 0.4s ease-out",
-                }}
+                className="flex items-baseline gap-4 text-foreground hover:text-accent transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
-                {link.label}
+                <span className="eyebrow tnum text-accent">{link.num}</span>
+                <span className="font-display text-3xl leading-none">
+                  {link.label}
+                </span>
               </a>
             </li>
           ))}
         </ul>
+
+        <div className="mt-auto eyebrow text-foreground-faint">
+          ATELIER · MADRID
+        </div>
       </div>
     </>
   );
