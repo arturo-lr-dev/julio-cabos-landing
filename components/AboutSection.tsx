@@ -37,6 +37,8 @@ export default function AboutSection() {
           </div>
           <a
             href={about.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block mt-8 px-6 py-3 border border-accent text-accent text-sm tracking-wide uppercase hover:bg-accent hover:text-background transition-colors duration-300"
           >
             {about.cta}

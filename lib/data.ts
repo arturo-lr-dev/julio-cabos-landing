@@ -6,7 +6,7 @@ export const siteContent = {
       "Más de dos décadas dedicado a la pintura, la formación y la búsqueda de un estándar artístico en cada pieza.",
     cta: "Aprender conmigo",
     ctaHref: "#formacion",
-    backgroundImage: "/placeholders/hero.svg",
+    backgroundImage: "/images/hero.webp",
   },
   message: {
     text: [
@@ -26,14 +26,14 @@ export const siteContent = {
   },
   about: {
     title: "Sobre Julio",
-    image: "/placeholders/about.svg",
+    image: "/images/about.webp",
     text: [
       "Julio Cabos es un pintor profesional de miniaturas con más de dos décadas de experiencia en el sector.",
       "Ha sido director de pintura en empresas de referencia como Andrea Miniatures y Scale75, liderando proyectos para coleccionistas y desarrollando publicaciones especializadas.",
       "Autor de más de 30 libros y formador internacional, combina su trabajo como pintor freelance con la enseñanza, ayudando a otros a entender la pintura desde el criterio y la experiencia.",
     ],
     cta: "Ver trayectoria",
-    ctaHref: "#",
+    ctaHref: "/files/CV%20Funcional%20Julio.pdf",
   },
   contact: {
     title: "Contacto",
@@ -48,28 +48,37 @@ export const siteContent = {
 };
 
 export const galleryImages = [
-  {
-    src: "/placeholders/gallery-1.svg",
-    alt: "Miniatura pintada por Julio Cabos - Busto de guerrero",
-  },
-  {
-    src: "/placeholders/gallery-2.svg",
-    alt: "Miniatura pintada por Julio Cabos - Figura fantástica",
-  },
-  {
-    src: "/placeholders/gallery-3.svg",
-    alt: "Miniatura pintada por Julio Cabos - Samurái",
-  },
-  {
-    src: "/placeholders/gallery-4.svg",
-    alt: "Miniatura pintada por Julio Cabos - Caballero medieval",
-  },
-  {
-    src: "/placeholders/gallery-5.svg",
-    alt: "Miniatura pintada por Julio Cabos - Retrato histórico",
-  },
-  {
-    src: "/placeholders/gallery-6.svg",
-    alt: "Miniatura pintada por Julio Cabos - Figura de colección",
-  },
+  { src: "/images/gallery/samurai.webp", alt: "Samurái — miniatura pintada por Julio Cabos" },
+  { src: "/images/gallery/templario.webp", alt: "Templario — encargo de pintura" },
+  { src: "/images/gallery/abanderado.webp", alt: "Abanderado — figura histórica" },
+  { src: "/images/gallery/paracaidista.webp", alt: "Paracaidista — box art" },
+  { src: "/images/gallery/soldado.webp", alt: "Soldado — box art" },
+  { src: "/images/gallery/arquero.webp", alt: "Arquero — encargo de pintura" },
+  { src: "/images/gallery/arabia.webp", alt: "Figura árabe — box art" },
+  { src: "/images/gallery/lancero.webp", alt: "Lancero — figura histórica" },
+  { src: "/images/gallery/samurai-2.webp", alt: "Samurái — detalle" },
+  { src: "/images/gallery/samurai-3.webp", alt: "Samurái — detalle" },
+  { src: "/images/gallery/samurai-4.webp", alt: "Samurái — detalle" },
+  { src: "/images/gallery/samurai-5.webp", alt: "Samurái — detalle" },
+  { src: "/images/gallery/templario-2.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-3.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-4.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-5.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-6.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-7.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/templario-8.webp", alt: "Templario — detalle" },
+  { src: "/images/gallery/arquero-2.webp", alt: "Arquero — detalle" },
+  { src: "/images/gallery/arquero-3.webp", alt: "Arquero — detalle" },
+  { src: "/images/gallery/arquero-4.webp", alt: "Arquero — detalle" },
+  { src: "/images/gallery/soldado-2.webp", alt: "Soldado — detalle" },
+  { src: "/images/gallery/soldado-3.webp", alt: "Soldado — detalle" },
+  { src: "/images/gallery/soldado-4.webp", alt: "Soldado — detalle" },
+  { src: "/images/gallery/arabia-2.webp", alt: "Figura árabe — detalle" },
+  { src: "/images/gallery/paracaidista-2.webp", alt: "Paracaidista — detalle" },
+  { src: "/images/gallery/paracaidista-3.webp", alt: "Paracaidista — detalle" },
+  { src: "/images/gallery/paracaidista-4.webp", alt: "Paracaidista — detalle" },
+  { src: "/images/gallery/paracaidista-5.webp", alt: "Paracaidista — detalle" },
+  { src: "/images/gallery/lancero-2.webp", alt: "Lancero — detalle" },
+  { src: "/images/gallery/mini-1.webp", alt: "Miniatura de colección" },
+  { src: "/images/gallery/mini-2.webp", alt: "Miniatura de colección" },
 ];

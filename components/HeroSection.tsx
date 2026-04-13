@@ -14,7 +14,8 @@ export default function HeroSection() {
         priority
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-background/20" />
+      <div className="absolute inset-0 bg-background/75" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/60" />
       <div className="relative z-10 text-center px-6">
         <h1 className="hero-animate text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-foreground">
           {hero.title}
