@@ -17,6 +17,21 @@ export const metadata: Metadata = {
     description: "Pintura de miniaturas con criterio artístico.",
     type: "website",
     locale: "es_ES",
+    siteName: "Julio Cabos",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Julio Cabos — Pintura de miniaturas",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Julio Cabos | Pintura de Miniaturas",
+    description: "Pintura de miniaturas con criterio artístico.",
+    images: ["/og-image.jpg"],
   },
 };
 
