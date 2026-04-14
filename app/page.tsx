@@ -13,8 +13,8 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <TextBlock />
         <AboutSection />
+        <TextBlock />
         <GalleryGrid />
         <TrainingSection />
         <ContactSection />
