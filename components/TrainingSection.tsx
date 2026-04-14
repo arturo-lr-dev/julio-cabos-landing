@@ -10,7 +10,7 @@ export default function TrainingSection() {
     <SectionWrapper id="formacion" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-5">
-          <SectionLabel index="03" label="Formación" className="mb-6" />
+          <SectionLabel index="04" label="Formación" className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
             Aprender
             <span className="font-display-italic block text-accent/95">

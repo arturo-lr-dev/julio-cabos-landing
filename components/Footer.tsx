@@ -44,6 +44,16 @@ export default function Footer() {
                   Instagram
                 </a>
               </li>
+              <li>
+                <a
+                  href={footer.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav-link hover:text-foreground transition-colors"
+                >
+                  Facebook
+                </a>
+              </li>
             </ul>
           </div>
         </div>

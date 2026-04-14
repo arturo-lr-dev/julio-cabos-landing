@@ -21,7 +21,7 @@ export default function GalleryGrid() {
       <FadeIn>
         <header className="mb-12 md:mb-16 flex items-end justify-between gap-6">
           <div>
-            <SectionLabel index="02" label="Galería" className="mb-4" />
+            <SectionLabel index="03" label="Galería" className="mb-4" />
             <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-tight">
               Obra <span className="font-display-italic text-accent/90">seleccionada</span>
             </h2>

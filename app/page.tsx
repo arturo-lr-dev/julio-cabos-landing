@@ -14,9 +14,9 @@ export default function Home() {
       <main>
         <HeroSection />
         <TextBlock />
+        <AboutSection />
         <GalleryGrid />
         <TrainingSection />
-        <AboutSection />
         <ContactSection />
       </main>
       <Footer />

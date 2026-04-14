@@ -54,9 +54,6 @@ export default function Header() {
                   href={link.href}
                   className="group inline-flex items-baseline gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
-                  <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors">
-                    {link.num}
-                  </span>
                   <span className="font-light tracking-wide">{link.label}</span>
                 </a>
               </li>
@@ -118,7 +115,6 @@ export default function Header() {
                 className="flex items-baseline gap-4 text-foreground hover:text-accent transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
-                <span className="eyebrow tnum text-accent">{link.num}</span>
                 <span className="font-display text-3xl leading-none">
                   {link.label}
                 </span>

@@ -43,7 +43,8 @@ export const siteContent = {
   },
   footer: {
     name: "Julio Cabos",
-    instagram: "https://instagram.com",
+    instagram: "https://www.instagram.com/juliocabos",
+    facebook: "https://www.facebook.com/julio.cabos",
   },
 };
 

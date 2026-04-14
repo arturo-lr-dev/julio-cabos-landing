@@ -32,7 +32,7 @@ export default function AboutSection() {
 
         {/* Text — wider column, like an essay */}
         <FadeIn delay={150} className="col-span-12 md:col-span-7">
-          <SectionLabel index="04" label="Sobre Julio" className="mb-6" />
+          <SectionLabel index="02" label="Sobre Julio" className="mb-6" />
 
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
             Dos décadas

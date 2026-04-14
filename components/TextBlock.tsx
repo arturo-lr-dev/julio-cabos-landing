@@ -10,10 +10,6 @@ export default function TextBlock() {
 
   return (
     <SectionWrapper narrow topRule>
-      <FadeIn>
-        <SectionLabel index="01" label="Manifiesto" className="mb-12" />
-      </FadeIn>
-
       <FadeIn delay={120}>
         <blockquote className="font-display-italic text-foreground text-3xl md:text-4xl lg:text-5xl leading-[1.15] tracking-tight">
           <span aria-hidden className="text-accent mr-2">“</span>

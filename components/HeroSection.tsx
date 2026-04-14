@@ -29,20 +29,6 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Top hairline + label row */}
-      <div className="absolute top-0 left-0 right-0 z-10 px-6 md:px-12 pt-24 md:pt-28">
-        <div className="max-w-6xl mx-auto flex items-center justify-between hero-animate">
-          <span className="eyebrow text-foreground-muted">
-            <span className="text-accent tnum">— 00</span>
-            <span className="ml-3 text-foreground-faint">/</span>
-            <span className="ml-3">PORTFOLIO &amp; ATELIER</span>
-          </span>
-          <span className="hidden md:inline eyebrow text-foreground-muted">
-            EST. <span className="tnum">2002</span>
-          </span>
-        </div>
-      </div>
-
       {/* Editorial composition */}
       <div className="relative z-10 h-full px-6 md:px-12 flex items-end pb-28 md:pb-36">
         <div className="max-w-6xl mx-auto w-full">

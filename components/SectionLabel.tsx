@@ -18,8 +18,6 @@ export default function SectionLabel({
       className={`eyebrow flex items-center gap-3 text-foreground-muted ${className}`}
     >
       <span aria-hidden className="text-foreground-faint">—</span>
-      <span className="tnum text-accent">{index}</span>
-      <span aria-hidden className="text-foreground-faint">/</span>
       <span>{label}</span>
     </div>
   );
