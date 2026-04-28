@@ -45,7 +45,7 @@ export default function GalleryPage() {
           </Link>
           <Link
             href="/"
-            className="text-sm text-foreground-muted hover:text-foreground transition-colors"
+            className="text-sm text-foreground-muted hover:text-accent transition-colors"
           >
             Volver
           </Link>
@@ -165,7 +165,7 @@ export default function GalleryPage() {
                     <span className="text-sm text-foreground-muted leading-snug font-light">
                       {img.alt.split("—")[0]?.trim()}
                     </span>
-                    <span className="eyebrow tnum text-foreground-faint shrink-0">
+                    <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors duration-500 shrink-0">
                       Nº{" "}
                       {String(
                         galleryImages.indexOf(img) + 1

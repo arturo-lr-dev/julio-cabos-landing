@@ -73,7 +73,7 @@ export default function Lightbox({
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-foreground-muted hover:text-foreground transition-colors duration-300"
+        className="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
         aria-label="Cerrar visor"
       >
         <svg
@@ -91,7 +91,7 @@ export default function Lightbox({
       {/* Navigation - Previous */}
       <button
         onClick={goPrev}
-        className="absolute left-4 md:left-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-foreground transition-colors duration-300"
+        className="absolute left-4 md:left-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
         aria-label="Imagen anterior"
       >
         <svg
@@ -109,7 +109,7 @@ export default function Lightbox({
       {/* Navigation - Next */}
       <button
         onClick={goNext}
-        className="absolute right-4 md:right-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-foreground transition-colors duration-300"
+        className="absolute right-4 md:right-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
         aria-label="Imagen siguiente"
       >
         <svg
@@ -152,7 +152,7 @@ export default function Lightbox({
               </p>
             )}
           </div>
-          <span className="eyebrow text-foreground-faint shrink-0 ml-4">
+          <span className="eyebrow text-accent shrink-0 ml-4">
             {String(currentIndex + 1).padStart(2, "0")} /{" "}
             {String(images.length).padStart(2, "0")}
           </span>
