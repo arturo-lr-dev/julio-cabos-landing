@@ -125,16 +125,14 @@ export default function Lightbox({
       </button>
 
       {/* Image container */}
-      <div className="relative z-10 w-full max-w-5xl mx-6 md:mx-12">
-        <div
-          className="relative w-full"
-          style={{ aspectRatio: currentImage.aspectRatio }}
-        >
+      <div className="relative z-10 flex items-center justify-center w-full h-full px-6 md:px-20 py-24">
+        <div className="relative max-w-full max-h-full">
           <Image
             src={currentImage.src}
             alt={currentImage.alt}
-            fill
-            className="object-contain"
+            width={1200}
+            height={1200}
+            className="object-contain max-w-full max-h-[calc(100vh-180px)] w-auto h-auto"
             sizes="(max-width: 1280px) 100vw, 1280px"
             priority
           />
