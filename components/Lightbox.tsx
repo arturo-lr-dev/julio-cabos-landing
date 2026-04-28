@@ -125,7 +125,7 @@ export default function Lightbox({
       </button>
 
       {/* Image container */}
-      <div className="relative z-10 flex items-center justify-center w-full h-full px-6 md:px-20 py-24">
+      <div className="relative flex items-center justify-center w-full h-full px-6 md:px-20 py-24">
         <div className="relative max-w-full max-h-full">
           <Image
             src={currentImage.src}
