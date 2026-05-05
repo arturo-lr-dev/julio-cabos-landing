@@ -66,8 +66,7 @@ export default function GalleryPage() {
                 <span className="font-display-italic text-accent/90">completa</span>
               </h1>
               <p className="text-foreground-muted max-w-xl text-lg leading-relaxed">
-                {galleryImages.length} piezas pintadas a lo largo de los últimos
-                años. Cada miniatura cuenta una historia de luz, volumen y
+                {galleryImages.length} piezas seleccionadas de más de 100 figuras pintadas en los últimos años. Cada miniatura cuenta una historia de luz, volumen y
                 decisión artística.
               </p>
             </div>
