@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 const navLinks = [
   { num: "02", label: "Galería", href: "#galeria" },
   { num: "03", label: "Formación", href: "#formacion" },
-  { num: "04", label: "Sobre Julio", href: "#sobre-mi" },
-  { num: "05", label: "Contacto", href: "#contacto" },
+  { num: "04", label: "Cursos Online", href: "#lista-espera" },
+  { num: "05", label: "Sobre Julio", href: "#sobre-mi" },
+  { num: "06", label: "Contacto", href: "#contacto" },
 ];
 
 export default function Header() {

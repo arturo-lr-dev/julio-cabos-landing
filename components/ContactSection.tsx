@@ -10,7 +10,7 @@ export default function ContactSection() {
     <SectionWrapper id="contacto" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-end">
         <FadeIn className="col-span-12 md:col-span-7">
-          <SectionLabel index="05" label="Contacto" className="mb-6" />
+          <SectionLabel index="06" label="Contacto" className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
             Hablemos
             <span className="font-display-italic block text-accent/95">
