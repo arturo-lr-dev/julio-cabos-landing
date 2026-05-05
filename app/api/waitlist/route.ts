@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await resend.emails.send({
       from: "Lista de Espera <onboarding@resend.dev>",
-      to: ["Juliocabosg@gmail.com"],
+      to: ["manuelmoralesg2@gmail.com"], // TODO: Cambiar a Juliocabosg@gmail.com tras verificar dominio en resend.com/domains
       subject: `Nuevo inscrito en lista de espera — ${nombre}`,
       html: `
         <h2>Nuevo interesado en cursos online</h2>
