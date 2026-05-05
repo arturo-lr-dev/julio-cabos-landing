@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Julio Cesar Cabos Gomez — CV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #f0ece4;
+      font-size: 9.5pt;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 18mm 22mm 22mm 22mm;
+      background: #0a0a0a;
+      position: relative;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* Header */
+    .header {
+      border-bottom: 1px solid rgba(240, 236, 228, 0.08);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+
+    .name {
+      font-family: 'Fraunces', ui-serif, Georgia, serif;
+      font-size: 28pt;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #f0ece4;
+      margin-bottom: 6px;
+    }
+
+    .title {
+      font-size: 10pt;
+      font-weight: 400;
+      color: #c9a668;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 18px;
+      font-size: 8.5pt;
+      color: #8a857d;
+    }
+
+    .contact-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-row .dot {
+      color: rgba(240, 236, 228, 0.12);
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', ui-serif, Georgia, serif;
+      font-size: 11pt;
+      font-weight: 400;
+      color: #c9a668;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(201, 166, 104, 0.25);
+    }
+
+    /* Job entries */
+    .job {
+      margin-bottom: 16px;
+    }
+
+    .job:last-child {
+      margin-bottom: 0;
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .job-company {
+      font-weight: 500;
+      font-size: 9.5pt;
+      color: #f0ece4;
+    }
+
+    .job-date {
+      font-size: 8pt;
+      color: #8a857d;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .job-role {
+      font-size: 8.5pt;
+      color: #c9a668;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+
+    .job-desc {
+      color: #a39e95;
+      font-size: 9pt;
+      line-height: 1.6;
+    }
+
+    .job-desc p {
+      margin-bottom: 3px;
+    }
+
+    .job-desc p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Two column layout for lower sections */
+    .two-col {
+      display: flex;
+      gap: 28px;
+    }
+
+    .col {
+      flex: 1;
+    }
+
+    /* List items */
+    .item {
+      margin-bottom: 10px;
+    }
+
+    .item-year {
+      font-size: 8pt;
+      color: #8a857d;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 1px;
+    }
+
+    .item-title {
+      font-weight: 500;
+      color: #f0ece4;
+      font-size: 9pt;
+      margin-bottom: 1px;
+    }
+
+    .item-sub {
+      color: #8a857d;
+      font-size: 8.5pt;
+    }
+
+    /* Simple list */
+    .simple-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(240, 236, 228, 0.06);
+    }
+
+    .simple-item:last-child {
+      border-bottom: none;
+    }
+
+    .simple-label {
+      color: #f0ece4;
+      font-weight: 500;
+      font-size: 9pt;
+    }
+
+    .simple-value {
+      color: #8a857d;
+      font-size: 9pt;
+    }
+
+    /* Links */
+    .links {
+      margin-top: 4px;
+    }
+
+    .link-item {
+      color: #8a857d;
+      font-size: 8.5pt;
+      word-break: break-all;
+    }
+
+    .link-item a {
+      color: #a39e95;
+      text-decoration: none;
+    }
+
+    /* Footer note */
+    .footer {
+      position: absolute;
+      bottom: 14mm;
+      left: 22mm;
+      right: 22mm;
+      text-align: center;
+      font-size: 7.5pt;
+      color: rgba(240, 236, 228, 0.25);
+      letter-spacing: 0.05em;
+    }
+
+    /* Page 2 specific */
+    .page-2 {
+      padding-top: 22mm;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1 -->
+  <div class="page">
+    <header class="header">
+      <h1 class="name">Julio Cesar Cabos Gomez</h1>
+      <p class="title">World Master Miniature Painter</p>
+      <div class="contact-row">
+        <span>C/ Gurugu, 45 — Moralzarzal, Madrid</span>
+        <span class="dot">·</span>
+        <span>+34 607 46 32 50</span>
+        <span class="dot">·</span>
+        <span>juliocc66@gmail.com</span>
+        <span class="dot">·</span>
+        <span>Coche propio — Disponibilidad para viajar</span>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">Experiencia Profesional</h2>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-company">Freelance</span>
+          <span class="job-date">Junio 2024 — Actualidad</span>
+        </div>
+        <div class="job-role">Gestión propia</div>
+        <div class="job-desc">
+          <p>Realización de trabajos para diversos clientes: pintura de miniaturas para coleccionistas, box art, desarrollo y asesoramiento en productos, y cursos de pintura a todos los niveles en España y el extranjero, especialmente EEUU.</p>
+          <p>Participación como jurado en concursos nacionales e internacionales.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-company">Scale75 S.L.</span>
+          <span class="job-date">Octubre 2015 — Junio 2024</span>
+        </div>
+        <div class="job-role">Director del Departamento de Pintura</div>
+        <div class="job-desc">
+          <p>Dirección de proyectos y encargos para coleccionistas, particulares, empresas y box art.</p>
+          <p>Desarrollo y creación de publicaciones: libros monográficos y enciclopedias.</p>
+          <p>Formación profesional a otros pintores, con especialización en aerógrafo.</p>
+          <p>Desarrollo de nuevas gamas de pinturas acrílicas para aerógrafo y pincel.</p>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="job-company">Andrea Miniatures, S.L.</span>
+          <span class="job-date">Septiembre 2001 — Junio 2015</span>
+        </div>
+        <div class="job-role">Director del Departamento de Pintura</div>
+        <div class="job-desc">
+          <p>Director del departamento de pintura asociado al departamento de diseño y publicaciones; director de la revista "Figure Internacional".</p>
+          <p>Dirección de proyectos y encargos para coleccionistas, particulares, empresas y box art.</p>
+          <p>Gestión de encargos especiales para clientes de alto nivel.</p>
+          <p>Dirección de equipos de pintores internos y externos para trabajos puntuales.</p>
+          <p>Pintura de figuras originales para editoriales como Planeta DeAgostini y Hachette.</p>
+          <p>Supervisión y control de calidad de figuras pintadas en China.</p>
+          <p>Autor y coautor de más de 30 libros y publicaciones de diferentes temáticas.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Julio Cesar Cabos Gomez — Curriculum Vitae</div>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page page-2">
+    <section class="section">
+      <div class="job">
+        <div class="job-header">
+          <span class="job-company">Editorial Acción Press, S.L.</span>
+          <span class="job-date">1989 — 2001</span>
+        </div>
+        <div class="job-role">Adjunto al Departamento Artístico</div>
+        <div class="job-desc">
+          <p>Realización de ilustraciones con aerógrafo para portadas e interior de revistas de modelismo y enciclopedias.</p>
+          <p>Autor de maquetas de modelismo estático de diversas temáticas: aviación, vehículos militares, vehículos civiles, ciencia ficción y dioramas.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <div class="col">
+        <section class="section">
+          <h2 class="section-title">Formación Académica</h2>
+          <div class="item">
+            <div class="item-year">1985</div>
+            <div class="item-title">Analista de Sistemas</div>
+            <div class="item-sub">Universidad Nacional de Rosario, Argentina</div>
+          </div>
+          <div class="item">
+            <div class="item-year">1989</div>
+            <div class="item-title">Formación Profesional en Ilustración, Diseño y Publicidad</div>
+            <div class="item-sub">Escuela de FP de Madrid</div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Cursos</h2>
+          <div class="item">
+            <div class="item-year">1990</div>
+            <div class="item-title">Curso Superior de Aerografía</div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="section">
+          <h2 class="section-title">Idiomas</h2>
+          <div class="simple-item">
+            <span class="simple-label">Inglés</span>
+            <span class="simple-value">Medio-bajo</span>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Redes Sociales</h2>
+          <div class="links">
+            <div class="link-item">
+              <a href="https://www.facebook.com/julio.cabos">facebook.com/julio.cabos</a>
+            </div>
+            <div class="link-item">
+              <a href="https://www.instagram.com/juliocabos">instagram.com/juliocabos</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="footer">Julio Cesar Cabos Gomez — Curriculum Vitae</div>
+  </div>
+
+</body>
+</html>

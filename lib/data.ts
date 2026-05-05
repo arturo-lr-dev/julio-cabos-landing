@@ -33,7 +33,7 @@ export const siteContent = {
       "Autor de más de 30 libros y formador internacional, combina su trabajo como pintor freelance con la enseñanza, ayudando a otros a entender la pintura desde el criterio y la experiencia.",
     ],
     cta: "Ver trayectoria",
-    ctaHref: "/files/CV%20Funcional%20Julio.pdf",
+    ctaHref: "/files/CV-Julio-Cabos.pdf",
   },
   contact: {
     title: "Contacto",
