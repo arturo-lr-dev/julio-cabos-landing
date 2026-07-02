@@ -1,13 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const navLinks = [
-  { num: "02", label: "Galería", href: "#galeria" },
-  { num: "03", label: "Formación", href: "#formacion" },
-  { num: "04", label: "Cursos Online", href: "#lista-espera" },
-  { num: "05", label: "Sobre Julio", href: "#sobre-mi" },
-  { num: "06", label: "Contacto", href: "#contacto" },
+  { num: "01", label: "Inicio", href: "#" },
+  { num: "02", label: "Aprender", href: "#formacion" },
+  { num: "03", label: "Obras por encargo", href: "#obras-por-encargo" },
+  { num: "04", label: "Colaboraciones", href: "#colaboraciones" },
+  { num: "05", label: "Galería", href: "#galeria" },
+  { num: "06", label: "Sobre Julio", href: "#sobre-mi" },
+  { num: "07", label: "Contacto", href: "#contacto" },
 ];
 
 export default function Header() {
@@ -15,9 +18,18 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > window.innerHeight - 96);
+    };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -38,17 +50,23 @@ export default function Header() {
       >
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
           {/* Wordmark */}
-          <a href="#" className="group flex items-baseline gap-2">
-            <span className="font-display text-foreground text-xl md:text-2xl leading-none">
-              Julio
-            </span>
-            <span className="font-display-italic text-accent text-xl md:text-2xl leading-none">
-              Cabos
-            </span>
+          <a
+            href="#"
+            className="group relative block h-12 w-32 md:h-14 md:w-40"
+            aria-label="Julio Cabos"
+          >
+            <Image
+              src="/images/logo-julio-cabos.png"
+              alt="Julio Cabos"
+              fill
+              sizes="(max-width: 768px) 128px, 160px"
+              className="object-contain brightness-110 contrast-110 transition-opacity duration-300 group-hover:opacity-90"
+              priority
+            />
           </a>
 
           {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a

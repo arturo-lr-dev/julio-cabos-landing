@@ -55,22 +55,23 @@ export default function WaitlistSection() {
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-5">
           <SectionLabel
-            index="05"
-            label="Próximamente"
+            index="07"
+            label="No te pierdas nada"
             className="mb-6"
           />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-            Cursos
+            Cursos, plazas
             <span className="font-display-italic block text-accent/95">
-              online
+              y proyectos
             </span>
           </h2>
           <p className="mt-6 text-foreground-muted leading-relaxed max-w-md">
-            Estamos preparando un programa completo de formación a distancia:
-            material grabado, ejercicios pautados y seguimiento personal.
+            Recibe novedades sobre cursos presenciales, formación online,
+            disponibilidad para obras por encargo y proyectos especiales.
           </p>
           <p className="mt-4 text-foreground-muted leading-relaxed max-w-md">
-            Déjanos tus datos y te avisaremos en cuanto abramos las inscripciones.
+            Sin spam. Solo información relevante cuando haya algo importante que
+            contar.
           </p>
         </FadeIn>
 
@@ -189,7 +190,7 @@ export default function WaitlistSection() {
 
                 {/* Nota privacidad */}
                 <p className="text-xs text-foreground-faint text-center">
-                  Sin spam. Solo un aviso cuando lancemos.
+                  Solo comunicaciones relevantes sobre formación y proyectos.
                 </p>
               </div>
             </form>

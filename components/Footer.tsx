@@ -22,8 +22,10 @@ export default function Footer() {
               ÍNDICE
             </span>
             <ul className="space-y-1.5 text-sm text-foreground-muted">
+              <li><a href="#formacion" className="nav-link hover:text-foreground transition-colors">Aprender</a></li>
+              <li><a href="#obras-por-encargo" className="nav-link hover:text-foreground transition-colors">Obras por encargo</a></li>
+              <li><a href="#colaboraciones" className="nav-link hover:text-foreground transition-colors">Colaboraciones</a></li>
               <li><a href="#galeria" className="nav-link hover:text-foreground transition-colors">Galería</a></li>
-              <li><a href="#formacion" className="nav-link hover:text-foreground transition-colors">Formación</a></li>
               <li><a href="#sobre-mi" className="nav-link hover:text-foreground transition-colors">Sobre Julio</a></li>
               <li><a href="#contacto" className="nav-link hover:text-foreground transition-colors">Contacto</a></li>
             </ul>

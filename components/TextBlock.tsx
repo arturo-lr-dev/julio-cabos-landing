@@ -11,7 +11,7 @@ export default function TextBlock() {
   return (
     <SectionWrapper narrow topRule>
       <FadeIn>
-        <SectionLabel index="01" label="Manifiesto" className="mb-12" />
+        <SectionLabel index="06" label="Manifiesto" className="mb-8" />
       </FadeIn>
 
       <FadeIn delay={120}>
