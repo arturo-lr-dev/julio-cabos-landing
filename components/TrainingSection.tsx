@@ -10,11 +10,11 @@ export default function TrainingSection() {
     <SectionWrapper id="formacion" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-5">
-          <SectionLabel index="04" label="Formación" className="mb-6" />
+          <SectionLabel index="03" label="Aprender con Julio" className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-            Aprender
+            Aprende a mirar
             <span className="font-display-italic block text-accent/95">
-              a ver
+              antes de pintar
             </span>
           </h2>
         </FadeIn>
@@ -35,8 +35,8 @@ export default function TrainingSection() {
                 Cursos presenciales
               </h3>
               <p className="text-sm text-foreground-muted leading-relaxed">
-                Sesiones intensivas en taller. Plazas limitadas, formación
-                personalizada según el nivel del alumno.
+                Sesiones intensivas y plazas limitadas. Trabajo directo sobre
+                luz, color, volumen y toma de decisiones.
               </p>
               <span className="mt-2 inline-flex items-center gap-3 eyebrow text-foreground group-hover:text-accent transition-colors duration-300">
                 <span>{training.primaryCta}</span>
@@ -53,8 +53,8 @@ export default function TrainingSection() {
                 Cursos online
               </h3>
               <p className="text-sm text-foreground-muted leading-relaxed">
-                En desarrollo. Material grabado, ejercicios pautados y
-                seguimiento personal a distancia.
+                En desarrollo. Material grabado, ejercicios pautados y una
+                forma clara de aplicar el método desde casa.
               </p>
               <span className="mt-2 eyebrow text-foreground-faint">
                 {training.secondaryCta}

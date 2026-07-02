@@ -16,11 +16,11 @@ export default function SectionWrapper({
   return (
     <section
       id={id}
-      className={`relative py-24 md:py-32 lg:py-40 px-6 md:px-12 ${className}`}
+      className={`relative py-12 md:py-20 lg:py-24 px-6 md:px-12 ${className}`}
     >
       <div
         className={`mx-auto ${narrow ? "max-w-3xl" : "max-w-6xl"} ${
-          topRule ? "rule-t pt-24 md:pt-28" : ""
+          topRule ? "rule-t pt-10 md:pt-16" : ""
         }`}
       >
         {children}
