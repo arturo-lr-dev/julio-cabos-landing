@@ -80,7 +80,8 @@ export function getAdminCourses(currentCourses: Course[]): AdminCourse[] {
 export function getAdminStats(
   currentWorks: Work[] = works,
   currentGalleryImages: GalleryImage[] = galleryImages,
-  currentCourses: Course[] = []
+  currentCourses: Course[] = [],
+  pendingInquiryCount = adminMessages.length
 ) {
   const adminWorks = getAdminWorks(currentWorks);
 
@@ -111,8 +112,8 @@ export function getAdminStats(
     },
     {
       label: "Consultas pendientes",
-      value: String(adminMessages.length),
-      detail: "Llegaran desde formularios",
+      value: String(pendingInquiryCount),
+      detail: "Desde formularios publicos",
     },
   ];
 }
@@ -193,6 +194,7 @@ export const adminNavigation = [
   "Inicio",
   "Obras",
   "Cursos",
+  "Instagram",
   "Calendario",
   "Videos",
   "Alumnos",

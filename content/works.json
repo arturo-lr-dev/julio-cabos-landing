@@ -270,5 +270,75 @@
         "aspectRatio": "4/5"
       }
     ]
+  },
+  {
+    "title": "Norman Knight",
+    "slug": "norman-knight",
+    "category": "historico",
+    "status": "published",
+    "scale": "54 mm",
+    "brand": "FeR",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Norman Knight - imagen 1",
+        "src": "/uploads/works/norman-knight/mini1.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Norman Knight - imagen 2",
+        "src": "/uploads/works/norman-knight/mini2.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Little Master Mice",
+    "slug": "little-master-mice",
+    "category": "fantasia",
+    "status": "published",
+    "scale": "54 mm",
+    "brand": "Blacksmith Miniatures",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Little Master Mice - imagen 1",
+        "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-28-45.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Little Master Mice - imagen 2",
+        "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-28-51.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Little Master Mice - imagen 3",
+        "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-29-05.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Little Master Mice - imagen 4",
+        "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-29-07.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Little Master Mice - imagen 5",
+        "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-29-10.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      }
+    ]
   }
 ]

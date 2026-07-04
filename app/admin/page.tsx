@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import {
-  adminMessages,
   adminNavigation,
   getAdminCourses,
   getAdminStats,
@@ -14,6 +14,15 @@ import {
   getGalleryImagesFromContent,
   getWorksFromContent,
 } from "@/lib/work-content";
+import {
+  ADMIN_SESSION_COOKIE,
+  verifyAdminSessionCookie,
+} from "@/lib/admin-auth";
+import {
+  getInquiriesFromContent,
+  getPendingInquiryCount,
+} from "@/lib/inquiry-content";
+import { inquirySourceLabels, inquiryStatusLabels } from "@/lib/inquiry-types";
 
 const statusStyles = {
   Publicado: "border-emerald-400/30 bg-emerald-400/10 text-emerald-100",
@@ -24,7 +33,27 @@ const statusStyles = {
 function getAdminNavigationHref(item: string) {
   if (item === "Obras") return "/admin/obras";
   if (item === "Cursos") return "/admin/cursos";
+  if (item === "Instagram") return "/admin/instagram";
+  if (item === "Calendario") return "/admin/calendario";
+  if (item === "Consultas") return "/admin/consultas";
   return `#${item.toLowerCase()}`;
+}
+
+function getFirstName(name?: string) {
+  return name?.trim().split(/\s+/)[0] || "Administrador";
+}
+
+function getUserInitials(name?: string, email?: string) {
+  const source = name?.trim() || email?.split("@")[0] || "Admin";
+  const words = source.split(/\s+/).filter(Boolean);
+
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+
+  return words
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
 }
 
 export const metadata = {
@@ -35,13 +64,30 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
+  const cookieStore = await cookies();
+  const adminSession = await verifyAdminSessionCookie(
+    cookieStore.get(ADMIN_SESSION_COOKIE)?.value
+  );
   const works = await getWorksFromContent();
   const courses = await getCoursesFromContent();
   const galleryImages = await getGalleryImagesFromContent();
-  const adminStats = getAdminStats(works, galleryImages, courses);
+  const inquiries = await getInquiriesFromContent();
+  const pendingInquiryCount = getPendingInquiryCount(inquiries);
+  const unreadInquiryCount = inquiries.filter(
+    (inquiry) => inquiry.status === "new"
+  ).length;
+  const adminStats = getAdminStats(
+    works,
+    galleryImages,
+    courses,
+    pendingInquiryCount
+  );
   const adminWorks = getAdminWorks(works);
   const adminCourses = getAdminCourses(courses);
   const publicContentSections = getPublicContentSections(galleryImages.length);
+  const adminName = adminSession?.name || "Administrador";
+  const adminEmail = adminSession?.email || "";
+  const adminInitials = getUserInitials(adminName, adminEmail);
 
   return (
     <main className="min-h-screen bg-[#080807] text-foreground">
@@ -66,21 +112,54 @@ export default async function AdminPage() {
               <Link
                 key={item}
                 href={getAdminNavigationHref(item)}
-                className={`rounded-md px-4 py-3 text-sm transition hover:bg-foreground/5 ${
+                className={`flex items-center justify-between gap-3 rounded-md px-4 py-3 text-sm transition hover:bg-foreground/5 ${
                   item === "Inicio"
                     ? "bg-accent/15 text-accent ring-1 ring-accent/20"
                     : "text-foreground/85"
                 }`}
               >
-                {item}
+                <span>{item}</span>
+                {item === "Consultas" && unreadInquiryCount > 0 ? (
+                  <span
+                    className="size-2.5 rounded-full bg-accent shadow-[0_0_14px_rgba(201,166,104,0.75)]"
+                    aria-label={`${unreadInquiryCount} consultas nuevas`}
+                  />
+                ) : null}
               </Link>
             ))}
           </nav>
 
-          <div className="mt-10 hidden border-t border-rule pt-5 text-sm text-foreground-muted lg:block">
-            <p className="font-medium text-foreground">Julio Cabos</p>
-            <p>Administrador</p>
-            <button className="mt-2 text-accent">Cerrar sesion</button>
+          <div className="mt-10 hidden border-t border-rule pt-5 lg:block">
+            <div className="flex items-center gap-3">
+              <div
+                className="grid size-12 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/15 bg-cover bg-center text-sm font-semibold text-accent"
+                style={
+                  adminSession?.picture
+                    ? { backgroundImage: `url(${adminSession.picture})` }
+                    : undefined
+                }
+                aria-label={adminName}
+              >
+                {!adminSession?.picture ? adminInitials : null}
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-foreground">
+                  {adminName}
+                </p>
+                {adminEmail ? (
+                  <p className="truncate text-xs text-foreground-muted">
+                    {adminEmail}
+                  </p>
+                ) : null}
+                <p className="mt-1 text-xs text-accent">Administrador</p>
+              </div>
+            </div>
+            <Link
+              href="/api/auth/logout"
+              className="mt-4 inline-flex text-sm text-accent"
+            >
+              Cerrar sesion
+            </Link>
           </div>
         </aside>
 
@@ -89,7 +168,7 @@ export default async function AdminPage() {
             <div>
               <p className="eyebrow text-accent">Panel privado</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-normal">
-                Bienvenido, Julio
+                Bienvenido, {getFirstName(adminName)}
               </h1>
               <p className="mt-1 text-foreground-muted">
                 Resumen de actividad y contenido conectado con la web publica.
@@ -176,7 +255,9 @@ export default async function AdminPage() {
             >
               <div className="flex items-center justify-between gap-4">
                 <h2 className="text-lg font-semibold">Proximos cursos</h2>
-                <button className="text-sm text-accent">Calendario</button>
+                <Link href="/admin/calendario" className="text-sm text-accent">
+                  Calendario
+                </Link>
               </div>
               <div className="mt-4 divide-y divide-rule">
                 {adminCourses.map((course) => (
@@ -245,24 +326,38 @@ export default async function AdminPage() {
             >
               <div className="flex items-center justify-between gap-4">
                 <h2 className="text-lg font-semibold">Consultas recientes</h2>
-                <button className="text-sm text-accent">Ver todas</button>
+                <Link href="/admin/consultas" className="text-sm text-accent">
+                  Ver todas
+                </Link>
               </div>
               <div className="mt-4 divide-y divide-rule">
-                {adminMessages.map((message) => (
-                  <article key={message.name} className="py-4 first:pt-0">
+                {inquiries.slice(0, 3).map((message) => (
+                  <article key={message.id} className="py-4 first:pt-0">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="font-medium">{message.name}</p>
                         <p className="mt-1 text-sm text-foreground-muted">
                           {message.subject}
                         </p>
+                        <p className="mt-2 text-xs text-foreground-faint">
+                          {inquirySourceLabels[message.source]} -{" "}
+                          {inquiryStatusLabels[message.status]}
+                        </p>
                       </div>
                       <time className="shrink-0 text-xs text-foreground-faint">
-                        {message.time}
+                        {new Intl.DateTimeFormat("es-ES", {
+                          day: "2-digit",
+                          month: "short",
+                        }).format(new Date(message.createdAt))}
                       </time>
                     </div>
                   </article>
                 ))}
+                {inquiries.length === 0 ? (
+                  <p className="py-4 text-sm text-foreground-muted">
+                    Aun no hay consultas registradas.
+                  </p>
+                ) : null}
               </div>
             </section>
 
@@ -307,6 +402,8 @@ export default async function AdminPage() {
                         ? "/admin/obras?nueva=1"
                         : action === "Nuevo curso"
                           ? "/admin/cursos?nuevo=1"
+                          : action === "Crear evento"
+                            ? "/admin/calendario"
                           : "#"
                     }
                     className="rounded-md border border-rule-strong px-4 py-3 text-left text-sm transition hover:border-accent/45 hover:bg-accent/10"

@@ -2,13 +2,14 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { siteContent } from "@/lib/data";
+import InquiryForm from "./InquiryForm";
 
 export default function ContactSection() {
   const { contact } = siteContent;
 
   return (
     <SectionWrapper id="contacto" topRule>
-      <div className="grid grid-cols-12 gap-8 md:gap-12 items-end">
+      <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-7">
           <SectionLabel index="09" label="Contacto" className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
@@ -22,15 +23,19 @@ export default function ContactSection() {
           </p>
         </FadeIn>
 
-        <FadeIn delay={150} className="col-span-12 md:col-span-5 md:text-right">
+        <FadeIn delay={150} className="col-span-12 md:col-span-5">
+          <span id="consulta-encargo" className="block scroll-mt-28" />
+          <span id="consulta-colaboracion" className="block scroll-mt-28" />
+          <span id="consulta-cursos" className="block scroll-mt-28" />
+          <InquiryForm />
           <a
             href={`mailto:${contact.email}`}
-            className="group inline-block"
+            className="group mt-6 inline-block"
           >
             <span className="block eyebrow text-foreground-faint mb-3">
-              ESCRIBIR A
+              O escribir directamente a
             </span>
-            <span className="font-display text-2xl md:text-3xl lg:text-4xl text-foreground group-hover:text-accent transition-colors duration-500 break-all">
+            <span className="font-display text-xl md:text-2xl text-foreground group-hover:text-accent transition-colors duration-500 break-all">
               {contact.email}
             </span>
             <span

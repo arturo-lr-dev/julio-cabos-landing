@@ -67,7 +67,7 @@ export const siteContent = {
     title: "Formación",
     text: "No se trata de memorizar recetas. Se trata de aprender a analizar una figura antes de pintar: dónde está la luz, qué volumen manda y qué decisiones hacen que una miniatura funcione.",
     primaryCta: "Solicitar información",
-    primaryHref: "#contacto",
+    primaryHref: "#consulta-cursos",
     secondaryCta: "Próximamente online",
     secondaryHref: "#",
   },
@@ -81,7 +81,7 @@ export const siteContent = {
       "Proyectos especiales para marcas y editoriales",
     ],
     cta: "Solicitar una obra",
-    href: "#contacto",
+    href: "#consulta-encargo",
   },
   collaborations: {
     title: "Colaboraciones profesionales",
@@ -93,7 +93,7 @@ export const siteContent = {
       "Asesoramiento artístico y proyectos a medida",
     ],
     cta: "Proponer colaboración",
-    href: "#contacto",
+    href: "#consulta-colaboracion",
   },
   about: {
     title: "Sobre Julio",
@@ -130,6 +130,14 @@ export type WorkCategory =
 export type GalleryCategory = WorkCategory;
 export type WorkStatus = "draft" | "in-progress" | "published" | "hidden";
 export type CourseStatus = "draft" | "active" | "hidden";
+export type InstagramPostStatus = "candidate" | "ignored" | "imported";
+export type CalendarEventStatus = "active" | "hidden";
+export type CalendarEventType =
+  | "curso"
+  | "feria"
+  | "concurso"
+  | "charla"
+  | "recordatorio";
 export type CourseLevel =
   | "Iniciacion"
   | "Intermedio"
@@ -209,6 +217,28 @@ export interface Course {
   posterAlt?: string;
 }
 
+export interface InstagramPost {
+  id: string;
+  permalink: string;
+  caption: string;
+  status: InstagramPostStatus;
+  createdAt: string;
+  importedWorkSlug?: string;
+  images: WorkImage[];
+}
+
+export interface CalendarEvent {
+  title: string;
+  slug: string;
+  type: CalendarEventType;
+  status: CalendarEventStatus;
+  location: string;
+  startDate: string;
+  endDate?: string;
+  description: string;
+  publicUrl?: string;
+}
+
 export const MAX_PUBLISHED_WORKS = 10;
 export const MAX_DRAFT_WORKS = 1;
 export const MAX_IMAGES_PER_WORK = 5;
@@ -219,6 +249,14 @@ export const courseLevelOptions: CourseLevel[] = [
   "Avanzado",
   "Todos los niveles",
 ];
+
+export const calendarEventTypeLabels: Record<CalendarEventType, string> = {
+  curso: "Curso",
+  feria: "Feria",
+  concurso: "Concurso",
+  charla: "Charla",
+  recordatorio: "Recordatorio",
+};
 
 const legacyGalleryImages: Array<
   Omit<GalleryImage, "category"> & { category: LegacyGalleryCategory }

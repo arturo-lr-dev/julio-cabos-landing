@@ -21,6 +21,7 @@ export default function WaitlistSection() {
     "idle" | "enviando" | "exito" | "error"
   >("idle");
   const [mensajeError, setMensajeError] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +29,18 @@ export default function WaitlistSection() {
     setMensajeError("");
 
     try {
-      const res = await fetch("/api/waitlist", {
+      const res = await fetch("/api/inquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.nombre,
+          email: formData.email,
+          level: formData.nivel,
+          source: "waitlist",
+          subject: "Lista de espera",
+          message:
+            "Quiere recibir novedades sobre cursos presenciales, formacion online, encargos y proyectos especiales.",
+        }),
       });
 
       const data = await res.json();
@@ -41,6 +50,7 @@ export default function WaitlistSection() {
       }
 
       setEstado("exito");
+      setSubmittedEmail(formData.email);
       setFormData({ nombre: "", email: "", nivel: "" });
     } catch (err) {
       setEstado("error");
@@ -84,7 +94,7 @@ export default function WaitlistSection() {
               </div>
               <p className="text-foreground-muted leading-relaxed">
                 Te has añadido a la lista de espera. Te escribiremos a{" "}
-                <span className="text-foreground">{formData.email}</span>{" "}
+                <span className="text-foreground">{submittedEmail}</span>{" "}
                 en cuanto abramos las inscripciones.
               </p>
             </div>
