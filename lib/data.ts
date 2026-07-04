@@ -1,3 +1,5 @@
+import worksContent from "@/content/works.json";
+
 export const siteContent = {
   hero: {
     title: "Julio Cabos",
@@ -117,7 +119,53 @@ export const siteContent = {
   },
 };
 
-export type GalleryCategory = "box-art" | "encargo" | "detalle" | "coleccion";
+type LegacyGalleryCategory = "box-art" | "encargo" | "detalle" | "coleccion";
+export type WorkCategory =
+  | "historico"
+  | "fantasia"
+  | "box-art"
+  | "busto"
+  | "diorama"
+  | "escenografia";
+export type GalleryCategory = WorkCategory;
+export type WorkStatus = "draft" | "in-progress" | "published" | "hidden";
+export type CourseStatus = "draft" | "active" | "hidden";
+export type CourseLevel =
+  | "Iniciacion"
+  | "Intermedio"
+  | "Avanzado"
+  | "Todos los niveles";
+export type WorkScale =
+  | "Busto"
+  | "28 mm"
+  | "54 mm"
+  | "75 mm"
+  | "90 mm"
+  | "120 mm"
+  | "1/10"
+  | "1/9"
+  | "1/6";
+
+export interface WorkImage {
+  src: string;
+  alt: string;
+  aspectRatio: "4/5" | "3/4" | "1/1" | "3/5";
+  kind: "principal" | "detalle";
+}
+
+export interface Work {
+  title: string;
+  slug: string;
+  category: WorkCategory;
+  scale?: WorkScale | "";
+  brand?: string;
+  year?: string;
+  description: string;
+  status: WorkStatus;
+  featured: boolean;
+  showOnHome: boolean;
+  images: WorkImage[];
+}
 
 export interface GalleryImage {
   src: string;
@@ -125,9 +173,56 @@ export interface GalleryImage {
   category: GalleryCategory;
   aspectRatio: "4/5" | "3/4" | "1/1" | "3/5";
   series?: string;
+  title?: string;
+  scale?: WorkScale | "";
+  brand?: string;
+  year?: string;
+  imageLabel?: string;
 }
 
-export const galleryImages: GalleryImage[] = [
+export interface GalleryWork {
+  slug: string;
+  title: string;
+  category: GalleryCategory;
+  scale?: WorkScale | "";
+  brand?: string;
+  year?: string;
+  cover: GalleryImage;
+  images: GalleryImage[];
+}
+
+export interface Course {
+  title: string;
+  slug: string;
+  status: CourseStatus;
+  location: string;
+  startDate: string;
+  endDate?: string;
+  price: string;
+  seatsTotal: number;
+  seatsAvailable: number;
+  level: CourseLevel;
+  materials: string;
+  description: string;
+  bookingUrl: string;
+  posterImage?: string;
+  posterAlt?: string;
+}
+
+export const MAX_PUBLISHED_WORKS = 10;
+export const MAX_DRAFT_WORKS = 1;
+export const MAX_IMAGES_PER_WORK = 5;
+
+export const courseLevelOptions: CourseLevel[] = [
+  "Iniciacion",
+  "Intermedio",
+  "Avanzado",
+  "Todos los niveles",
+];
+
+const legacyGalleryImages: Array<
+  Omit<GalleryImage, "category"> & { category: LegacyGalleryCategory }
+> = [
   { src: "/images/gallery/samurai.webp", alt: "Samurái — miniatura pintada por Julio Cabos", category: "box-art", aspectRatio: "4/5", series: "samurai" },
   { src: "/images/gallery/templario.webp", alt: "Templario — encargo de pintura", category: "encargo", aspectRatio: "3/4", series: "templario" },
   { src: "/images/gallery/abanderado.webp", alt: "Abanderado — figura histórica", category: "box-art", aspectRatio: "4/5", series: "abanderado" },
@@ -163,9 +258,184 @@ export const galleryImages: GalleryImage[] = [
   { src: "/images/gallery/mini-2.webp", alt: "Miniatura de colección", category: "coleccion", aspectRatio: "4/5" },
 ];
 
-export const categoryLabels: Record<GalleryCategory, string> = {
-  "box-art": "Box Art",
-  "encargo": "Encargos",
-  "detalle": "Detalles",
-  "coleccion": "Colección",
+const workDefaults: Record<
+  string,
+  Pick<
+    Work,
+    | "title"
+    | "category"
+    | "scale"
+    | "brand"
+    | "description"
+    | "featured"
+    | "showOnHome"
+  >
+> = {
+  samurai: {
+    title: "Samurai",
+    category: "box-art",
+    scale: "75 mm",
+    brand: "Scale75",
+    description: "Miniatura de exposicion con varios detalles de proceso.",
+    featured: true,
+    showOnHome: true,
+  },
+  templario: {
+    title: "Templario",
+    category: "historico",
+    scale: "54 mm",
+    brand: "Pegaso Models",
+    description: "Encargo de pintura con estudio de metal, tela y cuero.",
+    featured: true,
+    showOnHome: true,
+  },
+  abanderado: {
+    title: "Abanderado",
+    category: "historico",
+    scale: "54 mm",
+    brand: "Andrea Miniatures",
+    description: "Figura historica con protagonismo de color y bandera.",
+    featured: true,
+    showOnHome: true,
+  },
+  paracaidista: {
+    title: "Paracaidista",
+    category: "box-art",
+    scale: "54 mm",
+    brand: "Pegaso Models",
+    description: "Box art de figura militar con multiples vistas de detalle.",
+    featured: true,
+    showOnHome: true,
+  },
+  soldado: {
+    title: "Soldado",
+    category: "box-art",
+    description: "Trabajo de box art con estudio de uniforme y equipo.",
+    featured: false,
+    showOnHome: true,
+  },
+  arquero: {
+    title: "Arquero",
+    category: "fantasia",
+    description: "Encargo de pintura con composicion escenica.",
+    featured: false,
+    showOnHome: true,
+  },
+  arabia: {
+    title: "Figura arabe",
+    category: "historico",
+    description: "Figura historica con tratamiento de telas claras.",
+    featured: false,
+    showOnHome: true,
+  },
+  lancero: {
+    title: "Lancero",
+    category: "historico",
+    description: "Figura historica con lanza y lectura vertical.",
+    featured: false,
+    showOnHome: true,
+  },
+  "miniaturas-coleccion": {
+    title: "Miniaturas de coleccion",
+    category: "fantasia",
+    description: "Piezas de coleccion y ejemplos complementarios.",
+    featured: false,
+    showOnHome: false,
+  },
 };
+
+function getLegacyTitle(image: { alt: string }) {
+  return image.alt.split(/—|â€”|-/)[0]?.trim() || "Obra";
+}
+
+function getWorkCategoryFromGalleryCategory(
+  category: LegacyGalleryCategory
+): WorkCategory {
+  if (category === "box-art") return "box-art";
+  if (category === "encargo") return "fantasia";
+  return "fantasia";
+}
+
+export const workCategoryLabels: Record<WorkCategory, string> = {
+  historico: "Histórico",
+  fantasia: "Fantasía",
+  "box-art": "Box Art",
+  busto: "Busto",
+  diorama: "Diorama",
+  escenografia: "Escenografía",
+};
+
+export const workScaleOptions: WorkScale[] = [
+  "Busto",
+  "28 mm",
+  "54 mm",
+  "75 mm",
+  "90 mm",
+  "120 mm",
+  "1/10",
+  "1/9",
+  "1/6",
+];
+
+export const legacyWorks: Work[] = Object.values(
+  legacyGalleryImages.reduce<Record<string, Work>>((acc, image) => {
+    const slug =
+      image.series ??
+      (image.category === "coleccion"
+        ? "miniaturas-coleccion"
+        : image.src.replace(/[^a-z0-9]+/gi, "-"));
+    const defaults = workDefaults[slug];
+
+    if (!acc[slug]) {
+      acc[slug] = {
+        title: defaults?.title ?? getLegacyTitle(image),
+        slug,
+        category:
+          defaults?.category ?? getWorkCategoryFromGalleryCategory(image.category),
+        scale: defaults?.scale,
+        brand: defaults?.brand,
+        description:
+          defaults?.description ??
+          "Obra importada desde la galeria existente.",
+        status: "published",
+        featured: defaults?.featured ?? false,
+        showOnHome: defaults?.showOnHome ?? image.category !== "coleccion",
+        images: [],
+      };
+    }
+
+    acc[slug].images.push({
+      src: image.src,
+      alt: image.alt,
+      aspectRatio: image.aspectRatio,
+      kind: image.category === "detalle" ? "detalle" : "principal",
+    });
+
+    return acc;
+  }, {})
+);
+
+export const works: Work[] = (worksContent as Work[]).map((work) => ({
+  ...work,
+  images: work.images.slice(0, MAX_IMAGES_PER_WORK),
+}));
+
+export const galleryImages: GalleryImage[] = works
+  .filter((work) => work.status === "published")
+  .slice(0, MAX_PUBLISHED_WORKS)
+  .flatMap((work) =>
+    work.images.slice(0, MAX_IMAGES_PER_WORK).map((image, index) => ({
+      src: image.src,
+      alt: image.alt || `${work.title} - imagen ${index + 1}`,
+      category: work.category,
+      aspectRatio: image.aspectRatio,
+      series: work.slug,
+      title: work.title,
+      scale: work.scale,
+      brand: work.brand,
+      year: work.year,
+      imageLabel: `Imagen ${index + 1}`,
+    }))
+  );
+
+export const categoryLabels: Record<GalleryCategory, string> = workCategoryLabels;

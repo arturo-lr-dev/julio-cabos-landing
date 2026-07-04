@@ -1,9 +1,27 @@
+import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { siteContent, type Course } from "@/lib/data";
 
-export default function TrainingSection() {
+function formatCourseDate(course: Course) {
+  if (!course.startDate) return "Fecha por confirmar";
+
+  const formatter = new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+  const start = formatter.format(new Date(`${course.startDate}T12:00:00`));
+
+  if (!course.endDate || course.endDate === course.startDate) {
+    return start;
+  }
+
+  return `${start} - ${formatter.format(new Date(`${course.endDate}T12:00:00`))}`;
+}
+
+export default function TrainingSection({ courses = [] }: { courses?: Course[] }) {
   const { training } = siteContent;
 
   return (
@@ -23,6 +41,62 @@ export default function TrainingSection() {
           <p className="text-lg md:text-xl text-foreground leading-relaxed font-light max-w-xl">
             {training.text}
           </p>
+
+          {courses.length > 0 ? (
+            <div className="mt-10 grid gap-px bg-rule">
+              {courses.slice(0, 3).map((course) => (
+                <article
+                  key={course.slug}
+                  className="bg-background p-5 md:p-6"
+                >
+                  <div
+                    className={
+                      course.posterImage
+                        ? "grid gap-5 md:grid-cols-[180px_1fr]"
+                        : "grid gap-5"
+                    }
+                  >
+                    {course.posterImage ? (
+                      <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                        <Image
+                          src={course.posterImage}
+                          alt={course.posterAlt || course.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 180px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : null}
+                    <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                      <p className="eyebrow text-accent">
+                        {course.location} - {formatCourseDate(course)}
+                      </p>
+                      <h3 className="mt-3 font-display text-2xl text-foreground leading-tight">
+                        {course.title}
+                      </h3>
+                      <p className="mt-3 text-sm text-foreground-muted leading-relaxed">
+                        {course.description}
+                      </p>
+                      <p className="mt-4 text-xs uppercase tracking-wider text-foreground-faint">
+                        {course.level} - {course.price} -{" "}
+                        {course.seatsAvailable} plazas disponibles
+                      </p>
+                      </div>
+                      {course.bookingUrl ? (
+                        <a
+                          href={course.bookingUrl}
+                          className="shrink-0 border border-rule-strong px-4 py-2 text-sm text-accent transition hover:border-accent/50 hover:bg-accent/10"
+                        >
+                          Reservar
+                        </a>
+                      ) : null}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : null}
 
           {/* Two offerings as catalogue items */}
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule">

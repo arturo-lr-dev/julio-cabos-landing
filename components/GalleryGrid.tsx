@@ -7,18 +7,32 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import Lightbox from "./Lightbox";
-import { galleryImages } from "@/lib/data";
+import type { GalleryImage, GalleryWork } from "@/lib/data";
 
 const INITIAL_COUNT = 5;
 
-export default function GalleryGrid() {
+function getMeta(image: GalleryImage) {
+  return [image.scale, image.brand, image.year].filter(Boolean).join(" · ");
+}
+
+export default function GalleryGrid({
+  works,
+}: {
+  works: GalleryWork[];
+}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
 
-  const visible = galleryImages.slice(0, INITIAL_COUNT);
+  const visible = works.slice(0, INITIAL_COUNT);
 
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
+  const openLightbox = (work: GalleryWork) => {
+    const coverIndex = work.images.findIndex(
+      (image) => image.src === work.cover.src
+    );
+
+    setLightboxImages(work.images);
+    setLightboxIndex(Math.max(coverIndex, 0));
     setLightboxOpen(true);
   };
 
@@ -52,11 +66,14 @@ export default function GalleryGrid() {
           </FadeIn>
 
           <div className="col-span-12 md:col-span-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-            {visible.map((img, i) => (
-              <FadeIn key={img.src} delay={i * 80}>
+            {visible.map((work, i) => {
+              const img = work.cover;
+
+              return (
+              <FadeIn key={work.slug} delay={i * 80}>
                 <figure
                   className="group cursor-pointer"
-                  onClick={() => openLightbox(i)}
+                  onClick={() => openLightbox(work)}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-surface">
                     <Image
@@ -71,8 +88,15 @@ export default function GalleryGrid() {
                   </div>
 
                   <figcaption className="mt-3 flex items-baseline justify-between gap-3">
-                    <span className="text-sm text-foreground-muted leading-snug font-light">
-                      {img.alt.split("—")[0]?.trim()}
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm text-foreground leading-snug">
+                        {work.title}
+                      </span>
+                      {getMeta(img) ? (
+                        <span className="mt-1 block truncate text-xs text-foreground-muted">
+                          {getMeta(img)}
+                        </span>
+                      ) : null}
                     </span>
                     <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors shrink-0">
                       Nº {String(i + 1).padStart(2, "0")}
@@ -80,13 +104,14 @@ export default function GalleryGrid() {
                   </figcaption>
                 </figure>
               </FadeIn>
-            ))}
+              );
+            })}
           </div>
         </div>
       </SectionWrapper>
 
       <Lightbox
-        images={visible}
+        images={lightboxImages}
         currentIndex={lightboxIndex}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}

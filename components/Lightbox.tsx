@@ -12,6 +12,10 @@ interface LightboxProps {
   onNavigate: (index: number) => void;
 }
 
+function getMeta(image: GalleryImage) {
+  return [image.scale, image.brand, image.year].filter(Boolean).join(" · ");
+}
+
 export default function Lightbox({
   images,
   currentIndex,
@@ -142,13 +146,16 @@ export default function Lightbox({
         <div className="mt-6 flex items-center justify-between">
           <div>
             <p className="text-sm text-foreground leading-relaxed">
-              {currentImage.alt}
+              {currentImage.title ?? currentImage.alt}
             </p>
-            {currentImage.series && (
+            <p className="mt-1 text-xs text-foreground-muted uppercase tracking-wider">
+              {currentImage.imageLabel ?? `Imagen ${currentIndex + 1}`}
+            </p>
+            {getMeta(currentImage) ? (
               <p className="mt-1 text-xs text-foreground-muted uppercase tracking-wider">
-                Serie: {currentImage.series}
+                {getMeta(currentImage)}
               </p>
-            )}
+            ) : null}
           </div>
           <span className="eyebrow text-accent shrink-0 ml-4">
             {String(currentIndex + 1).padStart(2, "0")} /{" "}

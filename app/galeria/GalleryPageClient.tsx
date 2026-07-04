@@ -1,0 +1,229 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Lightbox from "@/components/Lightbox";
+import FadeIn from "@/components/FadeIn";
+import {
+  categoryLabels,
+  type GalleryCategory,
+  type GalleryImage,
+  type GalleryWork,
+  type WorkCategory,
+  workCategoryLabels,
+} from "@/lib/data";
+
+const categories: WorkCategory[] = [
+  "historico",
+  "fantasia",
+  "box-art",
+  "busto",
+  "diorama",
+  "escenografia",
+];
+
+function getMeta(image: GalleryImage) {
+  return [categoryLabels[image.category], image.scale, image.brand, image.year]
+    .filter(Boolean)
+    .join(" - ");
+}
+
+export default function GalleryPageClient({
+  galleryWorks,
+}: {
+  galleryWorks: GalleryWork[];
+}) {
+  const [activeFilter, setActiveFilter] = useState<GalleryCategory | "todas">(
+    "todas"
+  );
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
+
+  const filteredWorks = useMemo(() => {
+    if (activeFilter === "todas") return galleryWorks;
+    return galleryWorks.filter((work) => work.category === activeFilter);
+  }, [activeFilter, galleryWorks]);
+
+  const openLightbox = (work: GalleryWork) => {
+    const coverIndex = work.images.findIndex(
+      (image) => image.src === work.cover.src
+    );
+
+    setLightboxImages(work.images);
+    setLightboxIndex(Math.max(coverIndex, 0));
+    setLightboxOpen(true);
+  };
+
+  return (
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-rule">
+        <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
+          <Link href="/" className="group flex items-baseline gap-2">
+            <span className="font-display text-foreground text-xl md:text-2xl leading-none">
+              Julio
+            </span>
+            <span className="font-display-italic text-accent text-xl md:text-2xl leading-none">
+              Cabos
+            </span>
+          </Link>
+          <Link
+            href="/"
+            className="text-sm text-foreground-muted hover:text-accent transition-colors"
+          >
+            Volver
+          </Link>
+        </nav>
+      </header>
+
+      <main className="pt-24 md:pt-32 pb-24 md:pb-32 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <div className="mb-16 md:mb-24">
+              <div className="flex items-center gap-3 mb-6">
+                <span aria-hidden className="text-foreground-faint">
+                  -
+                </span>
+                <span className="eyebrow text-foreground-muted">Galeria</span>
+              </div>
+              <h1 className="font-display text-foreground text-5xl md:text-7xl lg:text-8xl leading-[0.9] mb-8">
+                Obra{" "}
+                <span className="font-display-italic text-accent/90">
+                  completa
+                </span>
+              </h1>
+              <p className="text-foreground-muted max-w-xl text-lg leading-relaxed">
+                {galleryWorks.length} obras publicadas, ordenadas como en el
+                panel de administracion. Cada ficha conserva categoria, escala,
+                marca y datos de la obra.
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={100}>
+            <div className="flex flex-wrap gap-3 mb-12 md:mb-16">
+              <button
+                onClick={() => setActiveFilter("todas")}
+                className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
+                  activeFilter === "todas"
+                    ? "border-accent text-accent bg-accent/5"
+                    : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
+                }`}
+              >
+                Todas ({galleryWorks.length})
+              </button>
+              {categories.map((cat) => {
+                const count = galleryWorks.filter(
+                  (work) => work.category === cat
+                ).length;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveFilter(cat)}
+                    className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
+                      activeFilter === cat
+                        ? "border-accent text-accent bg-accent/5"
+                        : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
+                    }`}
+                  >
+                    {workCategoryLabels[cat]} ({count})
+                  </button>
+                );
+              })}
+            </div>
+          </FadeIn>
+
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
+            {filteredWorks.map((work, i) => {
+              const img = work.cover;
+              const globalIndex = galleryWorks.findIndex(
+                (item) => item.slug === work.slug
+              );
+
+              return (
+                <FadeIn
+                  key={work.slug}
+                  delay={i < 12 ? i * 60 : 0}
+                  className="break-inside-avoid"
+                >
+                  <figure
+                    className="group relative cursor-pointer overflow-hidden bg-surface"
+                    onClick={() => openLightbox(work)}
+                  >
+                    <div
+                      className="relative w-full overflow-hidden"
+                      style={{ aspectRatio: img.aspectRatio }}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        className="object-contain transition-transform duration-[900ms] ease-out group-hover:scale-[1.02]"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        loading="lazy"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                        <span className="eyebrow text-foreground/90 bg-background/60 backdrop-blur-sm px-3 py-1.5">
+                          {categoryLabels[img.category]}
+                        </span>
+                      </div>
+
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                        <div className="w-10 h-10 flex items-center justify-center bg-background/60 backdrop-blur-sm">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            className="text-foreground"
+                          >
+                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <figcaption className="mt-4 flex items-baseline justify-between gap-4 px-1">
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm text-foreground leading-snug">
+                          {work.title}
+                        </span>
+                        <span className="mt-1 block truncate text-xs text-foreground-muted">
+                          {work.images.length === 1
+                            ? "1 imagen"
+                            : `${work.images.length} imagenes`}
+                        </span>
+                        {getMeta(img) ? (
+                          <span className="mt-1 block truncate text-xs text-foreground-faint">
+                            {getMeta(img)}
+                          </span>
+                        ) : null}
+                      </span>
+                      <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors duration-500 shrink-0">
+                        No. {String(globalIndex + 1).padStart(2, "0")}
+                      </span>
+                    </figcaption>
+                  </figure>
+                </FadeIn>
+              );
+            })}
+          </div>
+        </div>
+      </main>
+
+      <Lightbox
+        images={lightboxImages}
+        currentIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        onNavigate={setLightboxIndex}
+      />
+    </>
+  );
+}

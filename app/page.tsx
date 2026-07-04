@@ -10,8 +10,15 @@ import WaitlistSection from "@/components/WaitlistSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import { getActiveCoursesFromContent } from "@/lib/course-content";
+import { getSelectedGalleryWorksFromContent } from "@/lib/work-content";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const galleryWorks = await getSelectedGalleryWorksFromContent();
+  const activeCourses = await getActiveCoursesFromContent();
+
   return (
     <>
       <Header />
@@ -19,9 +26,9 @@ export default function Home() {
         <HeroSection />
         <AuthorityStrip />
         <PathwaysSection />
-        <TrainingSection />
+        <TrainingSection courses={activeCourses} />
         <CommissionsSection />
-        <GalleryGrid />
+        <GalleryGrid works={galleryWorks} />
         <TextBlock />
         <WaitlistSection />
         <AboutSection />
