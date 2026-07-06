@@ -2,7 +2,6 @@ import Image from "next/image";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import {
-  adminNavigation,
   getAdminCourses,
   getAdminStats,
   getAdminWorks,
@@ -30,30 +29,8 @@ const statusStyles = {
   "En preparacion": "border-accent/35 bg-accent/10 text-accent",
 };
 
-function getAdminNavigationHref(item: string) {
-  if (item === "Obras") return "/admin/obras";
-  if (item === "Cursos") return "/admin/cursos";
-  if (item === "Instagram") return "/admin/instagram";
-  if (item === "Calendario") return "/admin/calendario";
-  if (item === "Consultas") return "/admin/consultas";
-  return `#${item.toLowerCase()}`;
-}
-
 function getFirstName(name?: string) {
   return name?.trim().split(/\s+/)[0] || "Administrador";
-}
-
-function getUserInitials(name?: string, email?: string) {
-  const source = name?.trim() || email?.split("@")[0] || "Admin";
-  const words = source.split(/\s+/).filter(Boolean);
-
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-
-  return words
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
 }
 
 export const metadata = {
@@ -73,9 +50,6 @@ export default async function AdminPage() {
   const galleryImages = await getGalleryImagesFromContent();
   const inquiries = await getInquiriesFromContent();
   const pendingInquiryCount = getPendingInquiryCount(inquiries);
-  const unreadInquiryCount = inquiries.filter(
-    (inquiry) => inquiry.status === "new"
-  ).length;
   const adminStats = getAdminStats(
     works,
     galleryImages,
@@ -86,83 +60,8 @@ export default async function AdminPage() {
   const adminCourses = getAdminCourses(courses);
   const publicContentSections = getPublicContentSections(galleryImages.length);
   const adminName = adminSession?.name || "Administrador";
-  const adminEmail = adminSession?.email || "";
-  const adminInitials = getUserInitials(adminName, adminEmail);
 
   return (
-    <main className="min-h-screen bg-[#080807] text-foreground">
-      <div className="grid min-h-screen lg:grid-cols-[280px_1fr]">
-        <aside className="border-b border-rule-strong bg-black/35 px-5 py-6 lg:border-b-0 lg:border-r">
-          <div className="flex items-center gap-4 lg:block">
-            <Image
-              src="/images/logo-julio-cabos.png"
-              alt="Julio Cabos"
-              width={170}
-              height={80}
-              className="h-auto w-36 lg:w-44"
-              priority
-            />
-            <p className="eyebrow mt-2 text-accent lg:text-center">
-              Administracion
-            </p>
-          </div>
-
-          <nav className="mt-8 grid gap-1 sm:grid-cols-3 lg:grid-cols-1">
-            {adminNavigation.map((item) => (
-              <Link
-                key={item}
-                href={getAdminNavigationHref(item)}
-                className={`flex items-center justify-between gap-3 rounded-md px-4 py-3 text-sm transition hover:bg-foreground/5 ${
-                  item === "Inicio"
-                    ? "bg-accent/15 text-accent ring-1 ring-accent/20"
-                    : "text-foreground/85"
-                }`}
-              >
-                <span>{item}</span>
-                {item === "Consultas" && unreadInquiryCount > 0 ? (
-                  <span
-                    className="size-2.5 rounded-full bg-accent shadow-[0_0_14px_rgba(201,166,104,0.75)]"
-                    aria-label={`${unreadInquiryCount} consultas nuevas`}
-                  />
-                ) : null}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mt-10 hidden border-t border-rule pt-5 lg:block">
-            <div className="flex items-center gap-3">
-              <div
-                className="grid size-12 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/15 bg-cover bg-center text-sm font-semibold text-accent"
-                style={
-                  adminSession?.picture
-                    ? { backgroundImage: `url(${adminSession.picture})` }
-                    : undefined
-                }
-                aria-label={adminName}
-              >
-                {!adminSession?.picture ? adminInitials : null}
-              </div>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-foreground">
-                  {adminName}
-                </p>
-                {adminEmail ? (
-                  <p className="truncate text-xs text-foreground-muted">
-                    {adminEmail}
-                  </p>
-                ) : null}
-                <p className="mt-1 text-xs text-accent">Administrador</p>
-              </div>
-            </div>
-            <Link
-              href="/api/auth/logout"
-              className="mt-4 inline-flex text-sm text-accent"
-            >
-              Cerrar sesion
-            </Link>
-          </div>
-        </aside>
-
         <section className="px-5 py-6 sm:px-8 lg:px-10">
           <header className="flex flex-col gap-5 border-b border-rule pb-6 md:flex-row md:items-center md:justify-between">
             <div>
@@ -415,7 +314,5 @@ export default async function AdminPage() {
             </section>
           </div>
         </section>
-      </div>
-    </main>
   );
 }
