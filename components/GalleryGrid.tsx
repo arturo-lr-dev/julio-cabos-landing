@@ -7,7 +7,7 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import Lightbox from "./Lightbox";
-import type { GalleryImage, GalleryWork } from "@/lib/data";
+import type { GalleryImage, GalleryWork } from "@/lib/work-types";
 
 const INITIAL_COUNT = 5;
 

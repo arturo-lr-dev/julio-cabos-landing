@@ -1,7 +1,7 @@
 import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { siteContent } from "@/lib/site-content";
 
 export default function PathwaysSection() {
   const { pathways } = siteContent;

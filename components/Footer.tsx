@@ -1,4 +1,4 @@
-import { siteContent } from "@/lib/data";
+import { siteContent } from "@/lib/site-content";
 
 export default function Footer() {
   const { footer } = siteContent;

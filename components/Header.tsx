@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { num: "01", label: "Inicio", href: "#" },
@@ -14,23 +14,7 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight - 96);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -41,15 +25,8 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled || menuOpen
-            ? "bg-background/85 backdrop-blur-xl border-b border-rule"
-            : "bg-transparent"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-rule bg-background/88 backdrop-blur-xl transition-all duration-500">
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
-          {/* Wordmark */}
           <a
             href="#"
             className="group relative block h-12 w-32 md:h-14 md:w-40"
@@ -65,7 +42,6 @@ export default function Header() {
             />
           </a>
 
-          {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -79,7 +55,6 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Mobile hamburger / X */}
           <button
             className="relative md:hidden w-6 h-6 p-0"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -108,7 +83,6 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Fullscreen mobile menu */}
       <div
         className={`fixed inset-0 z-40 bg-background flex flex-col px-6 pt-28 pb-12 transition-opacity duration-500 md:hidden ${
           menuOpen

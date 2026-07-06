@@ -2,7 +2,8 @@ import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent, type Course } from "@/lib/data";
+import { siteContent } from "@/lib/site-content";
+import type { Course } from "@/lib/work-types";
 
 function formatCourseDate(course: Course) {
   if (!course.startDate) return "Fecha por confirmar";

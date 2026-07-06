@@ -1,7 +1,7 @@
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { siteContent } from "@/lib/site-content";
 
 export default function TextBlock() {
   const { message } = siteContent;

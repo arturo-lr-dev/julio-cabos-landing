@@ -7,12 +7,14 @@ import Lightbox from "@/components/Lightbox";
 import FadeIn from "@/components/FadeIn";
 import {
   categoryLabels,
-  type GalleryCategory,
-  type GalleryImage,
-  type GalleryWork,
-  type WorkCategory,
   workCategoryLabels,
-} from "@/lib/data";
+} from "@/lib/work-options";
+import type {
+  GalleryCategory,
+  GalleryImage,
+  GalleryWork,
+  WorkCategory,
+} from "@/lib/work-types";
 
 const categories: WorkCategory[] = [
   "historico",

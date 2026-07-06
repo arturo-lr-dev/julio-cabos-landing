@@ -1,55 +1,15 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { revalidatePath } from "next/cache";
-import type { Course, CourseStatus } from "@/lib/data";
+import {
+  deleteCourse,
+  getExistingCourse,
+  normalizeCourse,
+  reorderAdminCourses,
+  upsertCourse,
+} from "@/lib/services/courses-service";
+import { isServiceError } from "@/lib/services/service-error";
+import { saveUploadedFile } from "@/lib/uploads/upload-files";
+import type { Course } from "@/lib/data";
 
 export const runtime = "nodejs";
-
-const contentPath = path.join(process.cwd(), "content", "courses.json");
-const uploadsRoot = path.join(process.cwd(), "public", "uploads", "courses");
-
-function slugify(value: string) {
-  return (
-    value
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") || `curso-${Date.now()}`
-  );
-}
-
-function sanitizeFilename(value: string) {
-  const extension = path.extname(value).toLowerCase() || ".webp";
-  const basename = path.basename(value, extension);
-  return `${slugify(basename)}${extension}`;
-}
-
-async function readCourses() {
-  const raw = await readFile(contentPath, "utf8");
-  return JSON.parse(raw) as Course[];
-}
-
-async function writeCourses(courses: Course[]) {
-  await writeFile(contentPath, `${JSON.stringify(courses, null, 2)}\n`, "utf8");
-}
-
-function revalidateAdminAndPublicCourses() {
-  revalidatePath("/");
-  revalidatePath("/admin");
-  revalidatePath("/admin/cursos");
-}
-
-function normalizeCourse(course: Course): Course {
-  return {
-    ...course,
-    slug: course.slug || slugify(course.title),
-    status: course.status as CourseStatus,
-    seatsTotal: Math.max(0, Number(course.seatsTotal) || 0),
-    seatsAvailable: Math.max(0, Number(course.seatsAvailable) || 0),
-  };
-}
 
 async function getIncomingCourse(request: Request) {
   const contentType = request.headers.get("content-type") ?? "";
@@ -95,40 +55,17 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!incoming.title.trim()) {
-    return Response.json(
-      { error: "El curso necesita un titulo." },
-      { status: 400 }
-    );
-  }
-
-  if (incoming.status === "active" && !incoming.startDate) {
-    return Response.json(
-      { error: "Indica una fecha antes de activar el curso." },
-      { status: 400 }
-    );
-  }
-
-  if (incoming.seatsAvailable > incoming.seatsTotal) {
-    return Response.json(
-      { error: "Las plazas disponibles no pueden superar las plazas totales." },
-      { status: 400 }
-    );
-  }
-
-  const currentCourses = await readCourses();
-  const existingIndex = currentCourses.findIndex(
-    (course) => course.slug === incoming.slug
-  );
-  const existingCourse = existingIndex >= 0 ? currentCourses[existingIndex] : null;
+  const existingCourse = await getExistingCourse(incoming.slug);
 
   if (posterFile) {
-    await mkdir(path.join(uploadsRoot, incoming.slug), { recursive: true });
-    const filename = sanitizeFilename(posterFile.name);
-    const destination = path.join(uploadsRoot, incoming.slug, filename);
-    const buffer = Buffer.from(await posterFile.arrayBuffer());
-    await writeFile(destination, buffer);
-    incoming.posterImage = `/uploads/courses/${incoming.slug}/${filename}`;
+    const savedFile = await saveUploadedFile({
+      file: posterFile,
+      folder: "courses",
+      ownerSlug: incoming.slug,
+      fallbackExtension: ".webp",
+      fallbackPrefix: "curso",
+    });
+    incoming.posterImage = savedFile.publicPath;
     incoming.posterAlt = incoming.posterAlt || incoming.title;
   } else if (removePoster) {
     incoming.posterImage = "";
@@ -138,41 +75,30 @@ export async function POST(request: Request) {
     incoming.posterAlt = existingCourse.posterAlt;
   }
 
-  const nextCourses =
-    existingIndex >= 0
-      ? currentCourses.map((course) =>
-          course.slug === incoming.slug ? incoming : course
-        )
-      : [...currentCourses, incoming];
-
-  await writeCourses(nextCourses);
-  revalidateAdminAndPublicCourses();
-
-  return Response.json({ ok: true, course: incoming });
+  try {
+    const course = await upsertCourse(incoming);
+    return Response.json({ ok: true, course });
+  } catch (error) {
+    if (isServiceError(error)) {
+      return Response.json({ error: error.message }, { status: error.status });
+    }
+    throw error;
+  }
 }
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get("slug");
 
-  if (!slug) {
-    return Response.json({ error: "Falta el curso a eliminar." }, { status: 400 });
+  try {
+    await deleteCourse(slug ?? "");
+    return Response.json({ ok: true });
+  } catch (error) {
+    if (isServiceError(error)) {
+      return Response.json({ error: error.message }, { status: error.status });
+    }
+    throw error;
   }
-
-  const currentCourses = await readCourses();
-  const nextCourses = currentCourses.filter((course) => course.slug !== slug);
-
-  if (nextCourses.length === currentCourses.length) {
-    return Response.json(
-      { error: "No se ha encontrado ese curso." },
-      { status: 404 }
-    );
-  }
-
-  await writeCourses(nextCourses);
-  revalidateAdminAndPublicCourses();
-
-  return Response.json({ ok: true });
 }
 
 export async function PATCH(request: Request) {
@@ -184,30 +110,7 @@ export async function PATCH(request: Request) {
     return Response.json({ error: "Falta el orden de los cursos." }, { status: 400 });
   }
 
-  const currentCourses = await readCourses();
-  const coursesBySlug = new Map(
-    currentCourses.map((course) => [course.slug, course])
-  );
-  const orderedCourses: Course[] = [];
-  const usedSlugs = new Set<string>();
-
-  for (const slug of payload.order) {
-    const course = coursesBySlug.get(slug);
-
-    if (!course || usedSlugs.has(slug)) {
-      continue;
-    }
-
-    orderedCourses.push(course);
-    usedSlugs.add(slug);
-  }
-
-  const missingCourses = currentCourses.filter(
-    (course) => !usedSlugs.has(course.slug)
-  );
-
-  await writeCourses([...orderedCourses, ...missingCourses]);
-  revalidateAdminAndPublicCourses();
+  await reorderAdminCourses(payload.order);
 
   return Response.json({ ok: true });
 }

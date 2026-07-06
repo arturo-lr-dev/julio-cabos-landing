@@ -1,14 +1,10 @@
 import { Resend } from "resend";
-import { revalidatePath } from "next/cache";
 import {
   inquirySourceLabels,
   normalizeInquirySource,
   type Inquiry,
 } from "@/lib/inquiry-types";
-import {
-  getInquiriesFromContent,
-  writeInquiriesToContent,
-} from "@/lib/inquiry-content";
+import { createInquiry } from "@/lib/services/inquiries-service";
 
 export const runtime = "nodejs";
 
@@ -128,11 +124,7 @@ export async function POST(request: Request) {
       createdAt: now,
       updatedAt: now,
     };
-    const currentInquiries = await getInquiriesFromContent();
-
-    await writeInquiriesToContent([inquiry, ...currentInquiries]);
-    revalidatePath("/admin");
-    revalidatePath("/admin/consultas");
+    await createInquiry(inquiry);
 
     const notification = await notifyByEmail(inquiry);
 

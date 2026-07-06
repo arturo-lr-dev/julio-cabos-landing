@@ -1,4 +1,4 @@
-import { siteContent } from "./data";
+import { siteContent } from "./site-content";
 
 export function getJsonLd(siteUrl: string) {
   const personId = `${siteUrl}/#person`;

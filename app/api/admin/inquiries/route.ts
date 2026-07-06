@@ -1,16 +1,7 @@
-import { revalidatePath } from "next/cache";
-import {
-  getInquiriesFromContent,
-  writeInquiriesToContent,
-} from "@/lib/inquiry-content";
-import { normalizeInquiryStatus } from "@/lib/inquiry-types";
+import { updateInquiry } from "@/lib/services/inquiries-service";
+import { isServiceError } from "@/lib/services/service-error";
 
 export const runtime = "nodejs";
-
-function revalidateInquiries() {
-  revalidatePath("/admin");
-  revalidatePath("/admin/consultas");
-}
 
 export async function PATCH(request: Request) {
   const payload = (await request.json()) as {
@@ -19,35 +10,13 @@ export async function PATCH(request: Request) {
     notes?: string;
   };
 
-  if (!payload.id) {
-    return Response.json({ error: "Falta la consulta." }, { status: 400 });
+  try {
+    const inquiry = await updateInquiry(payload);
+    return Response.json({ ok: true, inquiry });
+  } catch (error) {
+    if (isServiceError(error)) {
+      return Response.json({ error: error.message }, { status: error.status });
+    }
+    throw error;
   }
-
-  const inquiries = await getInquiriesFromContent();
-  const existing = inquiries.find((inquiry) => inquiry.id === payload.id);
-
-  if (!existing) {
-    return Response.json(
-      { error: "No se ha encontrado esa consulta." },
-      { status: 404 }
-    );
-  }
-
-  const updated = {
-    ...existing,
-    status: payload.status
-      ? normalizeInquiryStatus(payload.status)
-      : existing.status,
-    notes:
-      typeof payload.notes === "string" ? payload.notes.trim() : existing.notes,
-    updatedAt: new Date().toISOString(),
-  };
-  const nextInquiries = inquiries.map((inquiry) =>
-    inquiry.id === updated.id ? updated : inquiry
-  );
-
-  await writeInquiriesToContent(nextInquiries);
-  revalidateInquiries();
-
-  return Response.json({ ok: true, inquiry: updated });
 }
