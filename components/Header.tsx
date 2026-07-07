@@ -1,36 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-const navLinks = [
-  { num: "01", label: "Inicio", href: "#" },
-  { num: "02", label: "Aprender", href: "#formacion" },
-  { num: "03", label: "Obras por encargo", href: "#obras-por-encargo" },
-  { num: "04", label: "Colaboraciones", href: "#colaboraciones" },
-  { num: "05", label: "Galería", href: "#galeria" },
-  { num: "06", label: "Sobre Julio", href: "#sobre-mi" },
-  { num: "07", label: "Contacto", href: "#contacto" },
-];
-
-export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+export default function Header({ locale = "es" }: { locale?: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight - 96);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
+  const { ui } = getSiteContent(locale);
+  const navLinks = ui.nav;
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -41,15 +19,8 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled || menuOpen
-            ? "bg-background/85 backdrop-blur-xl border-b border-rule"
-            : "bg-transparent"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-rule bg-background/88 backdrop-blur-xl transition-all duration-500">
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
-          {/* Wordmark */}
           <a
             href="#"
             className="group relative block h-12 w-32 md:h-14 md:w-40"
@@ -65,7 +36,6 @@ export default function Header() {
             />
           </a>
 
-          {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -79,36 +49,53 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Mobile hamburger / X */}
-          <button
-            className="relative md:hidden w-6 h-6 p-0"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+          <Link
+            href={ui.alternateHref}
+            className="hidden md:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+            aria-label={`${ui.language}: ${ui.alternateLanguage}`}
           >
-            <span
-              className={`absolute left-0 block w-6 h-px bg-foreground transition-all duration-300 ease-out ${
-                menuOpen
-                  ? "top-1/2 -translate-y-1/2 rotate-45"
-                  : "top-1 translate-y-0 rotate-0"
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-px bg-foreground transition-opacity duration-300 ${
-                menuOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`absolute left-0 block w-6 h-px bg-foreground transition-all duration-300 ease-out ${
-                menuOpen
-                  ? "bottom-1/2 translate-y-1/2 -rotate-45"
-                  : "bottom-1 translate-y-0 rotate-0"
-              }`}
-            />
-          </button>
+            {ui.alternateLanguage}
+          </Link>
+
+          <div className="flex items-center gap-4 md:hidden">
+            <Link
+              href={ui.alternateHref}
+              className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+              aria-label={`${ui.language}: ${ui.alternateLanguage}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {ui.alternateLanguage}
+            </Link>
+
+            <button
+              className="relative h-9 w-7 p-0"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? ui.menuClose : ui.menuOpen}
+            >
+              <span
+                className={`absolute left-0 block w-7 h-px bg-foreground transition-all duration-300 ease-out ${
+                  menuOpen
+                    ? "top-1/2 -translate-y-1/2 rotate-45"
+                    : "top-2 translate-y-0 rotate-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-7 h-px bg-foreground transition-opacity duration-300 ${
+                  menuOpen ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 block w-7 h-px bg-foreground transition-all duration-300 ease-out ${
+                  menuOpen
+                    ? "bottom-1/2 translate-y-1/2 -rotate-45"
+                    : "bottom-2 translate-y-0 rotate-0"
+                }`}
+              />
+            </button>
+          </div>
         </nav>
       </header>
 
-      {/* Fullscreen mobile menu */}
       <div
         className={`fixed inset-0 z-40 bg-background flex flex-col px-6 pt-28 pb-12 transition-opacity duration-500 md:hidden ${
           menuOpen
@@ -143,7 +130,11 @@ export default function Header() {
         </ul>
 
         <div className="mt-auto eyebrow text-foreground-faint">
-          ATELIER · MADRID
+          <Link href={ui.alternateHref} className="hover:text-accent">
+            {ui.language}: {ui.alternateLanguage}
+          </Link>
+          <span className="mx-3">/</span>
+          {ui.atelier}
         </div>
       </div>
     </>

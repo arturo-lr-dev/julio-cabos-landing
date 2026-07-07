@@ -1,10 +1,10 @@
 import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-export default function PathwaysSection() {
-  const { pathways } = siteContent;
+export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) {
+  const { pathways } = getSiteContent(locale);
 
   return (
     <SectionWrapper id="servicios" topRule>

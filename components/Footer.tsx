@@ -1,7 +1,7 @@
-import { siteContent } from "@/lib/data";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-export default function Footer() {
-  const { footer } = siteContent;
+export default function Footer({ locale = "es" }: { locale?: Locale }) {
+  const { footer, ui } = getSiteContent(locale);
   const year = new Date().getFullYear();
 
   return (
@@ -13,27 +13,28 @@ export default function Footer() {
               {footer.name}
             </p>
             <p className="mt-2 eyebrow text-foreground-faint">
-              ATELIER · MADRID · ES
+              {ui.atelier} · {locale.toUpperCase()}
             </p>
           </div>
 
           <nav className="col-span-6 md:col-span-3">
             <span className="eyebrow text-foreground-faint block mb-3">
-              ÍNDICE
+              {ui.footer.index}
             </span>
             <ul className="space-y-1.5 text-sm text-foreground-muted">
-              <li><a href="#formacion" className="nav-link hover:text-foreground transition-colors">Aprender</a></li>
-              <li><a href="#obras-por-encargo" className="nav-link hover:text-foreground transition-colors">Obras por encargo</a></li>
-              <li><a href="#colaboraciones" className="nav-link hover:text-foreground transition-colors">Colaboraciones</a></li>
-              <li><a href="#galeria" className="nav-link hover:text-foreground transition-colors">Galería</a></li>
-              <li><a href="#sobre-mi" className="nav-link hover:text-foreground transition-colors">Sobre Julio</a></li>
-              <li><a href="#contacto" className="nav-link hover:text-foreground transition-colors">Contacto</a></li>
+              {ui.nav.slice(1).map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className="nav-link hover:text-foreground transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
 
           <div className="col-span-6 md:col-span-3">
             <span className="eyebrow text-foreground-faint block mb-3">
-              REDES
+              {ui.footer.social}
             </span>
             <ul className="space-y-1.5 text-sm text-foreground-muted">
               <li>
@@ -62,10 +63,10 @@ export default function Footer() {
 
         <div className="mt-16 pt-6 rule-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-foreground-faint">
           <span className="eyebrow tnum">
-            © {year} JULIO CABOS — TODOS LOS DERECHOS RESERVADOS
+            © {year} JULIO CABOS — {ui.footer.rights}
           </span>
           <span className="eyebrow">
-            DISEÑO &amp; CÓDIGO — <span className="text-foreground-muted">MMXXVI</span>
+            {ui.footer.credits} — <span className="text-foreground-muted">MMXXVI</span>
           </span>
         </div>
       </div>

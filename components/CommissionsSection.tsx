@@ -1,20 +1,24 @@
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-export default function CommissionsSection() {
-  const { commissions, collaborations } = siteContent;
+export default function CommissionsSection({
+  locale = "es",
+}: {
+  locale?: Locale;
+}) {
+  const { commissions, collaborations, ui } = getSiteContent(locale);
 
   return (
     <SectionWrapper id="obras-por-encargo" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12">
         <FadeIn className="col-span-12 lg:col-span-5">
-          <SectionLabel index="04" label="Obras por encargo" className="mb-6" />
+          <SectionLabel index="04" label={ui.sections.commissions} className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-            Piezas únicas
+            {ui.commissions.heading[0]}
             <span className="font-display-italic block text-accent/95">
-              para proyectos especiales
+              {ui.commissions.heading[1]}
             </span>
           </h2>
         </FadeIn>

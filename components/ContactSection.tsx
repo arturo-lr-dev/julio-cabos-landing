@@ -1,20 +1,21 @@
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { getSiteContent, type Locale } from "@/lib/site-content";
+import InquiryForm from "./InquiryForm";
 
-export default function ContactSection() {
-  const { contact } = siteContent;
+export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
+  const { contact, ui } = getSiteContent(locale);
 
   return (
     <SectionWrapper id="contacto" topRule>
-      <div className="grid grid-cols-12 gap-8 md:gap-12 items-end">
+      <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-7">
-          <SectionLabel index="09" label="Contacto" className="mb-6" />
+          <SectionLabel index="09" label={ui.sections.contact} className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-            Hablemos
+            {ui.contact.heading[0]}
             <span className="font-display-italic block text-accent/95">
-              de tu proyecto
+              {ui.contact.heading[1]}
             </span>
           </h2>
           <p className="mt-8 max-w-lg text-base md:text-lg text-foreground-muted leading-relaxed font-light">
@@ -22,15 +23,19 @@ export default function ContactSection() {
           </p>
         </FadeIn>
 
-        <FadeIn delay={150} className="col-span-12 md:col-span-5 md:text-right">
+        <FadeIn delay={150} className="col-span-12 md:col-span-5">
+          <span id="consulta-encargo" className="block scroll-mt-28" />
+          <span id="consulta-colaboracion" className="block scroll-mt-28" />
+          <span id="consulta-cursos" className="block scroll-mt-28" />
+          <InquiryForm locale={locale} />
           <a
             href={`mailto:${contact.email}`}
-            className="group inline-block"
+            className="group mt-6 inline-block"
           >
             <span className="block eyebrow text-foreground-faint mb-3">
-              ESCRIBIR A
+              {ui.contact.direct}
             </span>
-            <span className="font-display text-2xl md:text-3xl lg:text-4xl text-foreground group-hover:text-accent transition-colors duration-500 break-all">
+            <span className="font-display text-xl md:text-2xl text-foreground group-hover:text-accent transition-colors duration-500 break-all">
               {contact.email}
             </span>
             <span

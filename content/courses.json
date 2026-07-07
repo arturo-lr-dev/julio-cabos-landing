@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Curso de Pintura de Caballos",
+    "slug": "curso-intensivo-madrid",
+    "status": "active",
+    "location": "Hotel la Cañada, calle la Cañada 5, 28411, Moralzarzal, Madrid",
+    "startDate": "2026-07-04",
+    "endDate": "2026-07-05",
+    "price": "",
+    "seatsTotal": 10,
+    "seatsAvailable": 0,
+    "level": "Intermedio",
+    "materials": "compresor, aerógrafo y pinceles",
+    "description": "Hola queridos amigos!! Os invito a todos aquellos que queráis aprender a pintar caballos empleando mi técnica mixta con aerógrafo y pincel. Cualquier consulta podéis escribirme por privado o al mail que os adjunto en el cartel.",
+    "bookingUrl": "mailto:Juliocabosg@gmail.com?subject=Reserva%20Curso%20Madrid",
+    "posterImage": "/uploads/courses/curso-intensivo-madrid/screenshot-2026-07-04-095630.png",
+    "posterAlt": "Cartel de Curso de Pintura de Caballos"
+  },
+  {
+    "title": "Retratos en miniatura Barcelona",
+    "slug": "retratos-miniatura-barcelona",
+    "status": "draft",
+    "location": "Barcelona",
+    "startDate": "2026-10-03",
+    "endDate": "2026-10-04",
+    "price": "Pendiente",
+    "seatsTotal": 12,
+    "seatsAvailable": 12,
+    "level": "Avanzado",
+    "materials": "Busto o figura con rostro marcado",
+    "description": "Borrador de curso centrado en lectura facial, temperatura de piel y foco expresivo.",
+    "bookingUrl": ""
+  }
+]

@@ -1,17 +1,17 @@
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/data";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-export default function TextBlock() {
-  const { message } = siteContent;
+export default function TextBlock({ locale = "es" }: { locale?: Locale }) {
+  const { message, ui } = getSiteContent(locale);
   const lines = message.text.filter((l) => l !== "");
   const [first, ...rest] = lines;
 
   return (
     <SectionWrapper narrow topRule>
       <FadeIn>
-        <SectionLabel index="06" label="Manifiesto" className="mb-8" />
+        <SectionLabel index="06" label={ui.sections.manifesto} className="mb-8" />
       </FadeIn>
 
       <FadeIn delay={120}>

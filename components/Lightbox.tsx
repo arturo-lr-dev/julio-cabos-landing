@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Image from "next/image";
-import { GalleryImage } from "@/lib/data";
+import type { GalleryImage } from "@/lib/work-types";
 
 interface LightboxProps {
   images: GalleryImage[];
@@ -20,6 +20,7 @@ export default function Lightbox({
   onNavigate,
 }: LightboxProps) {
   const currentImage = images[currentIndex];
+  const hasMultipleImages = images.length > 1;
 
   const goNext = useCallback(() => {
     onNavigate((currentIndex + 1) % images.length);
@@ -32,16 +33,16 @@ export default function Lightbox({
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
         case "Escape":
           onClose();
           break;
         case "ArrowRight":
-          goNext();
+          if (hasMultipleImages) goNext();
           break;
         case "ArrowLeft":
-          goPrev();
+          if (hasMultipleImages) goPrev();
           break;
       }
     };
@@ -53,7 +54,7 @@ export default function Lightbox({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [isOpen, onClose, goNext, goPrev]);
+  }, [isOpen, onClose, goNext, goPrev, hasMultipleImages]);
 
   if (!isOpen || !currentImage) return null;
 
@@ -62,18 +63,18 @@ export default function Lightbox({
       className="fixed inset-0 z-[100] flex items-center justify-center"
       role="dialog"
       aria-modal="true"
-      aria-label="Visor de imágenes"
+      aria-label="Visor de imagenes"
     >
-      {/* Backdrop */}
-      <div
+      <button
+        type="button"
         className="absolute inset-0 bg-background/95 backdrop-blur-xl"
         onClick={onClose}
+        aria-label="Cerrar visor"
       />
 
-      {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
+        className="absolute right-6 top-6 z-10 flex h-12 w-12 items-center justify-center text-foreground-muted transition-colors duration-300 hover:text-accent"
         aria-label="Cerrar visor"
       >
         <svg
@@ -88,98 +89,80 @@ export default function Lightbox({
         </svg>
       </button>
 
-      {/* Navigation - Previous */}
-      <button
-        onClick={goPrev}
-        className="absolute left-4 md:left-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
-        aria-label="Imagen anterior"
-      >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-      </button>
-
-      {/* Navigation - Next */}
-      <button
-        onClick={goNext}
-        className="absolute right-4 md:right-8 z-10 w-14 h-14 flex items-center justify-center text-foreground-muted hover:text-accent transition-colors duration-300"
-        aria-label="Imagen siguiente"
-      >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </button>
-
-      {/* Image container */}
-      <div className="relative flex items-center justify-center w-full h-full px-6 md:px-20 py-24">
-        <div className="relative max-w-full max-h-full">
-          <Image
-            src={currentImage.src}
-            alt={currentImage.alt}
-            width={1200}
-            height={1200}
-            className="object-contain max-w-full max-h-[calc(100vh-180px)] w-auto h-auto"
-            sizes="(max-width: 1280px) 100vw, 1280px"
-            priority
-          />
-        </div>
-
-        {/* Caption */}
-        <div className="mt-6 flex items-center justify-between">
-          <div>
-            <p className="text-sm text-foreground leading-relaxed">
-              {currentImage.alt}
-            </p>
-            {currentImage.series && (
-              <p className="mt-1 text-xs text-foreground-muted uppercase tracking-wider">
-                Serie: {currentImage.series}
-              </p>
-            )}
-          </div>
-          <span className="eyebrow text-accent shrink-0 ml-4">
-            {String(currentIndex + 1).padStart(2, "0")} /{" "}
-            {String(images.length).padStart(2, "0")}
-          </span>
-        </div>
-      </div>
-
-      {/* Thumbnail strip */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2 max-w-[90vw] overflow-x-auto px-4 py-2">
-        {images.map((img, i) => (
+      {hasMultipleImages ? (
+        <>
           <button
-            key={img.src}
-            onClick={() => onNavigate(i)}
-            className={`relative w-12 h-12 md:w-16 md:h-16 shrink-0 overflow-hidden transition-all duration-300 ${
-              i === currentIndex
-                ? "ring-2 ring-accent scale-110"
-                : "opacity-50 hover:opacity-80"
-            }`}
-            aria-label={`Ir a imagen ${i + 1}`}
+            onClick={goPrev}
+            className="absolute left-4 z-10 flex h-14 w-14 items-center justify-center text-foreground-muted transition-colors duration-300 hover:text-accent md:left-8"
+            aria-label="Imagen anterior"
           >
-            <Image
-              src={img.src}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="64px"
-            />
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
           </button>
-        ))}
+
+          <button
+            onClick={goNext}
+            className="absolute right-4 z-10 flex h-14 w-14 items-center justify-center text-foreground-muted transition-colors duration-300 hover:text-accent md:right-8"
+            aria-label="Imagen siguiente"
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </>
+      ) : null}
+
+      <div className="relative flex h-full w-full items-center justify-center px-6 pb-28 pt-20 md:px-20">
+        <Image
+          src={currentImage.src}
+          alt={currentImage.alt}
+          width={1400}
+          height={1400}
+          className="h-auto max-h-[calc(100vh-150px)] w-auto max-w-full object-contain"
+          sizes="(max-width: 1280px) 100vw, 1280px"
+          priority
+        />
       </div>
+
+      {hasMultipleImages ? (
+        <div className="absolute bottom-6 left-1/2 z-10 flex max-w-[90vw] -translate-x-1/2 gap-2 overflow-x-auto px-4 py-2">
+          {images.map((img, index) => (
+            <button
+              key={img.src}
+              onClick={() => onNavigate(index)}
+              className={`relative h-12 w-12 shrink-0 overflow-hidden transition-all duration-300 md:h-16 md:w-16 ${
+                index === currentIndex
+                  ? "scale-110 ring-2 ring-accent"
+                  : "opacity-50 hover:opacity-80"
+              }`}
+              aria-label={`Ir a imagen ${index + 1}`}
+            >
+              <Image
+                src={img.src}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="64px"
+              />
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
