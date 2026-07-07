@@ -1,5 +1,49 @@
 [
   {
+    "title": "Comadreja con Gnomos",
+    "slug": "ferret",
+    "category": "fantasia",
+    "status": "published",
+    "scale": "54 mm",
+    "brand": "Blacksmith Miniatures",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Comadreja con Gnomos - imagen 1",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 2",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 3",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-08.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 4",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09-1.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 5",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
     "title": "Unternehmen Merkur, 1941Max Schmeling",
     "slug": "unternehmen-merkur-1941max-schmeling",
     "category": "historico",
@@ -38,50 +82,6 @@
       {
         "alt": "Unternehmen Merkur, 1941Max Schmeling - imagen 5",
         "src": "/uploads/works/unternehmen-merkur-1941max-schmeling/dsc-0698-jpg.jpg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      }
-    ]
-  },
-  {
-    "title": "Ferret",
-    "slug": "ferret",
-    "category": "fantasia",
-    "status": "published",
-    "scale": "54 mm",
-    "brand": "Blacksmith Miniatures",
-    "year": "",
-    "featured": false,
-    "showOnHome": true,
-    "description": "",
-    "images": [
-      {
-        "alt": "Ferret - imagen 1",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07-1.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 2",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 3",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-08.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 4",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09-1.jpeg",
-        "kind": "principal",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 5",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09.jpeg",
         "kind": "detalle",
         "aspectRatio": "4/5"
       }
