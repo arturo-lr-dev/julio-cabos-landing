@@ -7,19 +7,23 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import Lightbox from "./Lightbox";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 import type { GalleryImage, GalleryWork } from "@/lib/work-types";
 
 const INITIAL_COUNT = 5;
 
-function getMeta(image: GalleryImage) {
-  return [image.scale, image.brand, image.year].filter(Boolean).join(" · ");
+function getMeta(image: GalleryImage, separator: string) {
+  return [image.scale, image.brand, image.year].filter(Boolean).join(separator);
 }
 
 export default function GalleryGrid({
   works,
+  locale = "es",
 }: {
   works: GalleryWork[];
+  locale?: Locale;
 }) {
+  const { ui } = getSiteContent(locale);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
@@ -43,24 +47,23 @@ export default function GalleryGrid({
           <FadeIn className="col-span-12 md:col-span-4">
             <SectionLabel
               index="05"
-              label="Así es el resultado"
+              label={ui.sections.gallery}
               className="mb-5"
             />
             <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-tight">
-              Obras{" "}
+              {ui.gallery.heading[0]}{" "}
               <span className="font-display-italic text-accent/90">
-                seleccionadas
+                {ui.gallery.heading[1]}
               </span>
             </h2>
             <p className="mt-6 text-sm md:text-base text-foreground-muted leading-relaxed">
-              Piezas que muestran el nivel, el detalle y la dedicación de cada
-              proyecto.
+              {ui.gallery.text}
             </p>
             <Link
-              href="/galeria"
+              href={ui.gallery.href}
               className="mt-8 inline-flex items-center gap-4 border border-rule-strong px-5 py-3 eyebrow text-foreground hover:border-accent hover:text-accent transition-colors"
             >
-              Ver galería completa
+              {ui.gallery.full}
               <span aria-hidden>→</span>
             </Link>
           </FadeIn>
@@ -92,14 +95,14 @@ export default function GalleryGrid({
                       <span className="block truncate text-sm text-foreground leading-snug">
                         {work.title}
                       </span>
-                      {getMeta(img) ? (
+                      {getMeta(img, ui.gallery.metaSeparator) ? (
                         <span className="mt-1 block truncate text-xs text-foreground-muted">
-                          {getMeta(img)}
+                          {getMeta(img, ui.gallery.metaSeparator)}
                         </span>
                       ) : null}
                     </span>
                     <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors shrink-0">
-                      Nº {String(i + 1).padStart(2, "0")}
+                      {ui.gallery.number} {String(i + 1).padStart(2, "0")}
                     </span>
                   </figcaption>
                 </figure>

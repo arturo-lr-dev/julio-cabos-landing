@@ -2,45 +2,11 @@ import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/site-content";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-const storyItems = [
-  {
-    label: "El oficio",
-    title: "Antes del efecto, la mirada.",
-    text:
-      "La pintura empieza antes de coger el pincel: analizar la luz, entender el volumen y decidir qué necesita la figura para funcionar.",
-    image: "/oficio.JPG",
-    alt: "Julio Cabos pintando una miniatura en su mesa de trabajo",
-  },
-  {
-    label: "Obra y reconocimiento",
-    title: "Una trayectoria construida pieza a pieza.",
-    text:
-      "Premios, publicaciones y proyectos profesionales acompañan una carrera dedicada a la miniatura de exposición y al trabajo de alto nivel.",
-    image: "/hoy_old.JPG",
-    alt: "Julio Cabos con un reconocimiento profesional junto a vitrinas de miniaturas",
-  },
-  {
-    label: "Formación",
-    title: "Enseñar a comprender, no a copiar.",
-    text:
-      "Sus cursos no se centran en repetir recetas, sino en dar al alumno criterio para resolver cualquier figura con más seguridad.",
-    image: "/formacion.jpeg",
-    alt: "Julio Cabos en una sesión de formación con alumnos",
-  },
-  {
-    label: "Hoy",
-    title: "Obra, formación y colaboraciones.",
-    text:
-      "Julio trabaja con coleccionistas, marcas y alumnos desde una misma idea: pintar miniaturas entendiendo por qué funcionan.",
-    image: "/Julio_pintando.jpeg",
-    alt: "Julio Cabos pintando durante una demostración de miniaturas",
-  },
-];
-
-export default function AboutSection() {
-  const { about } = siteContent;
+export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
+  const { about, ui } = getSiteContent(locale);
+  const storyItems = ui.about.story;
 
   return (
     <SectionWrapper id="sobre-mi" topRule>
@@ -49,9 +15,9 @@ export default function AboutSection() {
           <FadeIn className="col-span-12 lg:col-span-5">
             <SectionLabel index="08" label={about.title} className="mb-6" />
             <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-              La trayectoria
+              {ui.about.heading[0]}
               <span className="font-display-italic block text-accent/95">
-                como relato de oficio
+                {ui.about.heading[1]}
               </span>
             </h2>
           </FadeIn>
@@ -79,7 +45,7 @@ export default function AboutSection() {
             <div className="relative aspect-[16/10] md:aspect-[21/9]">
               <Image
                 src={about.image}
-                alt="Julio Cabos en su taller"
+                alt={ui.about.imageAlt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 1100px"
@@ -88,7 +54,7 @@ export default function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent" />
             </div>
             <figcaption className="absolute bottom-5 left-5 md:bottom-8 md:left-8 eyebrow text-foreground-muted">
-              Taller · Madrid · España
+              {ui.about.caption}
             </figcaption>
           </figure>
         </FadeIn>
@@ -133,7 +99,7 @@ export default function AboutSection() {
         <FadeIn delay={240} className="grid grid-cols-12 gap-8 items-center rule-t pt-8">
           <div className="col-span-12 md:col-span-7">
             <p className="font-display text-3xl md:text-4xl leading-tight text-foreground">
-              Más que un currículum, una forma de trabajar.
+              {ui.about.closing}
             </p>
           </div>
           <div className="col-span-12 md:col-span-5 md:text-right">
@@ -143,7 +109,7 @@ export default function AboutSection() {
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors duration-300"
             >
-              <span>{about.cta} profesional (PDF)</span>
+              <span>{about.cta} {ui.about.pdfSuffix}</span>
               <span
                 aria-hidden
                 className="block w-8 h-px bg-current transition-all duration-500 group-hover:w-14"

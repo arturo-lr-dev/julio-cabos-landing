@@ -4,14 +4,11 @@ import { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-const niveles = [
-  { value: "principiante", label: "Principiante" },
-  { value: "intermedio", label: "Intermedio" },
-  { value: "avanzado", label: "Avanzado" },
-];
-
-export default function WaitlistSection() {
+export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) {
+  const { ui } = getSiteContent(locale);
+  const niveles = ui.waitlist.levels;
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -37,9 +34,8 @@ export default function WaitlistSection() {
           email: formData.email,
           level: formData.nivel,
           source: "waitlist",
-          subject: "Lista de espera",
-          message:
-            "Quiere recibir novedades sobre cursos presenciales, formacion online, encargos y proyectos especiales.",
+          subject: ui.waitlist.subject,
+          message: ui.waitlist.message,
         }),
       });
 
@@ -55,7 +51,7 @@ export default function WaitlistSection() {
     } catch (err) {
       setEstado("error");
       setMensajeError(
-        err instanceof Error ? err.message : "Error al enviar el formulario"
+        err instanceof Error ? err.message : ui.waitlist.error
       );
     }
   };
@@ -66,22 +62,20 @@ export default function WaitlistSection() {
         <FadeIn className="col-span-12 md:col-span-5">
           <SectionLabel
             index="07"
-            label="No te pierdas nada"
+            label={ui.sections.waitlist}
             className="mb-6"
           />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-            Cursos, plazas
+            {ui.waitlist.heading[0]}
             <span className="font-display-italic block text-accent/95">
-              y proyectos
+              {ui.waitlist.heading[1]}
             </span>
           </h2>
           <p className="mt-6 text-foreground-muted leading-relaxed max-w-md">
-            Recibe novedades sobre cursos presenciales, formación online,
-            disponibilidad para obras por encargo y proyectos especiales.
+            {ui.waitlist.text}
           </p>
           <p className="mt-4 text-foreground-muted leading-relaxed max-w-md">
-            Sin spam. Solo información relevante cuando haya algo importante que
-            contar.
+            {ui.waitlist.note}
           </p>
         </FadeIn>
 
@@ -90,12 +84,12 @@ export default function WaitlistSection() {
             <div className="bg-surface border border-rule p-8 md:p-12">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-accent"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg></span>
-                <span className="font-display text-2xl text-foreground">¡Listo!</span>
+                <span className="font-display text-2xl text-foreground">{ui.waitlist.successTitle}</span>
               </div>
               <p className="text-foreground-muted leading-relaxed">
-                Te has añadido a la lista de espera. Te escribiremos a{" "}
+                {ui.waitlist.successTextBefore}{" "}
                 <span className="text-foreground">{submittedEmail}</span>{" "}
-                en cuanto abramos las inscripciones.
+                {ui.waitlist.successTextAfter}
               </p>
             </div>
           ) : (
@@ -109,7 +103,7 @@ export default function WaitlistSection() {
                     htmlFor="nombre"
                     className="block eyebrow text-foreground-muted mb-2"
                   >
-                    Nombre
+                    {ui.waitlist.name}
                   </label>
                   <input
                     type="text"
@@ -121,7 +115,7 @@ export default function WaitlistSection() {
                     }
                     required
                     className="w-full bg-background border border-rule px-4 py-3 text-foreground placeholder-foreground-faint focus:outline-none focus:border-accent transition-colors"
-                    placeholder="Tu nombre"
+                    placeholder={ui.waitlist.namePlaceholder}
                   />
                 </div>
 
@@ -150,7 +144,7 @@ export default function WaitlistSection() {
                 {/* Nivel */}
                 <div>
                   <span className="block eyebrow text-foreground-muted mb-3">
-                    Tu nivel
+                    {ui.waitlist.level}
                   </span>
                   <div className="grid grid-cols-3 gap-px bg-rule">
                     {niveles.map((nivel) => (
@@ -189,8 +183,8 @@ export default function WaitlistSection() {
                   className="w-full bg-accent text-background py-4 px-6 text-sm font-medium tracking-wide uppercase hover:bg-accent-hover transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {estado === "enviando"
-                    ? "Enviando..."
-                    : "Unirme a la lista de espera"}
+                    ? ui.waitlist.sending
+                    : ui.waitlist.submit}
                 </button>
 
                 {/* Error */}
@@ -200,7 +194,7 @@ export default function WaitlistSection() {
 
                 {/* Nota privacidad */}
                 <p className="text-xs text-foreground-faint text-center">
-                  Solo comunicaciones relevantes sobre formación y proyectos.
+                  {ui.waitlist.privacy}
                 </p>
               </div>
             </form>

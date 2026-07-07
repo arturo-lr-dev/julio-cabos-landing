@@ -5,14 +5,17 @@ import {
   inquirySourceLabels,
   type InquirySource,
 } from "@/lib/inquiry-types";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-const sourceOptions: InquirySource[] = [
+const sourceOptions = [
   "commission",
   "collaboration",
   "training",
   "course",
   "general",
-];
+] satisfies InquirySource[];
+
+type FormSource = (typeof sourceOptions)[number];
 
 const inputClass =
   "w-full bg-background border border-rule px-4 py-3 text-foreground placeholder-foreground-faint focus:outline-none focus:border-accent transition-colors";
@@ -25,9 +28,16 @@ const sourceByHash: Record<string, InquirySource> = {
 
 export default function InquiryForm({
   defaultSource = "general",
+  locale = "es",
 }: {
   defaultSource?: InquirySource;
+  locale?: Locale;
 }) {
+  const { ui } = getSiteContent(locale);
+  const getSourceLabel = (source: InquirySource) =>
+    sourceOptions.includes(source as FormSource)
+      ? ui.form.sources[source as FormSource]
+      : inquirySourceLabels[source];
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -66,13 +76,13 @@ export default function InquiryForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          subject: inquirySourceLabels[formData.source],
+          subject: getSourceLabel(formData.source),
         }),
       });
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "No se ha podido enviar la consulta.");
+        throw new Error(data.error || ui.form.sendError);
       }
 
       setState("success");
@@ -86,7 +96,7 @@ export default function InquiryForm({
     } catch (error) {
       setState("error");
       setErrorMessage(
-        error instanceof Error ? error.message : "No se ha podido enviar."
+        error instanceof Error ? error.message : ui.form.sendError
       );
     }
   }
@@ -94,17 +104,16 @@ export default function InquiryForm({
   if (state === "success") {
     return (
       <div className="border border-rule bg-surface p-8">
-        <p className="font-display text-2xl text-foreground">Consulta enviada</p>
+        <p className="font-display text-2xl text-foreground">{ui.form.successTitle}</p>
         <p className="mt-3 text-foreground-muted">
-          Gracias. Tu mensaje ha quedado registrado y Julio podra responderte
-          desde su correo.
+          {ui.form.successText}
         </p>
         <button
           type="button"
           onClick={() => setState("idle")}
           className="mt-6 text-sm text-accent"
         >
-          Enviar otra consulta
+          {ui.form.sendAnother}
         </button>
       </div>
     );
@@ -115,7 +124,7 @@ export default function InquiryForm({
       <div className="grid gap-4">
         <div>
           <label htmlFor="inquiry-source" className="mb-2 block eyebrow text-foreground-muted">
-            Tipo de consulta
+            {ui.form.source}
           </label>
           <select
             id="inquiry-source"
@@ -130,7 +139,7 @@ export default function InquiryForm({
           >
             {sourceOptions.map((source) => (
               <option key={source} value={source}>
-                {inquirySourceLabels[source]}
+                {getSourceLabel(source)}
               </option>
             ))}
           </select>
@@ -139,7 +148,7 @@ export default function InquiryForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="inquiry-name" className="mb-2 block eyebrow text-foreground-muted">
-              Nombre
+              {ui.form.name}
             </label>
             <input
               id="inquiry-name"
@@ -149,7 +158,7 @@ export default function InquiryForm({
                 setFormData({ ...formData, name: event.target.value })
               }
               required
-              placeholder="Tu nombre"
+              placeholder={ui.form.namePlaceholder}
             />
           </div>
           <div>
@@ -172,7 +181,7 @@ export default function InquiryForm({
 
         <div>
           <label htmlFor="inquiry-phone" className="mb-2 block eyebrow text-foreground-muted">
-            Telefono
+              {ui.form.phone}
           </label>
           <input
             id="inquiry-phone"
@@ -181,13 +190,13 @@ export default function InquiryForm({
             onChange={(event) =>
               setFormData({ ...formData, phone: event.target.value })
             }
-            placeholder="Opcional"
+            placeholder={ui.form.phonePlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="inquiry-message" className="mb-2 block eyebrow text-foreground-muted">
-            Mensaje
+            {ui.form.message}
           </label>
           <textarea
             id="inquiry-message"
@@ -197,7 +206,7 @@ export default function InquiryForm({
               setFormData({ ...formData, message: event.target.value })
             }
             required
-            placeholder="Cuentanos que necesitas, fechas, tipo de pieza o curso que te interesa..."
+            placeholder={ui.form.messagePlaceholder}
           />
         </div>
 
@@ -206,7 +215,7 @@ export default function InquiryForm({
           disabled={state === "sending"}
           className="bg-accent px-6 py-4 text-sm font-medium uppercase tracking-wide text-background transition-colors duration-300 hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {state === "sending" ? "Enviando..." : "Enviar consulta"}
+          {state === "sending" ? ui.form.sending : ui.form.submit}
         </button>
 
         {state === "error" ? (

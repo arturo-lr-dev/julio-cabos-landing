@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { siteContent } from "@/lib/site-content";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
-export default function HeroSection() {
-  const { hero } = siteContent;
+export default function HeroSection({ locale = "es" }: { locale?: Locale }) {
+  const { hero, ui } = getSiteContent(locale);
 
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden">
@@ -18,7 +18,7 @@ export default function HeroSection() {
       >
         <Image
           src={hero.backgroundImage}
-          alt="Miniatura pintada por Julio Cabos"
+          alt={ui.heroImageAlt}
           fill
           className="object-cover object-[58%_50%] md:object-contain md:object-[right_top] ken-burns"
           priority
@@ -46,9 +46,9 @@ export default function HeroSection() {
                 {hero.eyebrow}
               </p>
               <h1 className="hero-animate-delay-1 font-display text-foreground leading-[0.95] text-[clamp(3.05rem,6.8vw,6.8rem)] max-w-[39rem]">
-                Pintar con criterio
+                {hero.headline.split(" ").slice(0, 3).join(" ")}
                 <span className="font-display-italic block text-accent/95">
-                  cambia tu forma de ver.
+                  {hero.headline.split(" ").slice(3).join(" ")}
                 </span>
             </h1>
 

@@ -32,7 +32,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Julio Cabos" }],
   creator: "Julio Cabos",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    languages: {
+      es: "/",
+      en: "/en",
+    },
+  },
   robots: { index: true, follow: true },
   openGraph: {
     title: "Julio Cabos — Pintura de miniaturas",

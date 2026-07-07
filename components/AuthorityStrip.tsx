@@ -1,4 +1,4 @@
-import { siteContent } from "@/lib/site-content";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 
 const icons = [
   <svg
@@ -61,11 +61,13 @@ const icons = [
   </svg>,
 ];
 
-export default function AuthorityStrip() {
+export default function AuthorityStrip({ locale = "es" }: { locale?: Locale }) {
+  const { authority } = getSiteContent(locale);
+
   return (
     <section className="relative px-6 md:px-12 border-y border-rule bg-background/95">
       <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-px bg-rule">
-        {siteContent.authority.map((item, index) => (
+        {authority.map((item, index) => (
           <div
             key={`${item.value}-${item.label}`}
             className="bg-background px-5 py-7 md:px-8 md:py-8 flex items-center gap-5"

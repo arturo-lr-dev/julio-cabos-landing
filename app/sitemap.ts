@@ -9,6 +9,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/`,
+          en: `${SITE_URL}/en`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/`,
+          en: `${SITE_URL}/en`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/galeria`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/galeria`,
+          en: `${SITE_URL}/en/galeria`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/galeria`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/galeria`,
+          en: `${SITE_URL}/en/galeria`,
+        },
+      },
     },
   ];
 }

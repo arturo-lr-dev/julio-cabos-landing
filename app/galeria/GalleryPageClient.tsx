@@ -9,6 +9,7 @@ import {
   categoryLabels,
   workCategoryLabels,
 } from "@/lib/work-options";
+import type { Locale } from "@/lib/site-content";
 import type {
   GalleryCategory,
   GalleryImage,
@@ -25,16 +26,31 @@ const categories: WorkCategory[] = [
   "escenografia",
 ];
 
-function getMeta(image: GalleryImage) {
-  return [categoryLabels[image.category], image.scale, image.brand, image.year]
+const categoryLabelsEn: Record<WorkCategory, string> = {
+  historico: "Historical",
+  fantasia: "Fantasy",
+  "box-art": "Box art",
+  busto: "Bust",
+  diorama: "Diorama",
+  escenografia: "Scenery",
+};
+
+function getCategoryLabel(category: WorkCategory, locale: Locale) {
+  return locale === "en" ? categoryLabelsEn[category] : categoryLabels[category];
+}
+
+function getMeta(image: GalleryImage, locale: Locale) {
+  return [getCategoryLabel(image.category, locale), image.scale, image.brand, image.year]
     .filter(Boolean)
     .join(" - ");
 }
 
 export default function GalleryPageClient({
   galleryWorks,
+  locale = "es",
 }: {
   galleryWorks: GalleryWork[];
+  locale?: Locale;
 }) {
   const [activeFilter, setActiveFilter] = useState<GalleryCategory | "todas">(
     "todas"
@@ -62,7 +78,7 @@ export default function GalleryPageClient({
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-rule">
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
-          <Link href="/" className="group flex items-baseline gap-2">
+          <Link href={locale === "en" ? "/en" : "/"} className="group flex items-baseline gap-2">
             <span className="font-display text-foreground text-xl md:text-2xl leading-none">
               Julio
             </span>
@@ -71,10 +87,10 @@ export default function GalleryPageClient({
             </span>
           </Link>
           <Link
-            href="/"
+            href={locale === "en" ? "/en" : "/"}
             className="text-sm text-foreground-muted hover:text-accent transition-colors"
           >
-            Volver
+            {locale === "en" ? "Back" : "Volver"}
           </Link>
         </nav>
       </header>
@@ -87,18 +103,18 @@ export default function GalleryPageClient({
                 <span aria-hidden className="text-foreground-faint">
                   -
                 </span>
-                <span className="eyebrow text-foreground-muted">Galeria</span>
+                <span className="eyebrow text-foreground-muted">{locale === "en" ? "Gallery" : "Galería"}</span>
               </div>
               <h1 className="font-display text-foreground text-5xl md:text-7xl lg:text-8xl leading-[0.9] mb-8">
-                Obra{" "}
+                {locale === "en" ? "Full" : "Obra"}{" "}
                 <span className="font-display-italic text-accent/90">
-                  completa
+                  {locale === "en" ? "body of work" : "completa"}
                 </span>
               </h1>
               <p className="text-foreground-muted max-w-xl text-lg leading-relaxed">
-                {galleryWorks.length} obras publicadas, ordenadas como en el
-                panel de administracion. Cada ficha conserva categoria, escala,
-                marca y datos de la obra.
+                {locale === "en"
+                  ? `${galleryWorks.length} published works, ordered as in the admin panel. Each entry keeps category, scale, brand and work details.`
+                  : `${galleryWorks.length} obras publicadas, ordenadas como en el panel de administración. Cada ficha conserva categoría, escala, marca y datos de la obra.`}
               </p>
             </div>
           </FadeIn>
@@ -113,7 +129,7 @@ export default function GalleryPageClient({
                     : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
                 }`}
               >
-                Todas ({galleryWorks.length})
+                {locale === "en" ? "All" : "Todas"} ({galleryWorks.length})
               </button>
               {categories.map((cat) => {
                 const count = galleryWorks.filter(
@@ -129,7 +145,7 @@ export default function GalleryPageClient({
                         : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
                     }`}
                   >
-                    {workCategoryLabels[cat]} ({count})
+                    {(locale === "en" ? categoryLabelsEn[cat] : workCategoryLabels[cat])} ({count})
                   </button>
                 );
               })}
@@ -170,7 +186,7 @@ export default function GalleryPageClient({
 
                       <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
                         <span className="eyebrow text-foreground/90 bg-background/60 backdrop-blur-sm px-3 py-1.5">
-                          {categoryLabels[img.category]}
+                          {getCategoryLabel(img.category, locale)}
                         </span>
                       </div>
 
@@ -198,12 +214,12 @@ export default function GalleryPageClient({
                         </span>
                         <span className="mt-1 block truncate text-xs text-foreground-muted">
                           {work.images.length === 1
-                            ? "1 imagen"
-                            : `${work.images.length} imagenes`}
+                            ? locale === "en" ? "1 image" : "1 imagen"
+                            : locale === "en" ? `${work.images.length} images` : `${work.images.length} imágenes`}
                         </span>
-                        {getMeta(img) ? (
+                        {getMeta(img, locale) ? (
                           <span className="mt-1 block truncate text-xs text-foreground-faint">
-                            {getMeta(img)}
+                            {getMeta(img, locale)}
                           </span>
                         ) : null}
                       </span>

@@ -2,13 +2,14 @@ import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
-import { siteContent } from "@/lib/site-content";
+import { getSiteContent, type Locale } from "@/lib/site-content";
 import type { Course } from "@/lib/work-types";
 
-function formatCourseDate(course: Course) {
-  if (!course.startDate) return "Fecha por confirmar";
+function formatCourseDate(course: Course, locale: Locale) {
+  const { ui } = getSiteContent(locale);
+  if (!course.startDate) return ui.training.datePending;
 
-  const formatter = new Intl.DateTimeFormat("es-ES", {
+  const formatter = new Intl.DateTimeFormat(ui.training.locale, {
     day: "2-digit",
     month: "long",
     year: "numeric",
@@ -22,18 +23,24 @@ function formatCourseDate(course: Course) {
   return `${start} - ${formatter.format(new Date(`${course.endDate}T12:00:00`))}`;
 }
 
-export default function TrainingSection({ courses = [] }: { courses?: Course[] }) {
-  const { training } = siteContent;
+export default function TrainingSection({
+  courses = [],
+  locale = "es",
+}: {
+  courses?: Course[];
+  locale?: Locale;
+}) {
+  const { training, ui } = getSiteContent(locale);
 
   return (
     <SectionWrapper id="formacion" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-5">
-          <SectionLabel index="03" label="Aprender con Julio" className="mb-6" />
+          <SectionLabel index="03" label={ui.sections.training} className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
-            Aprende a mirar
+            {ui.training.heading[0]}
             <span className="font-display-italic block text-accent/95">
-              antes de pintar
+              {ui.training.heading[1]}
             </span>
           </h2>
         </FadeIn>
@@ -71,7 +78,7 @@ export default function TrainingSection({ courses = [] }: { courses?: Course[] }
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                       <p className="eyebrow text-accent">
-                        {course.location} - {formatCourseDate(course)}
+                        {course.location} - {formatCourseDate(course, locale)}
                       </p>
                       <h3 className="mt-3 font-display text-2xl text-foreground leading-tight">
                         {course.title}
@@ -81,7 +88,7 @@ export default function TrainingSection({ courses = [] }: { courses?: Course[] }
                       </p>
                       <p className="mt-4 text-xs uppercase tracking-wider text-foreground-faint">
                         {course.level} - {course.price} -{" "}
-                        {course.seatsAvailable} plazas disponibles
+                        {course.seatsAvailable} {ui.training.seats}
                       </p>
                       </div>
                       {course.bookingUrl ? (
@@ -89,7 +96,7 @@ export default function TrainingSection({ courses = [] }: { courses?: Course[] }
                           href={course.bookingUrl}
                           className="shrink-0 border border-rule-strong px-4 py-2 text-sm text-accent transition hover:border-accent/50 hover:bg-accent/10"
                         >
-                          Reservar
+                          {ui.training.book}
                         </a>
                       ) : null}
                     </div>
@@ -107,11 +114,10 @@ export default function TrainingSection({ courses = [] }: { courses?: Course[] }
             >
               <span className="eyebrow text-accent tnum">I.</span>
               <h3 className="font-display text-2xl md:text-3xl text-foreground leading-tight">
-                Cursos presenciales
+                {ui.training.inPersonTitle}
               </h3>
               <p className="text-sm text-foreground-muted leading-relaxed">
-                Sesiones intensivas y plazas limitadas. Trabajo directo sobre
-                luz, color, volumen y toma de decisiones.
+                {ui.training.inPersonText}
               </p>
               <span className="mt-2 inline-flex items-center gap-3 eyebrow text-foreground group-hover:text-accent transition-colors duration-300">
                 <span>{training.primaryCta}</span>
@@ -125,11 +131,10 @@ export default function TrainingSection({ courses = [] }: { courses?: Course[] }
             <div className="bg-background p-6 md:p-8 flex flex-col gap-4 opacity-80">
               <span className="eyebrow text-foreground-faint tnum">II.</span>
               <h3 className="font-display text-2xl md:text-3xl text-foreground/70 leading-tight">
-                Cursos online
+                {ui.training.onlineTitle}
               </h3>
               <p className="text-sm text-foreground-muted leading-relaxed">
-                En desarrollo. Material grabado, ejercicios pautados y una
-                forma clara de aplicar el método desde casa.
+                {ui.training.onlineText}
               </p>
               <span className="mt-2 eyebrow text-foreground-faint">
                 {training.secondaryCta}
