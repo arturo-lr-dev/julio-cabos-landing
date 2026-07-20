@@ -3,7 +3,7 @@ import {
   MAX_DRAFT_WORKS,
   MAX_PUBLISHED_WORKS,
 } from "@/lib/work-options";
-import type { Work, WorkImage, WorkStatus } from "@/lib/work-types";
+import type { Work, WorkImage, WorkSaleStatus, WorkStatus } from "@/lib/work-types";
 import {
   getWorks,
   reorderWorks,
@@ -36,6 +36,8 @@ export function revalidateAdminAndPublicWorks() {
 export async function upsertWork(incoming: Work, images: WorkImage[]) {
   const slug = getWorkSlug(incoming);
   const status = incoming.status as WorkStatus;
+  const saleStatus = (incoming.saleStatus ?? "none") as WorkSaleStatus;
+  const isCommercialWork = saleStatus !== "none";
 
   if (status === "published" && !incoming.category) {
     throw new ServiceError("Selecciona una categoria antes de publicar la obra.");
@@ -67,6 +69,9 @@ export async function upsertWork(incoming: Work, images: WorkImage[]) {
     ...incoming,
     slug,
     status,
+    saleStatus,
+    salePrice: isCommercialWork ? incoming.salePrice?.trim() ?? "" : "",
+    saleNote: isCommercialWork ? incoming.saleNote?.trim() ?? "" : "",
     images: normalizeMainImage(images),
   };
 

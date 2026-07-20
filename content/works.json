@@ -1,5 +1,160 @@
 [
   {
+    "title": "Caballero Mediaval, 1190",
+    "slug": "caballero-mediaval-1190",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "for-sale",
+    "salePrice": "500 €",
+    "saleNote": "",
+    "scale": "",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Caballero Mediaval, 1190 - imagen 1",
+        "src": "/uploads/works/caballero-mediaval-1190/whatsapp-image-2026-07-16-at-11-17-57-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Caballero Mediaval, 1190 - imagen 2",
+        "src": "/uploads/works/caballero-mediaval-1190/whatsapp-image-2026-07-16-at-11-17-57.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Caballero Mediaval, 1190 - imagen 3",
+        "src": "/uploads/works/caballero-mediaval-1190/whatsapp-image-2026-07-16-at-11-17-58-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Caballero Mediaval, 1190 - imagen 4",
+        "src": "/uploads/works/caballero-mediaval-1190/whatsapp-image-2026-07-16-at-11-17-58.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Comadreja con Gnomos",
+    "slug": "ferret",
+    "category": "fantasia",
+    "status": "published",
+    "scale": "54 mm",
+    "brand": "Blacksmith Miniatures",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Comadreja con Gnomos - imagen 1",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 2",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 3",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-08.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 4",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09-1.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Comadreja con Gnomos - imagen 5",
+        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Arquero Inglés Agincourt, 1415",
+    "slug": "english-longbowman-agincourt-1415",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "for-sale",
+    "salePrice": "560 €",
+    "saleNote": "",
+    "scale": "75 mm",
+    "brand": "FeR",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Arquero Inglés Agincourt, 1415 - imagen 1",
+        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0718-jpg.jpg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Arquero Inglés Agincourt, 1415 - imagen 2",
+        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0720-jpg.jpg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Arquero Inglés Agincourt, 1415 - imagen 3",
+        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0726-jpg.jpg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Pin up, \"Stop Now\"",
+    "slug": "pin-up-stop-now",
+    "category": "fantasia",
+    "status": "published",
+    "saleStatus": "for-sale",
+    "salePrice": "650 €",
+    "saleNote": "",
+    "scale": "",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Pin up, \"Stop Now\" - imagen 1",
+        "src": "/uploads/works/pin-up-stop-now/whatsapp-image-2026-07-16-at-11-21-24-1.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Pin up, \"Stop Now\" - imagen 2",
+        "src": "/uploads/works/pin-up-stop-now/whatsapp-image-2026-07-16-at-11-21-24-2.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Pin up, \"Stop Now\" - imagen 3",
+        "src": "/uploads/works/pin-up-stop-now/whatsapp-image-2026-07-16-at-11-21-24.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
     "title": "Unternehmen Merkur, 1941Max Schmeling",
     "slug": "unternehmen-merkur-1941max-schmeling",
     "category": "historico",
@@ -38,50 +193,6 @@
       {
         "alt": "Unternehmen Merkur, 1941Max Schmeling - imagen 5",
         "src": "/uploads/works/unternehmen-merkur-1941max-schmeling/dsc-0698-jpg.jpg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      }
-    ]
-  },
-  {
-    "title": "Ferret",
-    "slug": "ferret",
-    "category": "fantasia",
-    "status": "published",
-    "scale": "54 mm",
-    "brand": "Blacksmith Miniatures",
-    "year": "",
-    "featured": false,
-    "showOnHome": true,
-    "description": "",
-    "images": [
-      {
-        "alt": "Ferret - imagen 1",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07-1.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 2",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-07.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 3",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-08.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 4",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09-1.jpeg",
-        "kind": "principal",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Ferret - imagen 5",
-        "src": "/uploads/works/ferret/whatsapp-image-2026-04-08-at-16-02-09.jpeg",
         "kind": "detalle",
         "aspectRatio": "4/5"
       }
@@ -132,97 +243,94 @@
     ]
   },
   {
-    "title": "English Longbowman Agincourt, 1415",
-    "slug": "english-longbowman-agincourt-1415",
-    "category": "historico",
-    "status": "published",
-    "scale": "75 mm",
-    "brand": "FeR",
-    "year": "",
-    "featured": false,
-    "showOnHome": true,
-    "description": "",
-    "images": [
-      {
-        "alt": "English Longbowman Agincourt, 1415 - imagen 1",
-        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0718-jpg.jpg",
-        "kind": "principal",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "English Longbowman Agincourt, 1415 - imagen 2",
-        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0720-jpg.jpg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "English Longbowman Agincourt, 1415 - imagen 3",
-        "src": "/uploads/works/english-longbowman-agincourt-1415/img-0726-jpg.jpg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      }
-    ]
-  },
-  {
-    "title": "Lawrence de Arabia",
-    "slug": "lawrence-de-arabia",
+    "title": "Piloto del RFC, 1917",
+    "slug": "piloto-del-rfc-1917",
     "category": "busto",
     "status": "published",
-    "scale": "",
-    "brand": "Andrea Miniatures",
+    "saleStatus": "for-sale",
+    "salePrice": "500€",
+    "saleNote": "",
+    "scale": "75 mm",
+    "brand": "",
     "year": "",
     "featured": false,
     "showOnHome": true,
     "description": "",
     "images": [
       {
-        "alt": "Lawrence de Arabia - imagen 1",
-        "src": "/uploads/works/lawrence-de-arabia/20250624-113127.jpg",
+        "alt": "Piloto del RFC, 1917 - imagen 1",
+        "src": "/uploads/works/piloto-del-rfc-1917/whatsapp-image-2026-07-16-at-11-30-44-1.jpeg",
         "kind": "principal",
         "aspectRatio": "4/5"
       },
       {
-        "alt": "Lawrence de Arabia - imagen 2",
-        "src": "/uploads/works/lawrence-de-arabia/20250624-113138.jpg",
+        "alt": "Piloto del RFC, 1917 - imagen 2",
+        "src": "/uploads/works/piloto-del-rfc-1917/whatsapp-image-2026-07-16-at-11-30-44.jpeg",
         "kind": "detalle",
         "aspectRatio": "4/5"
       }
     ]
   },
   {
-    "title": "Alejandro III de Macedonia en Tebas, 335 a.C.",
-    "slug": "alejandro-iii-de-macedonia-en-tebas-335-a-c",
+    "title": "Dragón francés 1812",
+    "slug": "dragon-frances-1812",
     "category": "historico",
-    "status": "draft",
-    "scale": "54 mm",
-    "brand": "Art Girona",
+    "status": "published",
+    "saleStatus": "sold",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "75 mm",
+    "brand": "",
     "year": "",
     "featured": false,
     "showOnHome": true,
     "description": "",
     "images": [
       {
-        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 1",
-        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-52.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 2",
-        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53-1.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 3",
-        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53-2.jpeg",
-        "kind": "detalle",
-        "aspectRatio": "4/5"
-      },
-      {
-        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 4",
-        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53.jpeg",
+        "alt": "Dragón francés 1812 - imagen 1",
+        "src": "/uploads/works/dragon-frances-1812/whatsapp-image-2026-07-16-at-11-46-41.jpeg",
         "kind": "principal",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Guerrero Celta Siglo III a.C.",
+    "slug": "guerrero-celta-siglo-iii-a-c",
+    "category": "historico",
+    "status": "published",
+    "saleStatus": "for-sale",
+    "salePrice": "400 €",
+    "saleNote": "",
+    "scale": "54 mm",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Guerrero Celta Siglo III a.C. - imagen 1",
+        "src": "/uploads/works/guerrero-celta-siglo-iii-a-c/whatsapp-image-2026-07-16-at-11-23-55-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Guerrero Celta Siglo III a.C. - imagen 2",
+        "src": "/uploads/works/guerrero-celta-siglo-iii-a-c/whatsapp-image-2026-07-16-at-11-23-55.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Guerrero Celta Siglo III a.C. - imagen 3",
+        "src": "/uploads/works/guerrero-celta-siglo-iii-a-c/whatsapp-image-2026-07-16-at-11-23-56-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Guerrero Celta Siglo III a.C. - imagen 4",
+        "src": "/uploads/works/guerrero-celta-siglo-iii-a-c/whatsapp-image-2026-07-16-at-11-23-56.jpeg",
+        "kind": "detalle",
         "aspectRatio": "4/5"
       }
     ]
@@ -267,6 +375,119 @@
         "alt": "Orden de San Juan (Hospitalarios) del siglo XIV. - imagen 5",
         "src": "/uploads/works/orden-de-san-juan-hospitalarios-del-siglo-xiv/templario7.jpeg",
         "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Lawrence de Arabia",
+    "slug": "lawrence-de-arabia",
+    "category": "busto",
+    "status": "published",
+    "scale": "",
+    "brand": "Andrea Miniatures",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Lawrence de Arabia - imagen 1",
+        "src": "/uploads/works/lawrence-de-arabia/20250624-113127.jpg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Lawrence de Arabia - imagen 2",
+        "src": "/uploads/works/lawrence-de-arabia/20250624-113138.jpg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Guerrero Visigodo",
+    "slug": "guerrero-visigodo",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "sold",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "75 mm",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Guerrero Visigodo - imagen 1",
+        "src": "/uploads/works/guerrero-visigodo/whatsapp-image-2026-07-16-at-11-49-01.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Alejandro III de Macedonia en Tebas, 335 a.C.",
+    "slug": "alejandro-iii-de-macedonia-en-tebas-335-a-c",
+    "category": "historico",
+    "status": "published",
+    "saleStatus": "none",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "54 mm",
+    "brand": "Art Girona",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 1",
+        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-52.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 2",
+        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53-1.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 3",
+        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53-2.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Alejandro III de Macedonia en Tebas, 335 a.C. - imagen 4",
+        "src": "/uploads/works/alejandro-iii-de-macedonia-en-tebas-335-a-c/whatsapp-image-2026-05-05-at-18-07-53.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "El Alquimista",
+    "slug": "el-alquimista",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "sold",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "El Alquimista - imagen 1",
+        "src": "/uploads/works/el-alquimista/whatsapp-image-2026-07-16-at-11-44-03.jpeg",
+        "kind": "principal",
         "aspectRatio": "4/5"
       }
     ]
@@ -336,6 +557,58 @@
       {
         "alt": "Little Master Mice - imagen 5",
         "src": "/uploads/works/little-master-mice/whatsapp-image-2026-05-07-at-17-29-10.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Rollo, duque de Normandía",
+    "slug": "rollo-duque-de-normandia",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "sold",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Rollo, duque de Normandía - imagen 1",
+        "src": "/uploads/works/rollo-duque-de-normandia/whatsapp-image-2026-07-16-at-11-43-01-1.jpeg",
+        "kind": "detalle",
+        "aspectRatio": "4/5"
+      },
+      {
+        "alt": "Rollo, duque de Normandía - imagen 2",
+        "src": "/uploads/works/rollo-duque-de-normandia/whatsapp-image-2026-07-16-at-11-43-01.jpeg",
+        "kind": "principal",
+        "aspectRatio": "4/5"
+      }
+    ]
+  },
+  {
+    "title": "Visigodo, 451 d.C.",
+    "slug": "visigodo-451-d-c",
+    "category": "busto",
+    "status": "published",
+    "saleStatus": "sold",
+    "salePrice": "",
+    "saleNote": "",
+    "scale": "",
+    "brand": "",
+    "year": "",
+    "featured": false,
+    "showOnHome": true,
+    "description": "",
+    "images": [
+      {
+        "alt": "Visigodo, 451 d.C. - imagen 1",
+        "src": "/uploads/works/visigodo-451-d-c/whatsapp-image-2026-07-16-at-11-38-12.jpeg",
         "kind": "principal",
         "aspectRatio": "4/5"
       }

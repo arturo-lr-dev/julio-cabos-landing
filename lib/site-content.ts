@@ -45,6 +45,9 @@ export const siteContents = {
           "Piezas únicas pintadas a mano para coleccionistas, marcas y proyectos privados.",
         cta: "Encargar una obra",
         href: "#obras-por-encargo",
+        secondaryText: "También hay piezas terminadas disponibles para consulta.",
+        secondaryCta: "Piezas disponibles",
+        secondaryHref: "/galeria?filtro=disponibles",
         image: "/images/gallery/templario.webp",
       },
       {
@@ -314,6 +317,9 @@ export const siteContents = {
             "Unique hand-painted pieces for collectors, brands and private projects.",
           cta: "Commission a piece",
           href: "#obras-por-encargo",
+          secondaryText: "Finished pieces are also available for enquiry.",
+          secondaryCta: "Available pieces",
+          secondaryHref: "/en/galeria?filtro=disponibles",
           image: "/images/gallery/templario.webp",
         },
         {

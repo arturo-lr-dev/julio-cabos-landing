@@ -53,6 +53,20 @@ export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) 
                   <span>{item.cta}</span>
                   <span aria-hidden>→</span>
                 </a>
+                {item.secondaryCta && item.secondaryHref ? (
+                  <p className="mt-5 max-w-xs text-xs leading-relaxed text-foreground-muted">
+                    {item.secondaryText ? (
+                      <span className="block">{item.secondaryText}</span>
+                    ) : null}
+                    <a
+                      href={item.secondaryHref}
+                      className="mt-2 inline-flex items-center gap-2 text-accent transition-colors hover:text-accent-hover"
+                    >
+                      <span>{item.secondaryCta}</span>
+                      <span aria-hidden>→</span>
+                    </a>
+                  </p>
+                ) : null}
               </div>
             </article>
           </FadeIn>

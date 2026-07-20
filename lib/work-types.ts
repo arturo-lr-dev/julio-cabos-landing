@@ -8,6 +8,7 @@ export type WorkCategory =
 
 export type GalleryCategory = WorkCategory;
 export type WorkStatus = "draft" | "in-progress" | "published" | "hidden";
+export type WorkSaleStatus = "none" | "for-sale" | "reserved" | "sold";
 export type CourseStatus = "draft" | "active" | "hidden";
 export type InstagramPostStatus = "candidate" | "ignored" | "imported";
 export type CalendarEventStatus = "active" | "hidden";
@@ -49,6 +50,9 @@ export interface Work {
   year?: string;
   description: string;
   status: WorkStatus;
+  saleStatus?: WorkSaleStatus;
+  salePrice?: string;
+  saleNote?: string;
   featured: boolean;
   showOnHome: boolean;
   images: WorkImage[];
@@ -64,6 +68,9 @@ export interface GalleryImage {
   scale?: WorkScale | "";
   brand?: string;
   year?: string;
+  saleStatus?: WorkSaleStatus;
+  salePrice?: string;
+  saleNote?: string;
   imageLabel?: string;
 }
 
@@ -74,6 +81,9 @@ export interface GalleryWork {
   scale?: WorkScale | "";
   brand?: string;
   year?: string;
+  saleStatus?: WorkSaleStatus;
+  salePrice?: string;
+  saleNote?: string;
   cover: GalleryImage;
   images: GalleryImage[];
 }
@@ -117,4 +127,3 @@ export interface CalendarEvent {
   description: string;
   publicUrl?: string;
 }
-

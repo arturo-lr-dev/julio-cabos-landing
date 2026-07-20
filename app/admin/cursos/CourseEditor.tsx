@@ -39,6 +39,7 @@ export default function CourseEditor({
   const [posterImage, setPosterImage] = useState(selectedCourse.posterImage ?? "");
   const [posterFile, setPosterFile] = useState<File | null>(null);
   const [posterRemoved, setPosterRemoved] = useState(false);
+  const [posterPreviewOpen, setPosterPreviewOpen] = useState(false);
 
   function addPoster(file: File | null) {
     if (!file) return;
@@ -51,6 +52,7 @@ export default function CourseEditor({
     setPosterFile(null);
     setPosterImage("");
     setPosterRemoved(true);
+    setPosterPreviewOpen(false);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -280,22 +282,33 @@ export default function CourseEditor({
 
         <div className="lg:col-span-2 rounded-md border border-rule bg-background/35 p-4">
           <div className="flex flex-col gap-4 md:flex-row md:items-start">
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-background md:w-64">
+            <button
+              type="button"
+              onClick={() => posterImage && setPosterPreviewOpen(true)}
+              disabled={!posterImage}
+              className="group relative aspect-[4/3] w-full overflow-hidden rounded-md border border-rule bg-background transition hover:border-accent/50 disabled:cursor-default md:w-96 lg:w-[28rem]"
+              aria-label="Ampliar cartel del curso"
+            >
               {posterImage ? (
-                <Image
-                  src={posterImage}
-                  alt={selectedCourse.posterAlt || selectedCourse.title || "Cartel del curso"}
-                  fill
-                  sizes="256px"
-                  className="object-cover"
-                  unoptimized={posterImage.startsWith("blob:")}
-                />
+                <>
+                  <Image
+                    src={posterImage}
+                    alt={selectedCourse.posterAlt || selectedCourse.title || "Cartel del curso"}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 448px"
+                    className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
+                    unoptimized={posterImage.startsWith("blob:")}
+                  />
+                  <span className="absolute bottom-3 right-3 rounded-md bg-background/85 px-3 py-1 text-xs text-accent opacity-0 backdrop-blur transition group-hover:opacity-100">
+                    Ampliar
+                  </span>
+                </>
               ) : (
                 <div className="flex h-full items-center justify-center px-6 text-center text-sm text-foreground-muted">
                   Sin cartel
                 </div>
               )}
-            </div>
+            </button>
             <div className="flex-1">
               <p className="font-medium text-foreground">Cartel del curso</p>
               <p className="mt-1 text-sm text-foreground-muted">
@@ -447,6 +460,51 @@ export default function CourseEditor({
           />
         </label>
       </form>
+
+      {posterPreviewOpen && posterImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Cartel del curso ampliado"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-background/95 backdrop-blur-xl"
+            onClick={() => setPosterPreviewOpen(false)}
+            aria-label="Cerrar cartel"
+          />
+          <button
+            type="button"
+            onClick={() => setPosterPreviewOpen(false)}
+            className="absolute right-5 top-5 z-20 flex h-12 w-12 items-center justify-center text-foreground-muted transition hover:text-accent"
+            aria-label="Cerrar cartel"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="pointer-events-none relative z-10 flex h-full w-full items-center justify-center p-6 pt-20 md:p-12">
+            <Image
+              src={posterImage}
+              alt={selectedCourse.posterAlt || selectedCourse.title || "Cartel del curso"}
+              width={1400}
+              height={1400}
+              className="h-auto max-h-[calc(100vh-7rem)] w-auto max-w-full rounded-md object-contain"
+              sizes="100vw"
+              unoptimized={posterImage.startsWith("blob:")}
+              priority
+            />
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

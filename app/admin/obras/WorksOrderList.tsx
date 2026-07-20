@@ -8,6 +8,7 @@ import {
   MAX_IMAGES_PER_WORK,
   type Work,
   workCategoryLabels,
+  workSaleStatusLabels,
 } from "@/lib/data";
 
 export default function WorksOrderList({
@@ -108,6 +109,9 @@ export default function WorksOrderList({
                 </p>
                 <p className="mt-2 text-xs text-accent">
                   {work.status === "published" ? "Publicado" : "Borrador"}
+                  {work.saleStatus && work.saleStatus !== "none"
+                    ? ` - ${workSaleStatusLabels[work.saleStatus]}`
+                    : ""}
                 </p>
               </Link>
             </div>

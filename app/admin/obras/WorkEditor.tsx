@@ -11,6 +11,7 @@ import {
   MAX_IMAGES_PER_WORK,
   MAX_PUBLISHED_WORKS,
   workCategoryLabels,
+  workSaleStatusLabels,
   workScaleOptions,
 } from "@/lib/data";
 
@@ -206,11 +207,14 @@ export default function WorkEditor({
       slug,
       category,
       status,
+      saleStatus: String(formData.get("saleStatus") ?? "none"),
+      salePrice: String(formData.get("salePrice") ?? "").trim(),
+      saleNote: String(formData.get("saleNote") ?? "").trim(),
       scale: String(formData.get("scale") ?? ""),
       brand: String(formData.get("brand") ?? "").trim(),
       year: String(formData.get("year") ?? "").trim(),
       featured: formData.get("featured") === "on",
-      showOnHome: formData.get("showOnHome") === "on",
+      showOnHome: selectedWork.showOnHome,
       description: String(formData.get("description") ?? "").trim(),
       images: normalizeMainImage(images).map((image, index) => ({
         alt: `${title} - imagen ${index + 1}`,
@@ -259,6 +263,10 @@ export default function WorkEditor({
         ? "Borrador guardado en el proyecto."
         : "Obra publicada. La galeria ya lee esta fuente."
     );
+
+    if (isNewWork && payload.work) {
+      router.push(`/admin/obras?obra=${payload.work.slug}`);
+    }
   }
 
   async function deleteWork() {
@@ -505,14 +513,55 @@ export default function WorkEditor({
             />
             Obra destacada
           </label>
-          <label className="flex items-center gap-3 text-sm">
-            <input
-              type="checkbox"
-              name="showOnHome"
-              defaultChecked={selectedWork.showOnHome}
-            />
-            Mostrar en portada
+          <p className="text-xs leading-relaxed text-foreground-muted">
+            Las primeras 10 obras publicadas segun este orden aparecen en portada.
+          </p>
+        </div>
+
+        <div className="grid gap-4 rounded-md border border-rule bg-background/35 p-4 lg:col-span-2">
+          <div>
+            <p className="font-medium text-foreground">Disponibilidad comercial</p>
+            <p className="mt-1 text-xs text-foreground-muted">
+              Activa una obra para que aparezca en el apartado de obras disponibles.
+            </p>
+          </div>
+
+          <label className={labelClass}>
+            Estado comercial
+            <select
+              className={inputClass}
+              name="saleStatus"
+              defaultValue={selectedWork.saleStatus ?? "none"}
+            >
+              {Object.entries(workSaleStatusLabels).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
           </label>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className={labelClass}>
+              Precio
+              <input
+                className={inputClass}
+                name="salePrice"
+                defaultValue={selectedWork.salePrice}
+                placeholder="Ej. 650 euros, consultar..."
+              />
+            </label>
+
+            <label className={labelClass}>
+              Nota comercial
+              <input
+                className={inputClass}
+                name="saleNote"
+                defaultValue={selectedWork.saleNote}
+                placeholder="Incluye peana, envio no incluido..."
+              />
+            </label>
+          </div>
         </div>
 
         <label className={`${labelClass} lg:col-span-2`}>

@@ -72,7 +72,11 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
                     src={item.image}
                     alt={item.alt}
                     fill
-                    className="object-cover transition-transform duration-700 hover:scale-[1.03]"
+                    className={`transition-transform duration-700 hover:scale-[1.03] ${
+                      item.image === "/hoy_old.JPG"
+                        ? "object-contain lg:object-cover"
+                        : "object-cover"
+                    }`}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     loading={index < 2 ? "eager" : "lazy"}
                   />
