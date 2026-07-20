@@ -7,6 +7,7 @@ import Lightbox from "@/components/Lightbox";
 import FadeIn from "@/components/FadeIn";
 import {
   categoryLabels,
+  workSaleStatusLabels,
   workCategoryLabels,
 } from "@/lib/work-options";
 import type { Locale } from "@/lib/site-content";
@@ -15,6 +16,7 @@ import type {
   GalleryImage,
   GalleryWork,
   WorkCategory,
+  WorkSaleStatus,
 } from "@/lib/work-types";
 
 const categories: WorkCategory[] = [
@@ -35,8 +37,33 @@ const categoryLabelsEn: Record<WorkCategory, string> = {
   escenografia: "Scenery",
 };
 
+const saleStatusLabelsEn: Record<WorkSaleStatus, string> = {
+  none: "Gallery only",
+  "for-sale": "For sale",
+  reserved: "Reserved",
+  sold: "Sold",
+};
+
+type GalleryFilter = GalleryCategory | "todas" | "disponibles";
+
 function getCategoryLabel(category: WorkCategory, locale: Locale) {
   return locale === "en" ? categoryLabelsEn[category] : categoryLabels[category];
+}
+
+function getSaleStatusLabel(status: WorkSaleStatus, locale: Locale) {
+  return locale === "en" ? saleStatusLabelsEn[status] : workSaleStatusLabels[status];
+}
+
+function getSaleBadgeClass(status: WorkSaleStatus) {
+  if (status === "for-sale") {
+    return "border-accent bg-accent text-background";
+  }
+
+  if (status === "reserved") {
+    return "border-sky-300/70 bg-sky-300 text-background";
+  }
+
+  return "border-foreground-muted bg-foreground text-background";
 }
 
 function getMeta(image: GalleryImage, locale: Locale) {
@@ -47,22 +74,31 @@ function getMeta(image: GalleryImage, locale: Locale) {
 
 export default function GalleryPageClient({
   galleryWorks,
+  initialFilter = "todas",
   locale = "es",
 }: {
   galleryWorks: GalleryWork[];
+  initialFilter?: GalleryFilter;
   locale?: Locale;
 }) {
-  const [activeFilter, setActiveFilter] = useState<GalleryCategory | "todas">(
-    "todas"
-  );
+  const [activeFilter, setActiveFilter] = useState<GalleryFilter>(initialFilter);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
+  const availableWorks = useMemo(
+    () =>
+      galleryWorks.filter(
+        (work) =>
+          work.saleStatus === "for-sale" || work.saleStatus === "reserved"
+      ),
+    [galleryWorks]
+  );
 
   const filteredWorks = useMemo(() => {
     if (activeFilter === "todas") return galleryWorks;
+    if (activeFilter === "disponibles") return availableWorks;
     return galleryWorks.filter((work) => work.category === activeFilter);
-  }, [activeFilter, galleryWorks]);
+  }, [activeFilter, availableWorks, galleryWorks]);
 
   const openLightbox = (work: GalleryWork) => {
     const coverIndex = work.images.findIndex(
@@ -131,6 +167,16 @@ export default function GalleryPageClient({
               >
                 {locale === "en" ? "All" : "Todas"} ({galleryWorks.length})
               </button>
+              <button
+                onClick={() => setActiveFilter("disponibles")}
+                className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
+                  activeFilter === "disponibles"
+                    ? "border-accent text-accent bg-accent/5"
+                    : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
+                }`}
+              >
+                {locale === "en" ? "Available" : "Disponibles"} ({availableWorks.length})
+              </button>
               {categories.map((cat) => {
                 const count = galleryWorks.filter(
                   (work) => work.category === cat
@@ -155,6 +201,10 @@ export default function GalleryPageClient({
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
             {filteredWorks.map((work, i) => {
               const img = work.cover;
+              const saleStatus = work.saleStatus ?? "none";
+              const hasCommercialStatus = saleStatus !== "none";
+              const canAskAboutWork =
+                saleStatus === "for-sale" || saleStatus === "reserved";
               const globalIndex = galleryWorks.findIndex(
                 (item) => item.slug === work.slug
               );
@@ -166,7 +216,11 @@ export default function GalleryPageClient({
                   className="break-inside-avoid"
                 >
                   <figure
-                    className="group relative cursor-pointer overflow-hidden bg-surface"
+                    className={`group relative cursor-pointer overflow-hidden bg-surface ${
+                      hasCommercialStatus
+                        ? "border border-accent/45 p-2 shadow-[0_0_0_1px_rgba(214,176,103,0.12)]"
+                        : ""
+                    }`}
                     onClick={() => openLightbox(work)}
                   >
                     <div
@@ -183,6 +237,21 @@ export default function GalleryPageClient({
                       />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      {hasCommercialStatus ? (
+                        <div className="absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] flex-col items-start gap-2">
+                          <span
+                            className={`border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide shadow-lg ${getSaleBadgeClass(saleStatus)}`}
+                          >
+                            {getSaleStatusLabel(saleStatus, locale)}
+                          </span>
+                          {work.salePrice ? (
+                            <span className="bg-background/90 px-3 py-1.5 text-sm font-medium text-foreground backdrop-blur">
+                              {work.salePrice}
+                            </span>
+                          ) : null}
+                        </div>
+                      ) : null}
 
                       <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
                         <span className="eyebrow text-foreground/90 bg-background/60 backdrop-blur-sm px-3 py-1.5">
@@ -212,6 +281,12 @@ export default function GalleryPageClient({
                         <span className="block truncate text-sm text-foreground leading-snug">
                           {work.title}
                         </span>
+                        {work.saleStatus && work.saleStatus !== "none" ? (
+                          <span className="mt-2 block truncate text-sm font-medium text-accent">
+                            {getSaleStatusLabel(work.saleStatus, locale)}
+                            {work.salePrice ? ` · ${work.salePrice}` : ""}
+                          </span>
+                        ) : null}
                         <span className="mt-1 block truncate text-xs text-foreground-muted">
                           {work.images.length === 1
                             ? locale === "en" ? "1 image" : "1 imagen"
@@ -222,11 +297,25 @@ export default function GalleryPageClient({
                             {getMeta(img, locale)}
                           </span>
                         ) : null}
+                        {work.saleNote ? (
+                          <span className="mt-1 block truncate text-xs text-foreground-faint">
+                            {work.saleNote}
+                          </span>
+                        ) : null}
                       </span>
                       <span className="eyebrow tnum text-foreground-faint group-hover:text-accent transition-colors duration-500 shrink-0">
                         No. {String(globalIndex + 1).padStart(2, "0")}
                       </span>
                     </figcaption>
+                    {canAskAboutWork ? (
+                      <a
+                        href={`${locale === "en" ? "/en" : ""}/#consulta-encargo`}
+                        onClick={(event) => event.stopPropagation()}
+                        className="mt-4 inline-flex w-full justify-center border border-accent/60 bg-accent/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-accent transition hover:bg-accent hover:text-background"
+                      >
+                        {locale === "en" ? "Ask about this work" : "Consultar esta obra"}
+                      </a>
+                    ) : null}
                   </figure>
                 </FadeIn>
               );

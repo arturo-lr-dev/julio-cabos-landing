@@ -3,10 +3,12 @@ import type {
   CourseLevel,
   GalleryCategory,
   WorkCategory,
+  WorkSaleStatus,
   WorkScale,
 } from "@/lib/work-types";
 
-export const MAX_PUBLISHED_WORKS = 10;
+export const MAX_PUBLISHED_WORKS = 20;
+export const MAX_HOME_WORKS = 10;
 export const MAX_DRAFT_WORKS = 1;
 export const MAX_IMAGES_PER_WORK = 5;
 
@@ -21,6 +23,13 @@ export const workCategoryLabels: Record<WorkCategory, string> = {
 
 export const categoryLabels: Record<GalleryCategory, string> =
   workCategoryLabels;
+
+export const workSaleStatusLabels: Record<WorkSaleStatus, string> = {
+  none: "Solo galeria",
+  "for-sale": "En venta",
+  reserved: "Reservada",
+  sold: "Vendida",
+};
 
 export const workScaleOptions: WorkScale[] = [
   "Busto",

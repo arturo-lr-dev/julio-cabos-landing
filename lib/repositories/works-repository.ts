@@ -1,5 +1,6 @@
 import path from "node:path";
 import {
+  MAX_HOME_WORKS,
   MAX_IMAGES_PER_WORK,
   MAX_PUBLISHED_WORKS,
 } from "@/lib/work-options";
@@ -44,6 +45,9 @@ export function mapWorkImageToGalleryImage(
     scale: work.scale,
     brand: work.brand,
     year: work.year,
+    saleStatus: work.saleStatus ?? "none",
+    salePrice: work.salePrice,
+    saleNote: work.saleNote,
     imageLabel: `Imagen ${index + 1}`,
   };
 }
@@ -91,6 +95,9 @@ export function getGalleryWorks(works: Work[]): GalleryWork[] {
         scale: work.scale,
         brand: work.brand,
         year: work.year,
+        saleStatus: work.saleStatus ?? "none",
+        salePrice: work.salePrice,
+        saleNote: work.saleNote,
         cover,
         images,
       },
@@ -99,11 +106,11 @@ export function getGalleryWorks(works: Work[]): GalleryWork[] {
 }
 
 export function getSelectedGalleryImages(works: Work[]): GalleryImage[] {
-  return getPrimaryGalleryImages(works.filter((work) => work.showOnHome));
+  return getPrimaryGalleryImages(works).slice(0, MAX_HOME_WORKS);
 }
 
 export function getSelectedGalleryWorks(works: Work[]): GalleryWork[] {
-  return getGalleryWorks(works.filter((work) => work.showOnHome));
+  return getGalleryWorks(works).slice(0, MAX_HOME_WORKS);
 }
 
 export function reorderWorks(works: Work[], order: string[]): Work[] {

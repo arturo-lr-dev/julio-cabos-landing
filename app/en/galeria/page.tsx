@@ -16,6 +16,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function EnglishGalleryPage() {
-  return <PublicGalleryPage locale="en" />;
+export default async function EnglishGalleryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ filtro?: string }>;
+}) {
+  const params = await searchParams;
+
+  return <PublicGalleryPage filter={params.filtro} locale="en" />;
 }

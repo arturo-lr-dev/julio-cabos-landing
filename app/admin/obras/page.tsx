@@ -24,6 +24,9 @@ const emptyWork: WorkFormData = {
   year: "",
   description: "",
   status: "draft",
+  saleStatus: "none",
+  salePrice: "",
+  saleNote: "",
   featured: false,
   showOnHome: true,
   images: [],
@@ -70,12 +73,12 @@ export default async function AdminWorksPage({
           >
             Ver galeria
           </Link>
-          <Link
+          <a
             href="/admin/obras?nueva=1"
             className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:bg-accent-hover"
           >
             Nueva obra
-          </Link>
+          </a>
         </div>
       </header>
 

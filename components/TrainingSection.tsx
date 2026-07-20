@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
@@ -31,6 +34,7 @@ export default function TrainingSection({
   locale?: Locale;
 }) {
   const { training, ui } = getSiteContent(locale);
+  const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
 
   return (
     <SectionWrapper id="formacion" topRule>
@@ -60,20 +64,25 @@ export default function TrainingSection({
                   <div
                     className={
                       course.posterImage
-                        ? "grid gap-5 md:grid-cols-[180px_1fr]"
+                        ? "grid gap-5 md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr]"
                         : "grid gap-5"
                     }
                   >
                     {course.posterImage ? (
-                      <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewCourse(course)}
+                        className="group relative aspect-[4/5] w-full overflow-hidden bg-surface outline-none transition hover:bg-background-elevated focus-visible:ring-2 focus-visible:ring-accent"
+                        aria-label={`Ampliar cartel de ${course.title}`}
+                      >
                         <Image
                           src={course.posterImage}
                           alt={course.posterAlt || course.title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 180px"
-                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 240px, 280px"
+                          className="object-contain p-2 transition-transform duration-700 group-hover:scale-110"
                         />
-                      </div>
+                      </button>
                     ) : null}
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                       <div>
@@ -143,6 +152,50 @@ export default function TrainingSection({
           </div>
         </FadeIn>
       </div>
+
+      {previewCourse?.posterImage ? (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Cartel de ${previewCourse.title}`}
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-background/95 backdrop-blur-xl"
+            onClick={() => setPreviewCourse(null)}
+            aria-label="Cerrar cartel"
+          />
+          <button
+            type="button"
+            onClick={() => setPreviewCourse(null)}
+            className="absolute right-5 top-5 z-20 flex h-12 w-12 items-center justify-center text-foreground-muted transition hover:text-accent"
+            aria-label="Cerrar cartel"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="pointer-events-none relative z-10 flex h-full w-full items-center justify-center p-6 pt-20 md:p-12">
+            <Image
+              src={previewCourse.posterImage}
+              alt={previewCourse.posterAlt || previewCourse.title}
+              width={1400}
+              height={1400}
+              className="h-auto max-h-[calc(100vh-7rem)] w-auto max-w-full object-contain"
+              sizes="100vw"
+              priority
+            />
+          </div>
+        </div>
+      ) : null}
     </SectionWrapper>
   );
 }

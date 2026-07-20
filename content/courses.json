@@ -1,5 +1,22 @@
 [
   {
+    "title": "Curso de Pintura en Valencia",
+    "slug": "curso-de-pintura-en-valencia",
+    "status": "active",
+    "location": "Valencia",
+    "startDate": "2026-11-21",
+    "endDate": "2026-11-22",
+    "price": "",
+    "seatsTotal": 10,
+    "seatsAvailable": 10,
+    "level": "Intermedio",
+    "materials": "Pinceles, aerógrafo y compresor",
+    "description": "A lo largo del fin de semana trabajarás técnicas como:\n\nCarnaciones realistas.\nTrue Metal con efectos de desgaste.\nPintura de cueros y diferentes texturas.\nTratamiento de telas y volúmenes.\nIntegración del aerógrafo con el trabajo a pincel.\nVeladuras, matices y acabados finales.",
+    "bookingUrl": "mailto:Juliocabosg@gmail.com?subject=Reserva%20Curso%20Madrid",
+    "posterImage": "/uploads/courses/curso-de-pintura-en-valencia/whatsapp-image-2026-07-16-at-11-50-19.jpeg",
+    "posterAlt": "Cartel de Curso de Pintura en Valencia"
+  },
+  {
     "title": "Curso de Pintura de Caballos",
     "slug": "curso-intensivo-madrid",
     "status": "active",
@@ -15,20 +32,5 @@
     "bookingUrl": "mailto:Juliocabosg@gmail.com?subject=Reserva%20Curso%20Madrid",
     "posterImage": "/uploads/courses/curso-intensivo-madrid/screenshot-2026-07-04-095630.png",
     "posterAlt": "Cartel de Curso de Pintura de Caballos"
-  },
-  {
-    "title": "Retratos en miniatura Barcelona",
-    "slug": "retratos-miniatura-barcelona",
-    "status": "draft",
-    "location": "Barcelona",
-    "startDate": "2026-10-03",
-    "endDate": "2026-10-04",
-    "price": "Pendiente",
-    "seatsTotal": 12,
-    "seatsAvailable": 12,
-    "level": "Avanzado",
-    "materials": "Busto o figura con rostro marcado",
-    "description": "Borrador de curso centrado en lectura facial, temperatura de piel y foco expresivo.",
-    "bookingUrl": ""
   }
 ]

@@ -8,12 +8,14 @@ import type { GalleryImage, Work } from "@/lib/work-types";
 export { siteContent } from "@/lib/site-content";
 export {
   MAX_DRAFT_WORKS,
+  MAX_HOME_WORKS,
   MAX_IMAGES_PER_WORK,
   MAX_PUBLISHED_WORKS,
   categoryLabels,
   calendarEventTypeLabels,
   courseLevelOptions,
   workCategoryLabels,
+  workSaleStatusLabels,
   workScaleOptions,
 } from "@/lib/work-options";
 export type {
@@ -31,6 +33,7 @@ export type {
   Work,
   WorkCategory,
   WorkImage,
+  WorkSaleStatus,
   WorkScale,
   WorkStatus,
 } from "@/lib/work-types";
@@ -54,6 +57,9 @@ export const galleryImages: GalleryImage[] = works
       scale: work.scale,
       brand: work.brand,
       year: work.year,
+      saleStatus: work.saleStatus ?? "none",
+      salePrice: work.salePrice,
+      saleNote: work.saleNote,
       imageLabel: `Imagen ${index + 1}`,
     }))
   );
