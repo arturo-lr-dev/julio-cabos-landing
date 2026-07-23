@@ -44,11 +44,11 @@ export default function CommissionsSection({
               </ul>
               <TrackedLink
                 href={commissions.href}
-                eventName="cta_click"
+                eventName="clic_llamada_accion"
                 eventParameters={{
-                  cta_name: "commission_inquiry",
-                  destination: commissions.href,
-                  language: locale,
+                  nombre_accion: "consulta_encargo",
+                  destino: commissions.href,
+                  idioma: locale,
                 }}
                 className="mt-8 inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors"
               >
@@ -74,11 +74,11 @@ export default function CommissionsSection({
               </ul>
               <TrackedLink
                 href={collaborations.href}
-                eventName="cta_click"
+                eventName="clic_llamada_accion"
                 eventParameters={{
-                  cta_name: "collaboration_inquiry",
-                  destination: collaborations.href,
-                  language: locale,
+                  nombre_accion: "consulta_colaboracion",
+                  destino: collaborations.href,
+                  idioma: locale,
                 }}
                 className="mt-8 inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors"
               >

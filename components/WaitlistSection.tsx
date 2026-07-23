@@ -26,9 +26,9 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
     if (hasTrackedStart.current) return;
 
     hasTrackedStart.current = true;
-    trackAnalyticsEvent("form_start", {
-      form_name: "waitlist",
-      language: locale,
+    trackAnalyticsEvent("inicio_formulario", {
+      nombre_formulario: "lista_espera",
+      idioma: locale,
     });
   };
 
@@ -57,10 +57,10 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
         throw new Error(data.error || "Error al enviar");
       }
 
-      trackAnalyticsEvent("form_submit", {
-        form_name: "waitlist",
-        experience_level: formData.nivel || "not_selected",
-        language: locale,
+      trackAnalyticsEvent("envio_formulario", {
+        nombre_formulario: "lista_espera",
+        nivel_experiencia: formData.nivel || "no_seleccionado",
+        idioma: locale,
       });
       setEstado("exito");
       setSubmittedEmail(formData.email);

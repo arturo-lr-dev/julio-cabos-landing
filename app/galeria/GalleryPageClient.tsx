@@ -109,20 +109,20 @@ export default function GalleryPageClient({
     setLightboxImages(work.images);
     setLightboxIndex(Math.max(coverIndex, 0));
     setLightboxOpen(true);
-    trackAnalyticsEvent("artwork_view", {
-      work_slug: work.slug,
-      gallery_location: "full_gallery",
-      active_filter: activeFilter,
-      sale_status: work.saleStatus ?? "none",
-      language: locale,
+    trackAnalyticsEvent("vista_obra", {
+      id_obra: work.slug,
+      ubicacion_galeria: "galeria_completa",
+      filtro_activo: activeFilter,
+      estado_venta: work.saleStatus ?? "none",
+      idioma: locale,
     });
   };
 
   const selectFilter = (filter: GalleryFilter) => {
     setActiveFilter(filter);
-    trackAnalyticsEvent("gallery_filter", {
-      filter_name: filter,
-      language: locale,
+    trackAnalyticsEvent("filtro_galeria", {
+      nombre_filtro: filter,
+      idioma: locale,
     });
   };
 
@@ -141,10 +141,10 @@ export default function GalleryPageClient({
           <Link
             href={locale === "en" ? "/en" : "/"}
             onClick={() =>
-              trackAnalyticsEvent("navigation_click", {
-                destination: locale === "en" ? "/en" : "/",
-                location: "gallery_header",
-                language: locale,
+              trackAnalyticsEvent("clic_navegacion", {
+                destino: locale === "en" ? "/en" : "/",
+                ubicacion: "cabecera_galeria",
+                idioma: locale,
               })
             }
             className="text-sm text-foreground-muted hover:text-accent transition-colors"
@@ -335,10 +335,10 @@ export default function GalleryPageClient({
                         href={`${locale === "en" ? "/en" : ""}/#consulta-encargo`}
                         onClick={(event) => {
                           event.stopPropagation();
-                          trackAnalyticsEvent("artwork_inquiry_click", {
-                            work_slug: work.slug,
-                            sale_status: saleStatus,
-                            language: locale,
+                          trackAnalyticsEvent("clic_consulta_obra", {
+                            id_obra: work.slug,
+                            estado_venta: saleStatus,
+                            idioma: locale,
                           });
                         }}
                         className="mt-4 inline-flex w-full justify-center border border-accent/60 bg-accent/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-accent transition hover:bg-accent hover:text-background"

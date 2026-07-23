@@ -31,11 +31,11 @@ export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
           <InquiryForm locale={locale} />
           <TrackedLink
             href={`mailto:${contact.email}`}
-            eventName="cta_click"
+            eventName="clic_llamada_accion"
             eventParameters={{
-              cta_name: "email_contact",
-              location: "contact_section",
-              language: locale,
+              nombre_accion: "contacto_email",
+              ubicacion: "seccion_contacto",
+              idioma: locale,
             }}
             className="group mt-6 inline-block"
           >

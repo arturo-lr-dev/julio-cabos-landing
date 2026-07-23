@@ -25,10 +25,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
           <a
             href="#"
             onClick={() =>
-              trackAnalyticsEvent("navigation_click", {
-                destination: "#",
-                location: "header_logo",
-                language: locale,
+              trackAnalyticsEvent("clic_navegacion", {
+                destino: "#",
+                ubicacion: "cabecera_logo",
+                idioma: locale,
               })
             }
             className="group relative block h-12 w-32 md:h-14 md:w-40"
@@ -50,10 +50,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
                 <a
                   href={link.href}
                   onClick={() =>
-                    trackAnalyticsEvent("navigation_click", {
-                      destination: link.href,
-                      location: "header_desktop",
-                      language: locale,
+                    trackAnalyticsEvent("clic_navegacion", {
+                      destino: link.href,
+                      ubicacion: "cabecera_escritorio",
+                      idioma: locale,
                     })
                   }
                   className="group inline-flex items-baseline gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors"
@@ -67,10 +67,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
           <Link
             href={ui.alternateHref}
             onClick={() =>
-              trackAnalyticsEvent("language_change", {
-                from_language: locale,
-                to_language: ui.alternateLanguage.toLowerCase(),
-                location: "header_desktop",
+              trackAnalyticsEvent("cambio_idioma", {
+                idioma_origen: locale,
+                idioma_destino: ui.alternateLanguage.toLowerCase(),
+                ubicacion: "cabecera_escritorio",
               })
             }
             className="hidden md:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
@@ -85,10 +85,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
               className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
               aria-label={`${ui.language}: ${ui.alternateLanguage}`}
               onClick={() => {
-                trackAnalyticsEvent("language_change", {
-                  from_language: locale,
-                  to_language: ui.alternateLanguage.toLowerCase(),
-                  location: "header_mobile",
+                trackAnalyticsEvent("cambio_idioma", {
+                  idioma_origen: locale,
+                  idioma_destino: ui.alternateLanguage.toLowerCase(),
+                  ubicacion: "cabecera_movil",
                 });
                 setMenuOpen(false);
               }}
@@ -149,10 +149,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
                 href={link.href}
                 className="flex items-baseline gap-4 text-foreground hover:text-accent transition-colors"
                 onClick={() => {
-                  trackAnalyticsEvent("navigation_click", {
-                    destination: link.href,
-                    location: "header_mobile",
-                    language: locale,
+                  trackAnalyticsEvent("clic_navegacion", {
+                    destino: link.href,
+                    ubicacion: "cabecera_movil",
+                    idioma: locale,
                   });
                   setMenuOpen(false);
                 }}
@@ -169,10 +169,10 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
           <Link
             href={ui.alternateHref}
             onClick={() =>
-              trackAnalyticsEvent("language_change", {
-                from_language: locale,
-                to_language: ui.alternateLanguage.toLowerCase(),
-                location: "mobile_menu_footer",
+              trackAnalyticsEvent("cambio_idioma", {
+                idioma_origen: locale,
+                idioma_destino: ui.alternateLanguage.toLowerCase(),
+                ubicacion: "pie_menu_movil",
               })
             }
             className="hover:text-accent"

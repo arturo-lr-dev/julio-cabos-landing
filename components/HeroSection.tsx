@@ -60,11 +60,11 @@ export default function HeroSection({ locale = "es" }: { locale?: Locale }) {
               <div className="hero-animate-delay-3 mt-7 md:mt-10 flex flex-col sm:flex-row gap-4">
                 <TrackedLink
                   href={hero.ctaHref}
-                  eventName="cta_click"
+                  eventName="clic_llamada_accion"
                   eventParameters={{
-                    cta_name: "hero_primary",
-                    destination: hero.ctaHref,
-                    language: locale,
+                    nombre_accion: "portada_principal",
+                    destino: hero.ctaHref,
+                    idioma: locale,
                   }}
                   className="inline-flex min-h-12 items-center justify-center bg-accent px-8 py-4 eyebrow text-background hover:bg-accent-hover transition-colors duration-300"
                 >
@@ -72,11 +72,11 @@ export default function HeroSection({ locale = "es" }: { locale?: Locale }) {
                 </TrackedLink>
                 <TrackedLink
                   href={hero.secondaryHref}
-                  eventName="cta_click"
+                  eventName="clic_llamada_accion"
                   eventParameters={{
-                    cta_name: "hero_secondary",
-                    destination: hero.secondaryHref,
-                    language: locale,
+                    nombre_accion: "portada_secundaria",
+                    destino: hero.secondaryHref,
+                    idioma: locale,
                   }}
                   className="inline-flex min-h-12 items-center justify-center border border-rule-strong px-8 py-4 eyebrow text-foreground hover:border-accent hover:text-accent transition-colors duration-300"
                 >

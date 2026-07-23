@@ -5,17 +5,17 @@ import { sendGAEvent } from "@next/third-parties/google";
 const CONSENT_STORAGE_KEY = "julio_cabos_cookie_consent_v1";
 
 export type AnalyticsEventName =
-  | "navigation_click"
-  | "cta_click"
-  | "gallery_filter"
-  | "artwork_view"
-  | "artwork_inquiry_click"
-  | "course_view"
-  | "course_booking_click"
-  | "form_start"
-  | "form_submit"
-  | "social_click"
-  | "language_change";
+  | "clic_navegacion"
+  | "clic_llamada_accion"
+  | "filtro_galeria"
+  | "vista_obra"
+  | "clic_consulta_obra"
+  | "vista_curso"
+  | "clic_reserva_curso"
+  | "inicio_formulario"
+  | "envio_formulario"
+  | "clic_red_social"
+  | "cambio_idioma";
 
 type AnalyticsParameter = string | number | boolean;
 export type AnalyticsParameters = Record<string, AnalyticsParameter | undefined>;
