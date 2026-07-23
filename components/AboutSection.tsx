@@ -112,11 +112,11 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
               href={about.ctaHref}
               target="_blank"
               rel="noopener noreferrer"
-              eventName="cta_click"
+              eventName="clic_llamada_accion"
               eventParameters={{
-                cta_name: "download_cv",
-                destination: about.ctaHref,
-                language: locale,
+                nombre_accion: "descargar_curriculum",
+                destino: about.ctaHref,
+                idioma: locale,
               }}
               className="group inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors duration-300"
             >

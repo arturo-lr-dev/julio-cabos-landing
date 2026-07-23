@@ -73,10 +73,10 @@ export default function TrainingSection({
                       <button
                         type="button"
                         onClick={() => {
-                          trackAnalyticsEvent("course_view", {
-                            course_slug: course.slug,
-                            location: "training_section",
-                            language: locale,
+                          trackAnalyticsEvent("vista_curso", {
+                            id_curso: course.slug,
+                            ubicacion: "seccion_formacion",
+                            idioma: locale,
                           });
                           setPreviewCourse(course);
                         }}
@@ -112,10 +112,10 @@ export default function TrainingSection({
                         <a
                           href={course.bookingUrl}
                           onClick={() =>
-                            trackAnalyticsEvent("course_booking_click", {
-                              course_slug: course.slug,
-                              location: "training_section",
-                              language: locale,
+                            trackAnalyticsEvent("clic_reserva_curso", {
+                              id_curso: course.slug,
+                              ubicacion: "seccion_formacion",
+                              idioma: locale,
                             })
                           }
                           className="shrink-0 border border-rule-strong px-4 py-2 text-sm text-accent transition hover:border-accent/50 hover:bg-accent/10"
@@ -135,10 +135,10 @@ export default function TrainingSection({
             <a
               href={training.primaryHref}
               onClick={() =>
-                trackAnalyticsEvent("cta_click", {
-                  cta_name: "training_in_person",
-                  destination: training.primaryHref,
-                  language: locale,
+                trackAnalyticsEvent("clic_llamada_accion", {
+                  nombre_accion: "formacion_presencial",
+                  destino: training.primaryHref,
+                  idioma: locale,
                 })
               }
               className="group bg-background hover:bg-background-elevated transition-colors duration-500 p-6 md:p-8 flex flex-col gap-4"

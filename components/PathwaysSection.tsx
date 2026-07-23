@@ -49,11 +49,11 @@ export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) 
                 </p>
                 <TrackedLink
                   href={item.href}
-                  eventName="cta_click"
+                  eventName="clic_llamada_accion"
                   eventParameters={{
-                    cta_name: `pathway_${index + 1}`,
-                    destination: item.href,
-                    language: locale,
+                    nombre_accion: `camino_${index + 1}`,
+                    destino: item.href,
+                    idioma: locale,
                   }}
                   className="mt-8 inline-flex min-h-11 items-center justify-between gap-6 bg-accent px-6 py-3 eyebrow text-background hover:bg-accent-hover transition-colors duration-300"
                 >
@@ -67,11 +67,11 @@ export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) 
                     ) : null}
                     <TrackedLink
                       href={item.secondaryHref}
-                      eventName="cta_click"
+                      eventName="clic_llamada_accion"
                       eventParameters={{
-                        cta_name: `pathway_${index + 1}_secondary`,
-                        destination: item.secondaryHref,
-                        language: locale,
+                        nombre_accion: `camino_${index + 1}_secundario`,
+                        destino: item.secondaryHref,
+                        idioma: locale,
                       }}
                       className="mt-2 inline-flex items-center gap-2 text-accent transition-colors hover:text-accent-hover"
                     >

@@ -29,11 +29,11 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
                 <li key={link.href}>
                   <TrackedLink
                     href={link.href}
-                    eventName="navigation_click"
+                    eventName="clic_navegacion"
                     eventParameters={{
-                      destination: link.href,
-                      location: "footer",
-                      language: locale,
+                      destino: link.href,
+                      ubicacion: "pie_pagina",
+                      idioma: locale,
                     }}
                     className="nav-link hover:text-foreground transition-colors"
                   >
@@ -54,11 +54,11 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
                   href={footer.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  eventName="social_click"
+                  eventName="clic_red_social"
                   eventParameters={{
-                    network: "instagram",
-                    location: "footer",
-                    language: locale,
+                    red_social: "instagram",
+                    ubicacion: "pie_pagina",
+                    idioma: locale,
                   }}
                   className="nav-link hover:text-foreground transition-colors"
                 >
@@ -70,11 +70,11 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
                   href={footer.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  eventName="social_click"
+                  eventName="clic_red_social"
                   eventParameters={{
-                    network: "facebook",
-                    location: "footer",
-                    language: locale,
+                    red_social: "facebook",
+                    ubicacion: "pie_pagina",
+                    idioma: locale,
                   }}
                   className="nav-link hover:text-foreground transition-colors"
                 >

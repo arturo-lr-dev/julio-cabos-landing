@@ -61,11 +61,11 @@ export default function GalleryGrid({
     setLightboxImages(work.images);
     setLightboxIndex(Math.max(coverIndex, 0));
     setLightboxOpen(true);
-    trackAnalyticsEvent("artwork_view", {
-      work_slug: work.slug,
-      gallery_location: "home",
-      sale_status: work.saleStatus ?? "none",
-      language: locale,
+    trackAnalyticsEvent("vista_obra", {
+      id_obra: work.slug,
+      ubicacion_galeria: "inicio",
+      estado_venta: work.saleStatus ?? "none",
+      idioma: locale,
     });
   };
 
@@ -91,10 +91,10 @@ export default function GalleryGrid({
             <Link
               href={ui.gallery.href}
               onClick={() =>
-                trackAnalyticsEvent("cta_click", {
-                  cta_name: "view_full_gallery",
-                  destination: ui.gallery.href,
-                  language: locale,
+                trackAnalyticsEvent("clic_llamada_accion", {
+                  nombre_accion: "ver_galeria_completa",
+                  destino: ui.gallery.href,
+                  idioma: locale,
                 })
               }
               className="mt-8 inline-flex items-center gap-4 border border-rule-strong px-5 py-3 eyebrow text-foreground hover:border-accent hover:text-accent transition-colors"

@@ -56,10 +56,10 @@ export default function InquiryForm({
     if (hasTrackedStart.current) return;
 
     hasTrackedStart.current = true;
-    trackAnalyticsEvent("form_start", {
-      form_name: "inquiry",
-      inquiry_source: formData.source,
-      language: locale,
+    trackAnalyticsEvent("inicio_formulario", {
+      nombre_formulario: "consulta",
+      tipo_consulta: formData.source,
+      idioma: locale,
     });
   };
 
@@ -98,10 +98,10 @@ export default function InquiryForm({
         throw new Error(data.error || ui.form.sendError);
       }
 
-      trackAnalyticsEvent("form_submit", {
-        form_name: "inquiry",
-        inquiry_source: formData.source,
-        language: locale,
+      trackAnalyticsEvent("envio_formulario", {
+        nombre_formulario: "consulta",
+        tipo_consulta: formData.source,
+        idioma: locale,
       });
       setState("success");
       setFormData({
