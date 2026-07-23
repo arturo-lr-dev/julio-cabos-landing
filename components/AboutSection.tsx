@@ -3,6 +3,7 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import TrackedLink from "./TrackedLink";
 
 export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
   const { about, ui } = getSiteContent(locale);
@@ -107,10 +108,16 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
             </p>
           </div>
           <div className="col-span-12 md:col-span-5 md:text-right">
-            <a
+            <TrackedLink
               href={about.ctaHref}
               target="_blank"
               rel="noopener noreferrer"
+              eventName="cta_click"
+              eventParameters={{
+                cta_name: "download_cv",
+                destination: about.ctaHref,
+                language: locale,
+              }}
               className="group inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors duration-300"
             >
               <span>{about.cta} {ui.about.pdfSuffix}</span>
@@ -118,7 +125,7 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
                 aria-hidden
                 className="block w-8 h-px bg-current transition-all duration-500 group-hover:w-14"
               />
-            </a>
+            </TrackedLink>
           </div>
         </FadeIn>
       </div>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   inquirySourceLabels,
   type InquirySource,
 } from "@/lib/inquiry-types";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const sourceOptions = [
   "commission",
@@ -49,6 +50,18 @@ export default function InquiryForm({
     "idle"
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const hasTrackedStart = useRef(false);
+
+  const trackFormStart = () => {
+    if (hasTrackedStart.current) return;
+
+    hasTrackedStart.current = true;
+    trackAnalyticsEvent("form_start", {
+      form_name: "inquiry",
+      inquiry_source: formData.source,
+      language: locale,
+    });
+  };
 
   useEffect(() => {
     function syncSourceFromHash() {
@@ -85,6 +98,11 @@ export default function InquiryForm({
         throw new Error(data.error || ui.form.sendError);
       }
 
+      trackAnalyticsEvent("form_submit", {
+        form_name: "inquiry",
+        inquiry_source: formData.source,
+        language: locale,
+      });
       setState("success");
       setFormData({
         name: "",
@@ -120,7 +138,11 @@ export default function InquiryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-rule bg-surface p-6">
+    <form
+      onSubmit={handleSubmit}
+      onFocusCapture={trackFormStart}
+      className="border border-rule bg-surface p-6"
+    >
       <div className="grid gap-4">
         <div>
           <label htmlFor="inquiry-source" className="mb-2 block eyebrow text-foreground-muted">

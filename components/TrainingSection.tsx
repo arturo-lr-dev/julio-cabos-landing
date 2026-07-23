@@ -7,6 +7,7 @@ import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
 import type { Course } from "@/lib/work-types";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 function formatCourseDate(course: Course, locale: Locale) {
   const { ui } = getSiteContent(locale);
@@ -71,7 +72,14 @@ export default function TrainingSection({
                     {course.posterImage ? (
                       <button
                         type="button"
-                        onClick={() => setPreviewCourse(course)}
+                        onClick={() => {
+                          trackAnalyticsEvent("course_view", {
+                            course_slug: course.slug,
+                            location: "training_section",
+                            language: locale,
+                          });
+                          setPreviewCourse(course);
+                        }}
                         className="group relative aspect-[4/5] w-full overflow-hidden bg-surface outline-none transition hover:bg-background-elevated focus-visible:ring-2 focus-visible:ring-accent"
                         aria-label={`Ampliar cartel de ${course.title}`}
                       >
@@ -103,6 +111,13 @@ export default function TrainingSection({
                       {course.bookingUrl ? (
                         <a
                           href={course.bookingUrl}
+                          onClick={() =>
+                            trackAnalyticsEvent("course_booking_click", {
+                              course_slug: course.slug,
+                              location: "training_section",
+                              language: locale,
+                            })
+                          }
                           className="shrink-0 border border-rule-strong px-4 py-2 text-sm text-accent transition hover:border-accent/50 hover:bg-accent/10"
                         >
                           {ui.training.book}
@@ -119,6 +134,13 @@ export default function TrainingSection({
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-px bg-rule">
             <a
               href={training.primaryHref}
+              onClick={() =>
+                trackAnalyticsEvent("cta_click", {
+                  cta_name: "training_in_person",
+                  destination: training.primaryHref,
+                  language: locale,
+                })
+              }
               className="group bg-background hover:bg-background-elevated transition-colors duration-500 p-6 md:p-8 flex flex-col gap-4"
             >
               <span className="eyebrow text-accent tnum">I.</span>

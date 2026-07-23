@@ -2,6 +2,7 @@ import Image from "next/image";
 import SectionWrapper from "./SectionWrapper";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import TrackedLink from "./TrackedLink";
 
 export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) {
   const { pathways } = getSiteContent(locale);
@@ -46,25 +47,37 @@ export default function PathwaysSection({ locale = "es" }: { locale?: Locale }) 
                 <p className="mt-5 text-sm md:text-base text-foreground-muted leading-relaxed max-w-sm">
                   {item.text}
                 </p>
-                <a
+                <TrackedLink
                   href={item.href}
+                  eventName="cta_click"
+                  eventParameters={{
+                    cta_name: `pathway_${index + 1}`,
+                    destination: item.href,
+                    language: locale,
+                  }}
                   className="mt-8 inline-flex min-h-11 items-center justify-between gap-6 bg-accent px-6 py-3 eyebrow text-background hover:bg-accent-hover transition-colors duration-300"
                 >
                   <span>{item.cta}</span>
                   <span aria-hidden>→</span>
-                </a>
+                </TrackedLink>
                 {item.secondaryCta && item.secondaryHref ? (
                   <p className="mt-5 max-w-xs text-xs leading-relaxed text-foreground-muted">
                     {item.secondaryText ? (
                       <span className="block">{item.secondaryText}</span>
                     ) : null}
-                    <a
+                    <TrackedLink
                       href={item.secondaryHref}
+                      eventName="cta_click"
+                      eventParameters={{
+                        cta_name: `pathway_${index + 1}_secondary`,
+                        destination: item.secondaryHref,
+                        language: locale,
+                      }}
                       className="mt-2 inline-flex items-center gap-2 text-accent transition-colors hover:text-accent-hover"
                     >
                       <span>{item.secondaryCta}</span>
                       <span aria-hidden>→</span>
-                    </a>
+                    </TrackedLink>
                   </p>
                 ) : null}
               </div>

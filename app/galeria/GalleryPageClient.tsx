@@ -18,6 +18,7 @@ import type {
   WorkCategory,
   WorkSaleStatus,
 } from "@/lib/work-types";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const categories: WorkCategory[] = [
   "historico",
@@ -108,6 +109,21 @@ export default function GalleryPageClient({
     setLightboxImages(work.images);
     setLightboxIndex(Math.max(coverIndex, 0));
     setLightboxOpen(true);
+    trackAnalyticsEvent("artwork_view", {
+      work_slug: work.slug,
+      gallery_location: "full_gallery",
+      active_filter: activeFilter,
+      sale_status: work.saleStatus ?? "none",
+      language: locale,
+    });
+  };
+
+  const selectFilter = (filter: GalleryFilter) => {
+    setActiveFilter(filter);
+    trackAnalyticsEvent("gallery_filter", {
+      filter_name: filter,
+      language: locale,
+    });
   };
 
   return (
@@ -124,6 +140,13 @@ export default function GalleryPageClient({
           </Link>
           <Link
             href={locale === "en" ? "/en" : "/"}
+            onClick={() =>
+              trackAnalyticsEvent("navigation_click", {
+                destination: locale === "en" ? "/en" : "/",
+                location: "gallery_header",
+                language: locale,
+              })
+            }
             className="text-sm text-foreground-muted hover:text-accent transition-colors"
           >
             {locale === "en" ? "Back" : "Volver"}
@@ -158,7 +181,7 @@ export default function GalleryPageClient({
           <FadeIn delay={100}>
             <div className="flex flex-wrap gap-3 mb-12 md:mb-16">
               <button
-                onClick={() => setActiveFilter("todas")}
+                onClick={() => selectFilter("todas")}
                 className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
                   activeFilter === "todas"
                     ? "border-accent text-accent bg-accent/5"
@@ -168,7 +191,7 @@ export default function GalleryPageClient({
                 {locale === "en" ? "All" : "Todas"} ({galleryWorks.length})
               </button>
               <button
-                onClick={() => setActiveFilter("disponibles")}
+                onClick={() => selectFilter("disponibles")}
                 className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
                   activeFilter === "disponibles"
                     ? "border-accent text-accent bg-accent/5"
@@ -184,7 +207,7 @@ export default function GalleryPageClient({
                 return (
                   <button
                     key={cat}
-                    onClick={() => setActiveFilter(cat)}
+                    onClick={() => selectFilter(cat)}
                     className={`eyebrow px-5 py-2.5 border transition-all duration-300 ${
                       activeFilter === cat
                         ? "border-accent text-accent bg-accent/5"
@@ -310,7 +333,14 @@ export default function GalleryPageClient({
                     {canAskAboutWork ? (
                       <a
                         href={`${locale === "en" ? "/en" : ""}/#consulta-encargo`}
-                        onClick={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          trackAnalyticsEvent("artwork_inquiry_click", {
+                            work_slug: work.slug,
+                            sale_status: saleStatus,
+                            language: locale,
+                          });
+                        }}
                         className="mt-4 inline-flex w-full justify-center border border-accent/60 bg-accent/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-accent transition hover:bg-accent hover:text-background"
                       >
                         {locale === "en" ? "Ask about this work" : "Consultar esta obra"}

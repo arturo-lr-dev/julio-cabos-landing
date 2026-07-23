@@ -3,6 +3,7 @@ import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
 import InquiryForm from "./InquiryForm";
+import TrackedLink from "./TrackedLink";
 
 export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
   const { contact, ui } = getSiteContent(locale);
@@ -28,8 +29,14 @@ export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
           <span id="consulta-colaboracion" className="block scroll-mt-28" />
           <span id="consulta-cursos" className="block scroll-mt-28" />
           <InquiryForm locale={locale} />
-          <a
+          <TrackedLink
             href={`mailto:${contact.email}`}
+            eventName="cta_click"
+            eventParameters={{
+              cta_name: "email_contact",
+              location: "contact_section",
+              language: locale,
+            }}
             className="group mt-6 inline-block"
           >
             <span className="block eyebrow text-foreground-faint mb-3">
@@ -42,7 +49,7 @@ export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
               aria-hidden
               className="block h-px bg-current mt-3 w-full md:ml-auto md:w-3/4 transition-all duration-700 group-hover:bg-accent"
             />
-          </a>
+          </TrackedLink>
         </FadeIn>
       </div>
     </SectionWrapper>

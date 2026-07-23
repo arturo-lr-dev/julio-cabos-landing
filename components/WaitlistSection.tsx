@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) {
   const { ui } = getSiteContent(locale);
@@ -19,6 +20,17 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
   >("idle");
   const [mensajeError, setMensajeError] = useState("");
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const hasTrackedStart = useRef(false);
+
+  const trackFormStart = () => {
+    if (hasTrackedStart.current) return;
+
+    hasTrackedStart.current = true;
+    trackAnalyticsEvent("form_start", {
+      form_name: "waitlist",
+      language: locale,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +57,11 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
         throw new Error(data.error || "Error al enviar");
       }
 
+      trackAnalyticsEvent("form_submit", {
+        form_name: "waitlist",
+        experience_level: formData.nivel || "not_selected",
+        language: locale,
+      });
       setEstado("exito");
       setSubmittedEmail(formData.email);
       setFormData({ nombre: "", email: "", nivel: "" });
@@ -95,6 +112,7 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
           ) : (
             <form
               onSubmit={handleSubmit}
+              onFocusCapture={trackFormStart}
               className="bg-surface border border-rule p-8 md:p-10">
               <div className="space-y-6">
                 {/* Nombre */}

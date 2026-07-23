@@ -2,6 +2,7 @@ import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import TrackedLink from "./TrackedLink";
 
 export default function CommissionsSection({
   locale = "es",
@@ -41,13 +42,19 @@ export default function CommissionsSection({
                   </li>
                 ))}
               </ul>
-              <a
+              <TrackedLink
                 href={commissions.href}
+                eventName="cta_click"
+                eventParameters={{
+                  cta_name: "commission_inquiry",
+                  destination: commissions.href,
+                  language: locale,
+                }}
                 className="mt-8 inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors"
               >
                 {commissions.cta}
                 <span aria-hidden className="h-px w-8 bg-current" />
-              </a>
+              </TrackedLink>
             </div>
 
             <div id="colaboraciones" className="bg-background p-7 md:p-8">
@@ -65,13 +72,19 @@ export default function CommissionsSection({
                   </li>
                 ))}
               </ul>
-              <a
+              <TrackedLink
                 href={collaborations.href}
+                eventName="cta_click"
+                eventParameters={{
+                  cta_name: "collaboration_inquiry",
+                  destination: collaborations.href,
+                  language: locale,
+                }}
                 className="mt-8 inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors"
               >
                 {collaborations.cta}
                 <span aria-hidden className="h-px w-8 bg-current" />
-              </a>
+              </TrackedLink>
             </div>
           </div>
         </FadeIn>
