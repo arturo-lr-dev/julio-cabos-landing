@@ -3,6 +3,7 @@ import { getSiteContent, type Locale } from "@/lib/site-content";
 const icons = [
   <svg
     key="books"
+    className="h-full w-full"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -17,6 +18,7 @@ const icons = [
   </svg>,
   <svg
     key="clock"
+    className="h-full w-full"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -30,6 +32,7 @@ const icons = [
   </svg>,
   <svg
     key="figure"
+    className="h-full w-full"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -46,6 +49,7 @@ const icons = [
   </svg>,
   <svg
     key="globe"
+    className="h-full w-full"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -65,21 +69,21 @@ export default function AuthorityStrip({ locale = "es" }: { locale?: Locale }) {
   const { authority } = getSiteContent(locale);
 
   return (
-    <section className="relative px-6 md:px-12 border-y border-rule bg-background/95">
+    <section className="relative overflow-hidden border-y border-rule bg-background/95 px-4 sm:px-6 md:px-12">
       <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-px bg-rule">
         {authority.map((item, index) => (
           <div
             key={`${item.value}-${item.label}`}
-            className="bg-background px-5 py-7 md:px-8 md:py-8 flex items-center gap-5"
+            className="flex min-w-0 flex-col items-start gap-4 bg-background px-4 py-6 sm:flex-row sm:items-center sm:gap-5 sm:px-5 sm:py-7 md:px-8 md:py-8"
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center text-accent md:h-14 md:w-14">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center text-accent sm:h-12 sm:w-12 md:h-14 md:w-14">
               {icons[index]}
             </span>
-            <div>
-              <p className="font-display text-foreground text-3xl md:text-4xl leading-none">
+            <div className="min-w-0">
+              <p className="font-display text-[1.65rem] leading-[1.05] text-foreground sm:text-3xl sm:leading-none md:text-4xl">
                 {item.value}
               </p>
-              <p className="mt-2 eyebrow text-foreground-muted leading-relaxed">
+              <p className="mt-2 text-[0.625rem] font-medium uppercase leading-relaxed tracking-[0.18em] text-foreground-muted sm:text-[0.6875rem] sm:tracking-[0.22em]">
                 {item.label}
               </p>
             </div>

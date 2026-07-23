@@ -1,4 +1,6 @@
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import Link from "next/link";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 export default function Footer({ locale = "es" }: { locale?: Locale }) {
   const { footer, ui } = getSiteContent(locale);
@@ -61,10 +63,22 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
           </div>
         </div>
 
-        <div className="mt-16 pt-6 rule-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-foreground-faint">
+        <div className="mt-16 pt-6 rule-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-foreground-faint">
           <span className="eyebrow tnum">
             © {year} JULIO CABOS — {ui.footer.rights}
           </span>
+          <nav
+            aria-label="Privacidad"
+            className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-foreground-muted"
+          >
+            <Link
+              href="/politica-de-cookies"
+              className="nav-link hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            >
+              Política de cookies
+            </Link>
+            <CookieSettingsButton />
+          </nav>
           <span className="eyebrow">
             {ui.footer.credits} — <span className="text-foreground-muted">MMXXVI</span>
           </span>
