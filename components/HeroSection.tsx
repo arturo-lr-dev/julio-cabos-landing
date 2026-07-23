@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import TrackedLink from "./TrackedLink";
 
 export default function HeroSection({ locale = "es" }: { locale?: Locale }) {
   const { hero, ui } = getSiteContent(locale);
@@ -57,18 +58,30 @@ export default function HeroSection({ locale = "es" }: { locale?: Locale }) {
               </p>
 
               <div className="hero-animate-delay-3 mt-7 md:mt-10 flex flex-col sm:flex-row gap-4">
-                <a
+                <TrackedLink
                   href={hero.ctaHref}
+                  eventName="cta_click"
+                  eventParameters={{
+                    cta_name: "hero_primary",
+                    destination: hero.ctaHref,
+                    language: locale,
+                  }}
                   className="inline-flex min-h-12 items-center justify-center bg-accent px-8 py-4 eyebrow text-background hover:bg-accent-hover transition-colors duration-300"
                 >
                   {hero.cta}
-                </a>
-                <a
+                </TrackedLink>
+                <TrackedLink
                   href={hero.secondaryHref}
+                  eventName="cta_click"
+                  eventParameters={{
+                    cta_name: "hero_secondary",
+                    destination: hero.secondaryHref,
+                    language: locale,
+                  }}
                   className="inline-flex min-h-12 items-center justify-center border border-rule-strong px-8 py-4 eyebrow text-foreground hover:border-accent hover:text-accent transition-colors duration-300"
                 >
                   {hero.secondaryCta}
-                </a>
+                </TrackedLink>
               </div>
             </div>
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getSiteContent, type Locale } from "@/lib/site-content";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export default function Header({ locale = "es" }: { locale?: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,6 +24,13 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
           <a
             href="#"
+            onClick={() =>
+              trackAnalyticsEvent("navigation_click", {
+                destination: "#",
+                location: "header_logo",
+                language: locale,
+              })
+            }
             className="group relative block h-12 w-32 md:h-14 md:w-40"
             aria-label="Julio Cabos"
           >
@@ -41,6 +49,13 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
               <li key={link.href}>
                 <a
                   href={link.href}
+                  onClick={() =>
+                    trackAnalyticsEvent("navigation_click", {
+                      destination: link.href,
+                      location: "header_desktop",
+                      language: locale,
+                    })
+                  }
                   className="group inline-flex items-baseline gap-1.5 text-sm text-foreground-muted hover:text-foreground transition-colors"
                 >
                   <span className="font-light tracking-wide">{link.label}</span>
@@ -51,6 +66,13 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
 
           <Link
             href={ui.alternateHref}
+            onClick={() =>
+              trackAnalyticsEvent("language_change", {
+                from_language: locale,
+                to_language: ui.alternateLanguage.toLowerCase(),
+                location: "header_desktop",
+              })
+            }
             className="hidden md:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
             aria-label={`${ui.language}: ${ui.alternateLanguage}`}
           >
@@ -62,7 +84,14 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
               href={ui.alternateHref}
               className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
               aria-label={`${ui.language}: ${ui.alternateLanguage}`}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => {
+                trackAnalyticsEvent("language_change", {
+                  from_language: locale,
+                  to_language: ui.alternateLanguage.toLowerCase(),
+                  location: "header_mobile",
+                });
+                setMenuOpen(false);
+              }}
             >
               {ui.alternateLanguage}
             </Link>
@@ -119,7 +148,14 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
               <a
                 href={link.href}
                 className="flex items-baseline gap-4 text-foreground hover:text-accent transition-colors"
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {
+                  trackAnalyticsEvent("navigation_click", {
+                    destination: link.href,
+                    location: "header_mobile",
+                    language: locale,
+                  });
+                  setMenuOpen(false);
+                }}
               >
                 <span className="font-display text-3xl leading-none">
                   {link.label}
@@ -130,7 +166,17 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
         </ul>
 
         <div className="mt-auto eyebrow text-foreground-faint">
-          <Link href={ui.alternateHref} className="hover:text-accent">
+          <Link
+            href={ui.alternateHref}
+            onClick={() =>
+              trackAnalyticsEvent("language_change", {
+                from_language: locale,
+                to_language: ui.alternateLanguage.toLowerCase(),
+                location: "mobile_menu_footer",
+              })
+            }
+            className="hover:text-accent"
+          >
             {ui.language}: {ui.alternateLanguage}
           </Link>
           <span className="mx-3">/</span>

@@ -1,6 +1,7 @@
 import { getSiteContent, type Locale } from "@/lib/site-content";
 import Link from "next/link";
 import CookieSettingsButton from "./CookieSettingsButton";
+import TrackedLink from "./TrackedLink";
 
 export default function Footer({ locale = "es" }: { locale?: Locale }) {
   const { footer, ui } = getSiteContent(locale);
@@ -26,9 +27,18 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
             <ul className="space-y-1.5 text-sm text-foreground-muted">
               {ui.nav.slice(1).map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="nav-link hover:text-foreground transition-colors">
+                  <TrackedLink
+                    href={link.href}
+                    eventName="navigation_click"
+                    eventParameters={{
+                      destination: link.href,
+                      location: "footer",
+                      language: locale,
+                    }}
+                    className="nav-link hover:text-foreground transition-colors"
+                  >
                     {link.label}
-                  </a>
+                  </TrackedLink>
                 </li>
               ))}
             </ul>
@@ -40,24 +50,36 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
             </span>
             <ul className="space-y-1.5 text-sm text-foreground-muted">
               <li>
-                <a
+                <TrackedLink
                   href={footer.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
+                  eventName="social_click"
+                  eventParameters={{
+                    network: "instagram",
+                    location: "footer",
+                    language: locale,
+                  }}
                   className="nav-link hover:text-foreground transition-colors"
                 >
                   Instagram
-                </a>
+                </TrackedLink>
               </li>
               <li>
-                <a
+                <TrackedLink
                   href={footer.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
+                  eventName="social_click"
+                  eventParameters={{
+                    network: "facebook",
+                    location: "footer",
+                    language: locale,
+                  }}
                   className="nav-link hover:text-foreground transition-colors"
                 >
                   Facebook
-                </a>
+                </TrackedLink>
               </li>
             </ul>
           </div>
