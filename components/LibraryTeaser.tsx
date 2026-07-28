@@ -29,7 +29,7 @@ export default function LibraryTeaser({ locale = "es" }: { locale?: Locale }) {
 
   return (
     <SectionWrapper id="biblioteca" topRule>
-      <div className="grid grid-cols-12 items-center gap-10 md:gap-14">
+      <div className="grid grid-cols-12 items-center gap-x-0 gap-y-10 lg:gap-14">
         <FadeIn className="col-span-12 lg:col-span-5">
           <SectionLabel index="07" label={content.label} className="mb-6" />
           <h2 className="font-display text-4xl leading-[1.02] text-foreground md:text-5xl lg:text-6xl">
