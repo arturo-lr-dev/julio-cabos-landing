@@ -4,7 +4,7 @@ import "./globals.css";
 import { getJsonLd } from "@/lib/schema";
 import CookieConsent from "@/components/CookieConsent";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.juliocabos.es";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const fraunces = Fraunces({

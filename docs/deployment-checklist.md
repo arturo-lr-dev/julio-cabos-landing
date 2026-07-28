@@ -18,7 +18,7 @@ No asumir que un despliegue serverless con filesystem efímero conservará los c
 ## 2. Variables de entorno
 
 ```text
-NEXT_PUBLIC_SITE_URL=https://dominio-real.example
+NEXT_PUBLIC_SITE_URL=https://www.juliocabos.es
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 RESEND_API_KEY=
 INQUIRIES_NOTIFICATION_EMAIL=
