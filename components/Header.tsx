@@ -10,6 +10,11 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { ui } = getSiteContent(locale);
   const navLinks = ui.nav;
+  const languageOptions = [
+    { locale: "es" as const, label: "ES", href: "/" },
+    { locale: "en" as const, label: "EN", href: "/en" },
+    { locale: "it" as const, label: "IT", href: "/it" },
+  ].filter((option) => option.locale !== locale);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -64,37 +69,47 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
             ))}
           </ul>
 
-          <Link
-            href={ui.alternateHref}
-            onClick={() =>
-              trackAnalyticsEvent("cambio_idioma", {
-                idioma_origen: locale,
-                idioma_destino: ui.alternateLanguage.toLowerCase(),
-                ubicacion: "cabecera_escritorio",
-              })
-            }
-            className="hidden xl:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
-            aria-label={`${ui.language}: ${ui.alternateLanguage}`}
-          >
-            {ui.alternateLanguage}
-          </Link>
+          <div className="hidden items-center gap-2 xl:flex">
+            {languageOptions.map((option) => (
+              <Link
+                key={option.locale}
+                href={option.href}
+                onClick={() =>
+                  trackAnalyticsEvent("cambio_idioma", {
+                    idioma_origen: locale,
+                    idioma_destino: option.locale,
+                    ubicacion: "cabecera_escritorio",
+                  })
+                }
+                className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+                aria-label={`${ui.language}: ${option.label}`}
+              >
+                {option.label}
+              </Link>
+            ))}
+          </div>
 
           <div className="flex items-center gap-4 xl:hidden">
-            <Link
-              href={ui.alternateHref}
-              className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
-              aria-label={`${ui.language}: ${ui.alternateLanguage}`}
-              onClick={() => {
-                trackAnalyticsEvent("cambio_idioma", {
-                  idioma_origen: locale,
-                  idioma_destino: ui.alternateLanguage.toLowerCase(),
-                  ubicacion: "cabecera_movil",
-                });
-                setMenuOpen(false);
-              }}
-            >
-              {ui.alternateLanguage}
-            </Link>
+            <div className="flex items-center gap-1.5">
+              {languageOptions.map((option) => (
+                <Link
+                  key={option.locale}
+                  href={option.href}
+                  className="inline-flex min-h-9 items-center border border-rule-strong px-2.5 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+                  aria-label={`${ui.language}: ${option.label}`}
+                  onClick={() => {
+                    trackAnalyticsEvent("cambio_idioma", {
+                      idioma_origen: locale,
+                      idioma_destino: option.locale,
+                      ubicacion: "cabecera_movil",
+                    });
+                    setMenuOpen(false);
+                  }}
+                >
+                  {option.label}
+                </Link>
+              ))}
+            </div>
 
             <button
               className="relative h-9 w-7 p-0"

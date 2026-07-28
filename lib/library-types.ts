@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/site-content";
 
-export type LocalizedText = Record<Locale, string>;
+export type LocalizedText = Record<"es" | "en", string> &
+  Partial<Record<Locale, string>>;
 
 export type PublicationType =
   | "book"

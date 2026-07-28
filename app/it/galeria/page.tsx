@@ -1,14 +1,14 @@
-import { PublicGalleryPage } from "@/app/galeria/page";
 import type { Metadata } from "next";
+import { PublicGalleryPage } from "@/app/galeria/page";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Gallery — Julio Cabos",
+  title: "Galleria — Julio Cabos",
   description:
-    "Published miniature works by Julio Cabos with category, scale and project details.",
+    "Opere di miniatura pubblicate da Julio Cabos con categoria, scala e dettagli del progetto.",
   alternates: {
-    canonical: "/en/galeria",
+    canonical: "/it/galeria",
     languages: {
       es: "/galeria",
       en: "/en/galeria",
@@ -17,12 +17,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function EnglishGalleryPage({
+export default async function ItalianGalleryPage({
   searchParams,
 }: {
   searchParams: Promise<{ filtro?: string }>;
 }) {
   const params = await searchParams;
 
-  return <PublicGalleryPage filter={params.filtro} locale="en" />;
+  return <PublicGalleryPage filter={params.filtro} locale="it" />;
 }

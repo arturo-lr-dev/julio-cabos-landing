@@ -22,6 +22,14 @@ const copy = {
     cta: "Enter the Library",
     href: "/en/biblioteca",
   },
+  it: {
+    label: "Biblioteca",
+    title: "Una vita tra",
+    accent: "pennelli e pagine",
+    text: "Da oltre vent'anni, Julio Cabos condivide mestiere e conoscenza attraverso libri, manuali e pubblicazioni specialistiche.",
+    cta: "Entra nella Biblioteca",
+    href: "/it/biblioteca",
+  },
 } satisfies Record<Locale, object>;
 
 export default function LibraryTeaser({ locale = "es" }: { locale?: Locale }) {

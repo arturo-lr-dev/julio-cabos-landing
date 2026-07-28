@@ -27,6 +27,33 @@ function formatCourseDate(course: Course, locale: Locale) {
   return `${start} - ${formatter.format(new Date(`${course.endDate}T12:00:00`))}`;
 }
 
+const italianCourseCopy: Record<
+  string,
+  Partial<Pick<Course, "title" | "level" | "materials" | "description" | "posterAlt">>
+> = {
+  "curso-de-pintura-en-valencia": {
+    title: "Corso di pittura a Valencia",
+    level: "Intermedio",
+    materials: "Pennelli, aerografo e compressore",
+    description:
+      "Durante il fine settimana lavorerai su incarnati realistici, True Metal con effetti di usura, cuoio e texture, tessuti e volumi, integrazione di aerografo e pennello, velature, sfumature e finiture finali.",
+    posterAlt: "Locandina del corso di pittura a Valencia",
+  },
+  "curso-intensivo-madrid": {
+    title: "Corso di pittura dei cavalli",
+    level: "Intermedio",
+    materials: "Compressore, aerografo e pennelli",
+    description:
+      "Un corso per imparare a dipingere i cavalli con la tecnica mista di Julio, combinando aerografo e pennello.",
+    posterAlt: "Locandina del corso di pittura dei cavalli",
+  },
+};
+
+function getLocalizedCourse(course: Course, locale: Locale): Course {
+  if (locale !== "it") return course;
+  return { ...course, ...italianCourseCopy[course.slug] };
+}
+
 export default function TrainingSection({
   courses = [],
   locale = "es",
@@ -57,7 +84,9 @@ export default function TrainingSection({
 
           {courses.length > 0 ? (
             <div className="mt-10 grid gap-px bg-rule">
-              {courses.slice(0, 3).map((course) => (
+              {courses.slice(0, 3).map((course) => {
+                const localizedCourse = getLocalizedCourse(course, locale);
+                return (
                 <article
                   key={course.slug}
                   className="bg-background p-5 md:p-6"
@@ -78,14 +107,18 @@ export default function TrainingSection({
                             ubicacion: "seccion_formacion",
                             idioma: locale,
                           });
-                          setPreviewCourse(course);
+                          setPreviewCourse(localizedCourse);
                         }}
                         className="group relative aspect-[4/5] w-full overflow-hidden bg-surface outline-none transition hover:bg-background-elevated focus-visible:ring-2 focus-visible:ring-accent"
-                        aria-label={`Ampliar cartel de ${course.title}`}
+                        aria-label={
+                          locale === "it"
+                            ? `Ingrandisci la locandina di ${localizedCourse.title}`
+                            : `Ampliar cartel de ${localizedCourse.title}`
+                        }
                       >
                         <Image
                           src={course.posterImage}
-                          alt={course.posterAlt || course.title}
+                          alt={localizedCourse.posterAlt || localizedCourse.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 240px, 280px"
                           className="object-contain p-2 transition-transform duration-700 group-hover:scale-110"
@@ -95,16 +128,16 @@ export default function TrainingSection({
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                       <p className="eyebrow text-accent">
-                        {course.location} - {formatCourseDate(course, locale)}
+                        {localizedCourse.location} - {formatCourseDate(course, locale)}
                       </p>
                       <h3 className="mt-3 font-display text-2xl text-foreground leading-tight">
-                        {course.title}
+                        {localizedCourse.title}
                       </h3>
                       <p className="mt-3 text-sm text-foreground-muted leading-relaxed">
-                        {course.description}
+                        {localizedCourse.description}
                       </p>
                       <p className="mt-4 text-xs uppercase tracking-wider text-foreground-faint">
-                        {course.level} - {course.price} -{" "}
+                        {localizedCourse.level} - {course.price} -{" "}
                         {course.seatsAvailable} {ui.training.seats}
                       </p>
                       </div>
@@ -126,7 +159,8 @@ export default function TrainingSection({
                     </div>
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           ) : null}
 

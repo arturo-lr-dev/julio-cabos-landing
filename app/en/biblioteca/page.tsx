@@ -7,7 +7,11 @@ export const metadata: Metadata = {
     "Books, technical manuals, guides and editorial collaborations by Julio Cabos across more than two decades.",
   alternates: {
     canonical: "/en/biblioteca",
-    languages: { es: "/biblioteca", en: "/en/biblioteca" },
+    languages: {
+      es: "/biblioteca",
+      en: "/en/biblioteca",
+      it: "/it/biblioteca",
+    },
   },
   openGraph: {
     title: "Library — Julio Cabos",
