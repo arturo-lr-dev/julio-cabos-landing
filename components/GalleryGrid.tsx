@@ -19,8 +19,17 @@ const saleStatusLabelsEn: Record<WorkSaleStatus, string> = {
   sold: "Sold",
 };
 
+const saleStatusLabelsIt: Record<WorkSaleStatus, string> = {
+  none: "Solo galleria",
+  "for-sale": "In vendita",
+  reserved: "Riservata",
+  sold: "Venduta",
+};
+
 function getSaleStatusLabel(status: WorkSaleStatus, locale: Locale) {
-  return locale === "en" ? saleStatusLabelsEn[status] : workSaleStatusLabels[status];
+  if (locale === "en") return saleStatusLabelsEn[status];
+  if (locale === "it") return saleStatusLabelsIt[status];
+  return workSaleStatusLabels[status];
 }
 
 function getSaleBadgeClass(status: WorkSaleStatus) {

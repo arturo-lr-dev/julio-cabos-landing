@@ -1,5 +1,19 @@
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Política de cookies — Julio Cabos",
+  description:
+    "Información sobre las cookies necesarias y analíticas utilizadas en la web de Julio Cabos.",
+  alternates: {
+    canonical: "/politica-de-cookies",
+    languages: {
+      es: "/politica-de-cookies",
+      it: "/it/politica-de-cookies",
+    },
+  },
+};
 
 export default function CookiePolicyPage() {
   return (

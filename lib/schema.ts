@@ -34,7 +34,7 @@ export function getJsonLd(siteUrl: string) {
         "@id": websiteId,
         name: "Julio Cabos",
         url: siteUrl,
-        inLanguage: "es-ES",
+        inLanguage: ["es-ES", "en-GB", "it-IT"],
         author: { "@id": personId },
       },
       {

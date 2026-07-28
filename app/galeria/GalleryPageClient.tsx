@@ -8,7 +8,6 @@ import FadeIn from "@/components/FadeIn";
 import {
   categoryLabels,
   workSaleStatusLabels,
-  workCategoryLabels,
 } from "@/lib/work-options";
 import type { Locale } from "@/lib/site-content";
 import type {
@@ -38,6 +37,15 @@ const categoryLabelsEn: Record<WorkCategory, string> = {
   escenografia: "Scenery",
 };
 
+const categoryLabelsIt: Record<WorkCategory, string> = {
+  historico: "Storico",
+  fantasia: "Fantasy",
+  "box-art": "Box art",
+  busto: "Busto",
+  diorama: "Diorama",
+  escenografia: "Scenografia",
+};
+
 const saleStatusLabelsEn: Record<WorkSaleStatus, string> = {
   none: "Gallery only",
   "for-sale": "For sale",
@@ -45,14 +53,81 @@ const saleStatusLabelsEn: Record<WorkSaleStatus, string> = {
   sold: "Sold",
 };
 
+const saleStatusLabelsIt: Record<WorkSaleStatus, string> = {
+  none: "Solo galleria",
+  "for-sale": "In vendita",
+  reserved: "Riservata",
+  sold: "Venduta",
+};
+
+const galleryCopy: Record<
+  Locale,
+  {
+    back: string;
+    label: string;
+    title: string;
+    accent: string;
+    description: (count: number) => string;
+    all: string;
+    available: string;
+    oneImage: string;
+    images: (count: number) => string;
+    ask: string;
+  }
+> = {
+  es: {
+    back: "Volver",
+    label: "Galería",
+    title: "Obra",
+    accent: "completa",
+    description: (count) =>
+      `${count} obras publicadas, ordenadas como en el panel de administración. Cada ficha conserva categoría, escala, marca y datos de la obra.`,
+    all: "Todas",
+    available: "Disponibles",
+    oneImage: "1 imagen",
+    images: (count) => `${count} imágenes`,
+    ask: "Consultar esta obra",
+  },
+  en: {
+    back: "Back",
+    label: "Gallery",
+    title: "Full",
+    accent: "body of work",
+    description: (count) =>
+      `${count} published works, ordered as in the admin panel. Each entry keeps category, scale, brand and work details.`,
+    all: "All",
+    available: "Available",
+    oneImage: "1 image",
+    images: (count) => `${count} images`,
+    ask: "Ask about this work",
+  },
+  it: {
+    back: "Indietro",
+    label: "Galleria",
+    title: "Opera",
+    accent: "completa",
+    description: (count) =>
+      `${count} opere pubblicate, ordinate come nel pannello di amministrazione. Ogni scheda conserva categoria, scala, marchio e dettagli dell'opera.`,
+    all: "Tutte",
+    available: "Disponibili",
+    oneImage: "1 immagine",
+    images: (count) => `${count} immagini`,
+    ask: "Richiedi informazioni sull'opera",
+  },
+};
+
 type GalleryFilter = GalleryCategory | "todas" | "disponibles";
 
 function getCategoryLabel(category: WorkCategory, locale: Locale) {
-  return locale === "en" ? categoryLabelsEn[category] : categoryLabels[category];
+  if (locale === "en") return categoryLabelsEn[category];
+  if (locale === "it") return categoryLabelsIt[category];
+  return categoryLabels[category];
 }
 
 function getSaleStatusLabel(status: WorkSaleStatus, locale: Locale) {
-  return locale === "en" ? saleStatusLabelsEn[status] : workSaleStatusLabels[status];
+  if (locale === "en") return saleStatusLabelsEn[status];
+  if (locale === "it") return saleStatusLabelsIt[status];
+  return workSaleStatusLabels[status];
 }
 
 function getSaleBadgeClass(status: WorkSaleStatus) {
@@ -86,6 +161,13 @@ export default function GalleryPageClient({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
+  const copy = galleryCopy[locale];
+  const homeHref = locale === "es" ? "/" : `/${locale}`;
+  const languageOptions = [
+    { locale: "es" as const, label: "ES", href: "/galeria" },
+    { locale: "en" as const, label: "EN", href: "/en/galeria" },
+    { locale: "it" as const, label: "IT", href: "/it/galeria" },
+  ].filter((option) => option.locale !== locale);
   const availableWorks = useMemo(
     () =>
       galleryWorks.filter(
@@ -130,7 +212,7 @@ export default function GalleryPageClient({
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl border-b border-rule">
         <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 h-16 md:h-20">
-          <Link href={locale === "en" ? "/en" : "/"} className="group flex items-baseline gap-2">
+          <Link href={homeHref} className="group flex items-baseline gap-2">
             <span className="font-display text-foreground text-xl md:text-2xl leading-none">
               Julio
             </span>
@@ -138,19 +220,30 @@ export default function GalleryPageClient({
               Cabos
             </span>
           </Link>
-          <Link
-            href={locale === "en" ? "/en#galeria" : "/#galeria"}
-            onClick={() =>
-              trackAnalyticsEvent("clic_navegacion", {
-                destino: locale === "en" ? "/en#galeria" : "/#galeria",
-                ubicacion: "cabecera_galeria",
-                idioma: locale,
-              })
-            }
-            className="text-sm text-foreground-muted hover:text-accent transition-colors"
-          >
-            {locale === "en" ? "Back" : "Volver"}
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href={`${homeHref}#galeria`}
+              onClick={() =>
+                trackAnalyticsEvent("clic_navegacion", {
+                  destino: `${homeHref}#galeria`,
+                  ubicacion: "cabecera_galeria",
+                  idioma: locale,
+                })
+              }
+              className="mr-2 text-sm text-foreground-muted transition-colors hover:text-accent"
+            >
+              {copy.back}
+            </Link>
+            {languageOptions.map((option) => (
+              <Link
+                key={option.locale}
+                href={option.href}
+                className="inline-flex min-h-9 items-center border border-rule-strong px-2.5 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+              >
+                {option.label}
+              </Link>
+            ))}
+          </div>
         </nav>
       </header>
 
@@ -162,18 +255,16 @@ export default function GalleryPageClient({
                 <span aria-hidden className="text-foreground-faint">
                   -
                 </span>
-                <span className="eyebrow text-foreground-muted">{locale === "en" ? "Gallery" : "Galería"}</span>
+                <span className="eyebrow text-foreground-muted">{copy.label}</span>
               </div>
               <h1 className="font-display text-foreground text-5xl md:text-7xl lg:text-8xl leading-[0.9] mb-8">
-                {locale === "en" ? "Full" : "Obra"}{" "}
+                {copy.title}{" "}
                 <span className="font-display-italic text-accent/90">
-                  {locale === "en" ? "body of work" : "completa"}
+                  {copy.accent}
                 </span>
               </h1>
               <p className="text-foreground-muted max-w-xl text-lg leading-relaxed">
-                {locale === "en"
-                  ? `${galleryWorks.length} published works, ordered as in the admin panel. Each entry keeps category, scale, brand and work details.`
-                  : `${galleryWorks.length} obras publicadas, ordenadas como en el panel de administración. Cada ficha conserva categoría, escala, marca y datos de la obra.`}
+                {copy.description(galleryWorks.length)}
               </p>
             </div>
           </FadeIn>
@@ -188,7 +279,7 @@ export default function GalleryPageClient({
                     : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
                 }`}
               >
-                {locale === "en" ? "All" : "Todas"} ({galleryWorks.length})
+                {copy.all} ({galleryWorks.length})
               </button>
               <button
                 onClick={() => selectFilter("disponibles")}
@@ -198,7 +289,7 @@ export default function GalleryPageClient({
                     : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
                 }`}
               >
-                {locale === "en" ? "Available" : "Disponibles"} ({availableWorks.length})
+                {copy.available} ({availableWorks.length})
               </button>
               {categories.map((cat) => {
                 const count = galleryWorks.filter(
@@ -214,7 +305,7 @@ export default function GalleryPageClient({
                         : "border-rule text-foreground-muted hover:text-foreground hover:border-foreground-muted"
                     }`}
                   >
-                    {(locale === "en" ? categoryLabelsEn[cat] : workCategoryLabels[cat])} ({count})
+                    {getCategoryLabel(cat, locale)} ({count})
                   </button>
                 );
               })}
@@ -312,8 +403,8 @@ export default function GalleryPageClient({
                         ) : null}
                         <span className="mt-1 block truncate text-xs text-foreground-muted">
                           {work.images.length === 1
-                            ? locale === "en" ? "1 image" : "1 imagen"
-                            : locale === "en" ? `${work.images.length} images` : `${work.images.length} imágenes`}
+                            ? copy.oneImage
+                            : copy.images(work.images.length)}
                         </span>
                         {getMeta(img, locale) ? (
                           <span className="mt-1 block truncate text-xs text-foreground-faint">
@@ -332,7 +423,7 @@ export default function GalleryPageClient({
                     </figcaption>
                     {canAskAboutWork ? (
                       <a
-                        href={`${locale === "en" ? "/en" : ""}/#consulta-encargo`}
+                        href={`${homeHref}#consulta-encargo`}
                         onClick={(event) => {
                           event.stopPropagation();
                           trackAnalyticsEvent("clic_consulta_obra", {
@@ -343,7 +434,7 @@ export default function GalleryPageClient({
                         }}
                         className="mt-4 inline-flex w-full justify-center border border-accent/60 bg-accent/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-accent transition hover:bg-accent hover:text-background"
                       >
-                        {locale === "en" ? "Ask about this work" : "Consultar esta obra"}
+                        {copy.ask}
                       </a>
                     ) : null}
                   </figure>

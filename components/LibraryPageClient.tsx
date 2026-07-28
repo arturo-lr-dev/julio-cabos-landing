@@ -84,33 +84,50 @@ export default function LibraryPageClient({
     });
   };
 
-  const requestHref = `${locale === "en" ? "/en" : "/"}?consulta=madre-buho#contacto`;
-  const tableExternalUrl = grouped.table?.externalUrls?.[locale];
+  const localePrefix = locale === "es" ? "" : `/${locale}`;
+  const homeHref = locale === "es" ? "/" : localePrefix;
+  const requestHref = `${homeHref}?consulta=madre-buho#contacto`;
+  const tableExternalUrl =
+    grouped.table?.externalUrls?.[locale] ??
+    grouped.table?.externalUrls?.[locale === "it" ? "es" : locale];
+  const languageOptions = [
+    { locale: "es" as const, label: "ES", href: "/biblioteca" },
+    { locale: "en" as const, label: "EN", href: "/en/biblioteca" },
+    { locale: "it" as const, label: "IT", href: "/it/biblioteca" },
+  ].filter((option) => option.locale !== locale);
+  const selectedExternalUrl =
+    selected?.externalUrls?.[locale] ??
+    selected?.externalUrls?.[locale === "it" ? "es" : locale];
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-rule bg-background/88 backdrop-blur-xl">
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:h-20 md:px-12">
           <Link
-            href={locale === "en" ? "/en" : "/"}
+            href={homeHref}
             className="font-display text-xl text-foreground md:text-2xl"
           >
             Julio <span className="font-display-italic text-accent">Cabos</span>
           </Link>
           <div className="flex items-center gap-5">
             <Link
-              href={locale === "en" ? "/en#biblioteca" : "/#biblioteca"}
+              href={`${homeHref}#biblioteca`}
               className="text-sm text-foreground-muted transition-colors hover:text-accent"
             >
               <span aria-hidden>←</span>{" "}
               <span className="hidden sm:inline">{copy.back}</span>
             </Link>
-            <Link
-              href={copy.languageHref}
-              className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
-            >
-              {copy.languageLabel}
-            </Link>
+            <div className="flex items-center gap-1.5">
+              {languageOptions.map((option) => (
+                <Link
+                  key={option.locale}
+                  href={option.href}
+                  className="inline-flex min-h-9 items-center border border-rule-strong px-2.5 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+                >
+                  {option.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </nav>
       </header>
@@ -438,9 +455,9 @@ export default function LibraryPageClient({
                   </div>
                 </dl>
 
-                {selected.purchaseMode === "external" && selected.externalUrls?.[locale] ? (
+                {selected.purchaseMode === "external" && selectedExternalUrl ? (
                   <a
-                    href={selected.externalUrls[locale]}
+                    href={selectedExternalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() =>

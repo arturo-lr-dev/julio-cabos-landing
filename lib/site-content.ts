@@ -1,6 +1,6 @@
-export type Locale = "es" | "en";
+export type Locale = "es" | "en" | "it";
 
-export const locales: Locale[] = ["es", "en"];
+export const locales: Locale[] = ["es", "en", "it"];
 
 export const siteContents = {
   es: {
@@ -555,6 +555,277 @@ export const siteContents = {
 
 export const siteContent = siteContents.es;
 
+const italianSiteContent: typeof siteContents.es = {
+  ...siteContents.es,
+  hero: {
+    ...siteContents.es.hero,
+    eyebrow: "Impara · Commissiona · Collabora",
+    headline: "Dipingere con consapevolezza cambia il tuo modo di vedere.",
+    subtitle: "Miniature dipinte e insegnate con sensibilità artistica",
+    description:
+      "Più di vent'anni di esperienza professionale nell'insegnamento, nella creazione e nel dare vita a miniature da esposizione.",
+    cta: "Impara con me",
+    secondaryCta: "Opere su commissione",
+    quote:
+      "La pittura di miniature non è solo tecnica. È comprendere la luce, il volume e le decisioni che fanno funzionare una figura.",
+  },
+  authority: [
+    { value: "30+", label: "Libri pubblicati" },
+    { value: "20+", label: "Anni di esperienza" },
+    { value: "Direttore della pittura", label: "Andrea Miniatures · Scale75" },
+    { value: "Formatore internazionale", label: "Europa · USA" },
+  ],
+  pathways: {
+    ...siteContents.es.pathways,
+    title: "Cosa stai cercando?",
+    subtitle: "Scegli il tuo percorso. Ti accompagnerò in base ai tuoi obiettivi.",
+    items: [
+      {
+        ...siteContents.es.pathways.items[0],
+        title: "Imparare",
+        kicker: "con Julio",
+        text:
+          "Corsi in presenza e formazione online per imparare a dipingere miniature con consapevolezza.",
+        cta: "Vedi la formazione",
+      },
+      {
+        ...siteContents.es.pathways.items[1],
+        title: "Opere",
+        kicker: "su commissione",
+        text:
+          "Pezzi unici dipinti a mano per collezionisti, marchi e progetti privati.",
+        cta: "Commissiona un'opera",
+        secondaryText: "Sono disponibili anche opere finite su richiesta.",
+        secondaryCta: "Opere disponibili",
+        secondaryHref: "/it/galeria?filtro=disponibles",
+      },
+      {
+        ...siteContents.es.pathways.items[2],
+        title: "Collaborazioni",
+        kicker: "professionali",
+        text:
+          "Box art, direzione artistica e progetti editoriali per aziende del settore.",
+        cta: "Collabora con me",
+      },
+    ],
+  },
+  message: {
+    text: [
+      "Non insegno a copiare gli effetti. Insegno a capire perché funzionano.",
+      "Un metodo che offre libertà, sicurezza e consapevolezza per affrontare qualsiasi miniatura.",
+      "",
+      "Prima di prendere il pennello, impariamo a osservare: luce, colore, volume e decisioni.",
+    ],
+  },
+  training: {
+    ...siteContents.es.training,
+    title: "Formazione",
+    text:
+      "Non si tratta di memorizzare ricette. Si tratta di imparare ad analizzare una figura prima di dipingerla: dove si trova la luce, quale volume domina e quali decisioni fanno funzionare una miniatura.",
+    primaryCta: "Richiedi informazioni",
+    secondaryCta: "Prossimamente online",
+  },
+  commissions: {
+    ...siteContents.es.commissions,
+    title: "Opere su commissione",
+    text:
+      "Lavoro ogni anno su un numero limitato di progetti per garantire dedizione, criterio e una finitura professionale. Se cerchi un pezzo realizzato appositamente per la tua collezione o il tuo marchio, valuterò il progetto con attenzione.",
+    items: [
+      "Pezzi unici per collezioni private",
+      "Box art e miniature da esposizione",
+      "Progetti speciali per marchi ed editori",
+    ],
+    cta: "Richiedi un'opera",
+  },
+  collaborations: {
+    ...siteContents.es.collaborations,
+    title: "Collaborazioni professionali",
+    text:
+      "Esperienza nella direzione della pittura, nelle pubblicazioni specialistiche, nel box art e nello sviluppo visivo per aziende del settore.",
+    items: [
+      "Produttori di miniature e marchi di colori",
+      "Editori, pubblicazioni e materiale didattico",
+      "Consulenza artistica e progetti su misura",
+    ],
+    cta: "Proponi una collaborazione",
+  },
+  about: {
+    ...siteContents.es.about,
+    title: "Su Julio",
+    text: [
+      "Julio Cabos non ha costruito il proprio percorso intorno a una tecnica isolata, ma a un modo di osservare la miniatura prima di dipingerla.",
+      "Più di due decenni di lavoro professionale, direzione artistica, pubblicazioni e formazione internazionale sostengono un metodo basato sulla comprensione della luce, del colore, del volume e delle decisioni che fanno funzionare una figura.",
+      "Oggi unisce opere su commissione, collaborazioni professionali e formazione per allievi che desiderano dipingere con maggiore sicurezza, consapevolezza e libertà.",
+    ],
+    cta: "Vedi il percorso",
+  },
+  contact: {
+    ...siteContents.es.contact,
+    title: "Contatti",
+    text:
+      "Raccontami se vuoi imparare, commissionare un pezzo o proporre una collaborazione professionale. Ti risponderò personalmente per valutare il percorso migliore.",
+    cta: "Invia un'email",
+  },
+  ui: {
+    ...siteContents.es.ui,
+    language: "Lingua",
+    currentLanguage: "IT",
+    alternateLanguage: "ES",
+    alternateHref: "/",
+    nav: [
+      { label: "Home", href: "#" },
+      { label: "Imparare", href: "#formacion" },
+      { label: "Opere su commissione", href: "#obras-por-encargo" },
+      { label: "Collaborazioni", href: "#colaboraciones" },
+      { label: "Galleria", href: "#galeria" },
+      { label: "Biblioteca", href: "/it/biblioteca" },
+      { label: "Su Julio", href: "#sobre-mi" },
+      { label: "Contatti", href: "#contacto" },
+    ],
+    menuOpen: "Apri menu",
+    menuClose: "Chiudi menu",
+    atelier: "ATELIER · MADRID",
+    heroImageAlt: "Miniatura dipinta da Julio Cabos",
+    sections: {
+      training: "Impara con Julio",
+      commissions: "Opere su commissione",
+      gallery: "Il risultato",
+      manifesto: "Manifesto",
+      waitlist: "Rimani aggiornato",
+      contact: "Contatti",
+    },
+    training: {
+      ...siteContents.es.ui.training,
+      heading: ["Impara a osservare", "prima di dipingere"],
+      inPersonTitle: "Corsi in presenza",
+      inPersonText:
+        "Sessioni intensive e posti limitati. Lavoro diretto su luce, colore, volume e processo decisionale.",
+      onlineTitle: "Corsi online",
+      onlineText:
+        "In preparazione. Materiale registrato, esercizi guidati e un metodo chiaro da applicare a casa.",
+      datePending: "Data da confermare",
+      locale: "it-IT",
+      seats: "posti disponibili",
+      book: "Prenota",
+    },
+    commissions: {
+      heading: ["Pezzi unici", "per progetti speciali"],
+    },
+    gallery: {
+      ...siteContents.es.ui.gallery,
+      heading: ["Opere", "selezionate"],
+      text:
+        "Pezzi che mostrano il livello, il dettaglio e la dedizione di ogni progetto.",
+      full: "Vedi la galleria completa",
+      href: "/it/galeria",
+      number: "N.",
+    },
+    about: {
+      ...siteContents.es.ui.about,
+      heading: ["Il percorso", "come racconto di un mestiere"],
+      imageAlt: "Julio Cabos nel suo atelier",
+      caption: "Atelier · Madrid · Spagna",
+      closing: "Più di un curriculum, un modo di lavorare.",
+      pdfSuffix: "professionale (PDF)",
+      story: [
+        {
+          ...siteContents.es.ui.about.story[0],
+          label: "Il mestiere",
+          title: "Prima dell'effetto, lo sguardo.",
+          text:
+            "La pittura inizia prima di prendere il pennello: analizzare la luce, comprendere il volume e decidere ciò di cui la figura ha bisogno per funzionare.",
+          alt: "Julio Cabos dipinge una miniatura al tavolo di lavoro",
+        },
+        {
+          ...siteContents.es.ui.about.story[1],
+          label: "Opera e riconoscimenti",
+          title: "Un percorso costruito pezzo dopo pezzo.",
+          text:
+            "Premi, pubblicazioni e progetti professionali accompagnano una carriera dedicata alle miniature da esposizione e al lavoro di alto livello.",
+          alt: "Julio Cabos con un riconoscimento professionale accanto alle vetrine di miniature",
+        },
+        {
+          ...siteContents.es.ui.about.story[2],
+          label: "Formazione",
+          title: "Insegnare a comprendere, non a copiare.",
+          text:
+            "I suoi corsi non si concentrano sulla ripetizione di ricette, ma sul dare all'allievo gli strumenti per risolvere qualsiasi figura con maggiore sicurezza.",
+          alt: "Julio Cabos durante una sessione di formazione con gli allievi",
+        },
+        {
+          ...siteContents.es.ui.about.story[3],
+          label: "Oggi",
+          title: "Opere, formazione e collaborazioni.",
+          text:
+            "Julio lavora con collezionisti, marchi e allievi partendo dalla stessa idea: dipingere miniature comprendendo perché funzionano.",
+          alt: "Julio Cabos dipinge durante una dimostrazione di miniature",
+        },
+      ],
+    },
+    waitlist: {
+      ...siteContents.es.ui.waitlist,
+      heading: ["Corsi, posti", "e progetti"],
+      text:
+        "Ricevi aggiornamenti sui corsi in presenza, la formazione online, la disponibilità per opere su commissione e i progetti speciali.",
+      note: "Niente spam. Solo informazioni rilevanti quando ci sarà qualcosa di importante da raccontare.",
+      successTitle: "Fatto!",
+      successTextBefore: "Ti sei iscritto alla lista d'attesa. Scriveremo a",
+      successTextAfter: "non appena apriranno le iscrizioni.",
+      name: "Nome",
+      namePlaceholder: "Il tuo nome",
+      level: "Il tuo livello",
+      levels: [
+        { value: "principiante", label: "Principiante" },
+        { value: "intermedio", label: "Intermedio" },
+        { value: "avanzado", label: "Avanzato" },
+      ],
+      sending: "Invio...",
+      submit: "Iscriviti alla lista d'attesa",
+      privacy: "Solo comunicazioni rilevanti su formazione e progetti.",
+      subject: "Lista d'attesa",
+      message:
+        "Desidera ricevere aggiornamenti su corsi in presenza, formazione online, commissioni e progetti speciali.",
+      error: "Errore durante l'invio del modulo",
+    },
+    contact: {
+      heading: ["Parliamo", "del tuo progetto"],
+      direct: "Oppure scrivi direttamente a",
+    },
+    form: {
+      ...siteContents.es.ui.form,
+      source: "Tipo di richiesta",
+      sources: {
+        commission: "Opere su commissione",
+        collaboration: "Collaborazione professionale",
+        training: "Formazione",
+        course: "Corso pubblicato",
+        general: "Richiesta generale",
+      },
+      name: "Nome",
+      namePlaceholder: "Il tuo nome",
+      phone: "Telefono",
+      phonePlaceholder: "Facoltativo",
+      message: "Messaggio",
+      messagePlaceholder:
+        "Raccontaci cosa ti serve, le date, il tipo di pezzo o il corso che ti interessa...",
+      sending: "Invio...",
+      submit: "Invia richiesta",
+      successTitle: "Richiesta inviata",
+      successText:
+        "Grazie. Il tuo messaggio è stato registrato e Julio potrà risponderti via email.",
+      sendAnother: "Invia un'altra richiesta",
+      sendError: "Non è stato possibile inviare la richiesta.",
+    },
+    footer: {
+      index: "INDICE",
+      social: "SOCIAL",
+      rights: "TUTTI I DIRITTI RISERVATI",
+      credits: "DESIGN & CODICE",
+    },
+  },
+};
+
 export function getSiteContent(locale: Locale = "es") {
+  if (locale === "it") return italianSiteContent;
   return siteContents[locale];
 }

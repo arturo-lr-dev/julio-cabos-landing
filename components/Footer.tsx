@@ -6,6 +6,10 @@ import TrackedLink from "./TrackedLink";
 export default function Footer({ locale = "es" }: { locale?: Locale }) {
   const { footer, ui } = getSiteContent(locale);
   const year = new Date().getFullYear();
+  const cookiePolicyHref =
+    locale === "it" ? "/it/politica-de-cookies" : "/politica-de-cookies";
+  const cookiePolicyLabel =
+    locale === "it" ? "Informativa sui cookie" : "Política de cookies";
 
   return (
     <footer className="relative px-6 md:px-12 pt-16 pb-10 rule-t">
@@ -94,12 +98,12 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
             className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-foreground-muted"
           >
             <Link
-              href="/politica-de-cookies"
+              href={cookiePolicyHref}
               className="nav-link hover:text-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
-              Política de cookies
+              {cookiePolicyLabel}
             </Link>
-            <CookieSettingsButton />
+            <CookieSettingsButton locale={locale} />
           </nav>
           <span className="eyebrow">
             {ui.footer.credits} — <span className="text-foreground-muted">MMXXVI</span>

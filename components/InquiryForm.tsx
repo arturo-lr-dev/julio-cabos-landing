@@ -78,7 +78,9 @@ export default function InquiryForm({
             current.message ||
             (locale === "en"
               ? "I would like to request the Madre Búho digital tutorial."
-              : "Me interesa solicitar el tutorial digital Madre Búho."),
+              : locale === "it"
+                ? "Vorrei richiedere il tutorial digitale Madre Búho."
+                : "Me interesa solicitar el tutorial digital Madre Búho."),
         }));
       } else if (source) {
         setFormData((current) => ({ ...current, source }));

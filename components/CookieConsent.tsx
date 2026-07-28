@@ -23,6 +23,57 @@ type CookieConsentValue = {
 
 type ConsentState = CookieConsentValue | null | undefined;
 
+const cookieCopy = {
+  es: {
+    aria: "Consentimiento de cookies",
+    eyebrow: "Privacidad y estadísticas",
+    title: "Tú decides sobre las cookies analíticas",
+    intro:
+      "Las cookies necesarias están siempre activas. Google Analytics solo se cargará si aceptas las analíticas. Puedes cambiar tu elección cuando quieras.",
+    policy: "Política de cookies",
+    accept: "Aceptar analíticas",
+    reject: "Rechazar",
+    configure: "Configurar",
+    preferences: "Preferencias",
+    settingsTitle: "Configurar cookies",
+    close: "Cerrar configuración de cookies",
+    settingsDescription:
+      "Elige si permites la medición estadística anónima del uso de la web. Las cookies necesarias no pueden desactivarse.",
+    necessary: "Cookies necesarias",
+    necessaryDescription: "Permiten el funcionamiento técnico y seguro de la web.",
+    alwaysActive: "Siempre activas",
+    analytics: "Cookies analíticas",
+    analyticsDescription: "Google Analytics 4 para estadísticas de uso.",
+    viewPolicy: "Consultar la política de cookies",
+    save: "Guardar preferencias",
+    policyHref: "/politica-de-cookies",
+  },
+  it: {
+    aria: "Consenso ai cookie",
+    eyebrow: "Privacy e statistiche",
+    title: "Sei tu a decidere sui cookie analitici",
+    intro:
+      "I cookie necessari sono sempre attivi. Google Analytics verrà caricato solo se accetti i cookie analitici. Puoi modificare la tua scelta in qualsiasi momento.",
+    policy: "Informativa sui cookie",
+    accept: "Accetta gli analitici",
+    reject: "Rifiuta",
+    configure: "Configura",
+    preferences: "Preferenze",
+    settingsTitle: "Configura i cookie",
+    close: "Chiudi la configurazione dei cookie",
+    settingsDescription:
+      "Scegli se consentire la misurazione statistica anonima dell'uso del sito. I cookie necessari non possono essere disattivati.",
+    necessary: "Cookie necessari",
+    necessaryDescription: "Consentono il funzionamento tecnico e sicuro del sito.",
+    alwaysActive: "Sempre attivi",
+    analytics: "Cookie analitici",
+    analyticsDescription: "Google Analytics 4 per le statistiche di utilizzo.",
+    viewPolicy: "Consulta l'informativa sui cookie",
+    save: "Salva le preferenze",
+    policyHref: "/it/politica-de-cookies",
+  },
+};
+
 function isCookieConsentValue(value: unknown): value is CookieConsentValue {
   if (!value || typeof value !== "object") return false;
 
@@ -98,6 +149,7 @@ export default function CookieConsent({
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
   const isAdminRoute = pathname.startsWith("/admin");
+  const copy = pathname.startsWith("/it") ? cookieCopy.it : cookieCopy.es;
 
   useEffect(() => {
     let cancelled = false;
@@ -210,24 +262,22 @@ export default function CookieConsent({
     <>
       {!isAdminRoute && consent === null && !settingsOpen ? (
         <section
-          aria-label="Consentimiento de cookies"
+          aria-label={copy.aria}
           className="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-5xl border border-rule-strong bg-background-elevated/98 p-5 shadow-2xl shadow-black/50 backdrop-blur-xl sm:inset-x-6 sm:p-6"
         >
           <div className="grid items-end gap-5 lg:grid-cols-[1fr_auto] lg:gap-10">
             <div>
-              <p className="eyebrow text-accent">Privacidad y estadísticas</p>
+              <p className="eyebrow text-accent">{copy.eyebrow}</p>
               <h2 className="mt-2 font-display text-2xl text-foreground sm:text-3xl">
-                Tú decides sobre las cookies analíticas
+                {copy.title}
               </h2>
               <p className="mt-3 max-w-2xl text-sm font-light leading-relaxed text-foreground-muted sm:text-base">
-                Las cookies necesarias están siempre activas. Google Analytics
-                solo se cargará si aceptas las analíticas. Puedes cambiar tu
-                elección cuando quieras.{" "}
+                {copy.intro}{" "}
                 <Link
-                  href="/politica-de-cookies"
+                  href={copy.policyHref}
                   className="text-foreground underline decoration-rule-strong underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
-                  Política de cookies
+                  {copy.policy}
                 </Link>
                 .
               </p>
@@ -239,14 +289,14 @@ export default function CookieConsent({
                 onClick={() => saveConsent(true)}
                 className="min-h-12 border border-accent bg-accent px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
               >
-                Aceptar analíticas
+                {copy.accept}
               </button>
               <button
                 type="button"
                 onClick={() => saveConsent(false)}
                 className="min-h-12 border border-accent px-5 py-3 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
-                Rechazar
+                {copy.reject}
               </button>
               <button
                 type="button"
@@ -258,7 +308,7 @@ export default function CookieConsent({
                 }}
                 className="min-h-12 border border-rule-strong px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-foreground-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
-                Configurar
+                {copy.configure}
               </button>
             </div>
           </div>
@@ -283,17 +333,17 @@ export default function CookieConsent({
           >
             <div className="flex items-start justify-between gap-6">
               <div>
-                <p className="eyebrow text-accent">Preferencias</p>
+                <p className="eyebrow text-accent">{copy.preferences}</p>
                 <h2
                   id="cookie-settings-title"
                   className="mt-2 font-display text-3xl text-foreground"
                 >
-                  Configurar cookies
+                  {copy.settingsTitle}
                 </h2>
               </div>
               <button
                 type="button"
-                aria-label="Cerrar configuración de cookies"
+                aria-label={copy.close}
                 onClick={() => setSettingsOpen(false)}
                 className="flex h-10 w-10 shrink-0 items-center justify-center border border-rule-strong text-xl text-foreground-muted transition-colors hover:border-foreground-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
@@ -305,32 +355,31 @@ export default function CookieConsent({
               id="cookie-settings-description"
               className="mt-4 text-sm font-light leading-relaxed text-foreground-muted"
             >
-              Elige si permites la medición estadística anónima del uso de la
-              web. Las cookies necesarias no pueden desactivarse.
+              {copy.settingsDescription}
             </p>
 
             <div className="mt-7 divide-y divide-rule border-y border-rule">
               <div className="flex items-center justify-between gap-5 py-5">
                 <div>
                   <h3 className="text-base text-foreground">
-                    Cookies necesarias
+                    {copy.necessary}
                   </h3>
                   <p className="mt-1 text-sm text-foreground-muted">
-                    Permiten el funcionamiento técnico y seguro de la web.
+                    {copy.necessaryDescription}
                   </p>
                 </div>
                 <span className="eyebrow shrink-0 text-foreground-muted">
-                  Siempre activas
+                  {copy.alwaysActive}
                 </span>
               </div>
 
               <div className="flex items-center justify-between gap-5 py-5">
                 <label htmlFor="analytics-consent">
                   <span className="block text-base text-foreground">
-                    Cookies analíticas
+                    {copy.analytics}
                   </span>
                   <span className="mt-1 block text-sm text-foreground-muted">
-                    Google Analytics 4 para estadísticas de uso.
+                    {copy.analyticsDescription}
                   </span>
                 </label>
                 <input
@@ -347,18 +396,18 @@ export default function CookieConsent({
 
             <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
               <Link
-                href="/politica-de-cookies"
+                href={copy.policyHref}
                 onClick={() => setSettingsOpen(false)}
                 className="text-sm text-foreground-muted underline decoration-rule-strong underline-offset-4 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               >
-                Consultar la política de cookies
+                {copy.viewPolicy}
               </Link>
               <button
                 type="button"
                 onClick={() => saveConsent(analyticsEnabled)}
                 className="min-h-12 border border-accent bg-accent px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
               >
-                Guardar preferencias
+                {copy.save}
               </button>
             </div>
           </div>
