@@ -1,27 +1,14 @@
-# Design System
+# Sistema de diseño
 
 ## Dirección visual
 
-La web debe sentirse como un portfolio editorial oscuro:
+La web es un portfolio editorial oscuro: sobrio, táctil y espacioso. Debe recordar a un catálogo de arte y a un taller personal, no a un producto SaaS, una academia genérica o una interfaz de ecommerce.
 
-- Fondo profundo.
-- Tipografía limpia.
-- Mucho aire.
-- Imágenes grandes.
-- Interacciones sutiles.
-- Sensación de taller personal, no academia.
+Regla de decisión: si una decisión visual llama más la atención que la miniatura o el trabajo de Julio, está mal calibrada.
 
-El diseño no debe competir con las miniaturas.
+## Tokens
 
-## Tokens principales
-
-Los colores viven en:
-
-```text
-app/globals.css
-```
-
-Variables actuales:
+Los tokens vigentes viven en `app/globals.css`:
 
 ```css
 --background: #0a0a0a;
@@ -36,121 +23,103 @@ Variables actuales:
 --rule-strong: rgba(240, 236, 228, 0.16);
 ```
 
-Regla: el dorado es acento, no color dominante.
+El dorado comunica foco y autoridad. No es un relleno decorativo ni debe dominar una pantalla.
 
 ## Tipografía
 
-Fuentes configuradas en:
+Configurada en `app/layout.tsx` con `next/font`:
 
-```text
-app/layout.tsx
-```
-
-Actual:
-
-- Display: `Fraunces`
-- Sans: `Inter Tight`
+- Display: Fraunces.
+- Sans: Inter Tight.
 
 Uso:
 
-- `font-display`: grandes titulares, nombres y frases editoriales.
-- `font-display-italic`: énfasis artístico controlado.
-- Sans: cuerpo, navegación, labels y formularios.
+- `font-display`: titulares, cifras y nombres.
+- `font-display-italic`: énfasis editorial controlado.
+- Sans: cuerpo, navegación, labels, formularios y datos.
+- `.eyebrow`: etiquetas breves en mayúsculas con tracking amplio.
+- `.tnum`: índices y cifras tabulares.
 
-Evitar fuentes decorativas o fantasía. La miniatura ya aporta carácter visual.
+Evitar fuentes de fantasía, demasiadas cursivas o titulares largos que pierdan fuerza en móvil.
 
 ## Layout
 
-Criterios:
+- Contenedor habitual: `max-w-6xl`.
+- Secciones: `SectionWrapper`, con padding responsive y regla superior opcional.
+- Composición frecuente: grid de 12 columnas.
+- Mucho espacio negativo y alineaciones estables.
+- Separadores finos antes que sombras o cajas.
+- Cards solo para contenido que realmente necesita agrupación.
 
-- Secciones amplias.
-- Márgenes generosos.
-- Grids simples.
-- Separadores finos.
-- Pocas cajas visuales.
+La home tiene un ritmo editorial. Una sección nueva debe aportar contraste de composición sin romper ese ritmo ni repetir exactamente la sección anterior.
 
-`SectionWrapper` debe seguir siendo la base de secciones para mantener consistencia.
+## Componentes base
 
-## Componentes visuales
+- `SectionWrapper`: geometría y separación.
+- `SectionLabel`: índice y etiqueta tipo catálogo.
+- `FadeIn`: entrada al viewport.
+- `TrackedLink`: enlace con analítica.
+- `Lightbox`: inspección de obra.
 
-### Labels
+Reutilizarlos evita divergencias, pero no convertirlos en una obligación si la semántica de la sección pide otra solución.
 
-`SectionLabel` usa numeración y etiqueta corta. Refuerza la sensación editorial.
+## CTAs
 
-Mantener labels breves:
+- Acción primaria: fondo dorado, usada con moderación.
+- Acción secundaria: borde fino o enlace editorial.
+- Hover suave y foco visible.
+- Área táctil mínima cómoda, normalmente `min-h-11` o `min-h-12`.
+- Copy orientado a una acción real: aprender, reservar, consultar, encargar o colaborar.
 
-- `Galería`
-- `Formación`
-- `Contacto`
+No usar múltiples acciones primarias competidoras en el mismo bloque.
 
-### Botones y enlaces
+## Imágenes y tarjetas
 
-Los CTAs actuales son discretos, con líneas y hover suave. Mantener esa línea antes que botones grandes tipo SaaS.
+Las imágenes pueden ocupar el fondo o protagonizar una columna. Overlays y gradientes solo sirven para asegurar legibilidad. El zoom en hover debe ser ligero.
 
-Botones sólidos solo cuando la acción lo necesita, como el formulario de lista de espera.
+Las tarjetas son aceptables para caminos, ofertas formativas, formularios y estados. Evitar cards anidadas, carruseles y rejillas corporativas de beneficios.
 
-### Cards
+## Movimiento
 
-Usarlas con moderación. Esta web no debe convertirse en una colección de tarjetas.
+Patrones vigentes:
 
-Casos aceptables:
-
-- Formulario.
-- Bloques de oferta formativa.
-- Estados de éxito/error.
-
-## Animación
-
-Animaciones actuales:
-
-- Fade-in en scroll.
-- Ken Burns en hero.
-- Hover suave en galería.
+- Fade-in al entrar en viewport.
+- Entrada secuenciada del hero.
+- Ken Burns lento en portada.
+- Zoom ligero de imagen.
 - Underline reveal en navegación.
 
-Reglas:
-
-- Nada de animaciones pesadas.
-- Nada de sliders innecesarios.
-- Nada de scroll raro.
-- Respetar `prefers-reduced-motion`.
-
-## Galería
-
-La galería debe priorizar inspección visual:
-
-- Fondo sobrio.
-- Imagen limpia.
-- Hover ligero.
-- Sin texto encima por defecto.
-- Lightbox para ver detalle.
-
-El overlay en hover debe ayudar, no tapar.
+Todo movimiento debe ser sutil, no bloquear interacción y respetar `prefers-reduced-motion`. No introducir sliders automáticos, scroll manipulado ni librerías pesadas para efectos simples.
 
 ## Responsive
 
-Móvil es prioritario.
+Móvil es prioritario:
 
-Revisar:
+- Revisar desde 320 px.
+- Evitar titulares huérfanos o desbordados.
+- Convertir grids en una columna cuando sea necesario.
+- Mantener acciones tocables y formularios cómodos.
+- No depender del hover para información o acciones esenciales.
+- Comprobar recortes de imagen en varios ratios.
 
-- Hero no corta de forma absurda la miniatura.
-- Titulares no pisan contenido.
-- Botones son tocables.
-- Galería pasa a 1 columna.
-- Formularios son cómodos.
-- Textos no se vuelven demasiado largos.
+## Accesibilidad
 
-## Qué evitar
+- Jerarquía de headings correcta y un `h1` por página.
+- Contraste suficiente en texto secundario.
+- Foco visible en todos los controles.
+- Labels asociados a inputs.
+- Botón para acciones; enlace para navegación.
+- Alt text útil.
+- Diálogos con nombre, cierre y navegación por teclado.
+- Estados no comunicados solo mediante color.
+- Movimiento reducido respetado.
 
-- Bloques corporativos genéricos.
+## Evitar
+
+- Gradientes llamativos o exceso de dorado.
 - Iconos decorativos innecesarios.
-- Gradientes llamativos.
-- Demasiado dorado.
+- Bloques corporativos genéricos.
+- Sombras y bordes gruesos sin función.
+- Texto sobre imágenes sin contraste.
 - Demasiadas animaciones.
-- Texto largo sin respiración.
-- Cards anidadas.
-- Sliders automáticos.
-
-## Regla de decisión
-
-Si una decisión visual llama más la atención que la miniatura, probablemente está mal calibrada.
+- Sliders, marquees o scroll horizontal accidental.

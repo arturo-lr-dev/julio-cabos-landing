@@ -1,193 +1,134 @@
-# Architecture
+# Arquitectura
 
 ## Patrón general
 
-La aplicación usa Next.js App Router. La home se compone ensamblando secciones reutilizables desde `app/page.tsx`.
+La aplicación usa Next.js App Router. Las páginas públicas son Server Components y cargan contenido en servidor. Los componentes interactivos —formularios, filtros, lightbox, consentimiento y editores— son Client Components.
 
-```tsx
-<Header />
-<main>
-  <HeroSection />
-  <AboutSection />
-  <TextBlock />
-  <GalleryGrid />
-  <TrainingSection />
-  <WaitlistSection />
-  <ContactSection />
-</main>
-<Footer />
+La home se compone en `app/page.tsx` y recibe `locale`. `/en` reutiliza la misma composición mediante `PublicHome`, evitando duplicar layout.
+
+Orden actual:
+
+```text
+Header
+HeroSection
+AuthorityStrip
+PathwaysSection
+TrainingSection
+CommissionsSection
+GalleryGrid
+TextBlock
+LibraryTeaser
+WaitlistSection
+AboutSection
+ContactSection
+Footer
 ```
 
-La mayor parte del contenido editable vive en `lib/data.ts`. Los componentes leen de ese archivo y se centran en layout e interacción.
+Las secciones editoriales numeradas usan actualmente `03` a `10`. Biblioteca ocupa `07`. Si se inserta una nueva sección, revisar numeración, navegación, anclas y eventos de analítica.
 
 ## Rutas
 
-### `/`
+### Públicas
 
-Home principal. Archivo:
+| Ruta | Responsabilidad |
+| --- | --- |
+| `/` | Home española |
+| `/en` | Home inglesa |
+| `/galeria` | Galería completa española |
+| `/en/galeria` | Galería completa inglesa |
+| `/biblioteca` | Biblioteca y archivo editorial en español |
+| `/en/biblioteca` | Biblioteca y archivo editorial en inglés |
+| `/politica-de-cookies` | Información y preferencias de cookies |
+| `/robots.txt` | Directivas de rastreo |
+| `/sitemap.xml` | URLs públicas y alternancias de idioma |
+| `/manifest.webmanifest` | Metadatos de aplicación |
 
-```text
-app/page.tsx
-```
+### Administración
 
-Contiene las secciones principales de la landing.
+| Ruta | Responsabilidad |
+| --- | --- |
+| `/admin/login` | Inicio de autenticación con Google |
+| `/admin` | Resumen operativo |
+| `/admin/obras` | Edición, publicación, venta y orden de obras |
+| `/admin/cursos` | Edición y orden de cursos |
+| `/admin/calendario` | Cursos y eventos en una vista conjunta |
+| `/admin/consultas` | Bandeja, estados y notas |
+| `/admin/instagram` | Candidatos e importación manual |
 
-### `/galeria`
+### API
 
-Galería completa. Archivo:
+- `POST /api/inquiries`: valida, guarda y notifica consultas.
+- `POST /api/waitlist`: alias compatible del endpoint anterior.
+- `/api/auth/google/start`, `/callback` y `/logout`: autenticación.
+- `/api/admin/works`: crear/editar, borrar y reordenar obras.
+- `/api/admin/courses`: crear/editar, borrar y reordenar cursos.
+- `/api/admin/calendar-events`: crear/editar y borrar eventos.
+- `/api/admin/inquiries`: actualizar estado y notas.
+- `/api/admin/instagram`: guardar candidatos, ignorar, restaurar, importar o borrar.
 
-```text
-app/galeria/page.tsx
-```
+`proxy.ts` protege `/admin/:path*` y `/api/admin/:path*`. Las APIs públicas no dependen de esa sesión.
 
-Características:
-
-- Filtros por categoría.
-- Grid tipo masonry con CSS columns.
-- Lightbox compartido.
-- Lectura de imágenes desde `galleryImages`.
-
-### `/api/waitlist`
-
-Endpoint POST para el formulario de lista de espera. Archivo:
-
-```text
-app/api/waitlist/route.ts
-```
-
-Valida nombre, email y nivel. Envía un email con Resend.
-
-## Componentes principales
-
-### `HeroSection`
-
-Hero full viewport con imagen de fondo, título y CTA. Lee `siteContent.hero`.
-
-Puntos delicados:
-
-- Usa `next/image` con `fill` y `priority`.
-- Tiene animación Ken Burns.
-- La imagen debe tener composición limpia porque ocupa el primer impacto.
-
-### `AboutSection`
-
-Presentación biográfica. Lee `siteContent.about`.
-
-Incluye enlace al CV en PDF.
-
-### `TextBlock`
-
-Mensaje editorial central. Lee `siteContent.message`.
-
-Debe mantenerse breve. Es una pausa conceptual, no un bloque explicativo largo.
-
-### `GalleryGrid`
-
-Galería resumida de la home. Lee `galleryImages` y muestra solo las primeras imágenes.
-
-Puntos importantes:
-
-- `INITIAL_COUNT` controla cuántas imágenes aparecen en home.
-- Abre `Lightbox`.
-- Enlaza a `/galeria`.
-
-### `TrainingSection`
-
-Presenta formación presencial y online. Lee `siteContent.training`.
-
-Actualmente:
-
-- Cursos presenciales apuntan a contacto.
-- Cursos online aparecen como próximos.
-
-### `WaitlistSection`
-
-Formulario para avisar sobre cursos online.
-
-Estado local:
-
-- `idle`
-- `enviando`
-- `exito`
-- `error`
-
-Envía datos a `/api/waitlist`.
-
-### `ContactSection`
-
-Contacto directo por email. Lee `siteContent.contact`.
-
-### `Footer`
-
-Identidad y redes. Lee `siteContent.footer`.
-
-### `Lightbox`
-
-Visor de imágenes reutilizado en home y galería completa.
-
-## Datos
-
-Archivo principal:
+## Capas
 
 ```text
-lib/data.ts
+app / components
+        ↓
+lib/*-content.ts
+        ↓
+lib/repositories/*
+        ↓
+content/*.json
 ```
 
-Exporta:
-
-- `siteContent`: textos y enlaces globales.
-- `galleryImages`: lista de imágenes.
-- `categoryLabels`: etiquetas visibles.
-- Tipos `GalleryCategory` y `GalleryImage`.
-
-Regla: si un cambio es de contenido, primero mirar `lib/data.ts` antes de tocar componentes.
-
-## SEO y metadata
-
-Archivo:
+Las mutaciones siguen:
 
 ```text
-app/layout.tsx
+API route → service → repository → JSON / public/uploads → revalidación
 ```
 
-Incluye:
+- `lib/site-content.ts`: copy estático localizado.
+- `content/library-publications.json`: inventario público de la Biblioteca.
+- `lib/library-content.ts`: localización, orden y etiquetas de publicaciones.
+- `lib/library-types.ts`: modelo editorial de publicaciones.
+- `lib/work-types.ts`: contratos de dominio.
+- `lib/work-options.ts`: límites, opciones y etiquetas.
+- `lib/*-content.ts`: fachadas de lectura para páginas.
+- `lib/services/`: validación, normalización y operaciones de escritura.
+- `lib/repositories/`: lectura, transformación y persistencia.
+- `lib/uploads/`: guardado y copia de archivos públicos.
 
-- `metadataBase`.
-- `title`.
-- `description`.
-- `keywords`.
-- Open Graph.
-- Twitter card.
-- JSON-LD desde `lib/schema.ts`.
+## Datos y renderizado
 
-Rutas técnicas:
+La home y las galerías usan `dynamic = "force-dynamic"` para reflejar el contenido actual. Obras y cursos se consultan en servidor. Los servicios revalidan rutas relevantes tras una mutación.
 
-- `app/robots.ts`
-- `app/sitemap.ts`
-- `app/manifest.ts`
+`lib/data.ts` conserva exportaciones de compatibilidad y deriva `galleryImages`, pero no debe considerarse la única fuente de contenido.
 
-## Estilos
+## Internacionalización
 
-Archivo:
+No se usa una librería i18n. El locale es `"es" | "en"` y los textos viven en `siteContents`. Las páginas inglesas reutilizan componentes y pasan `locale="en"`. Cualquier sección pública nueva debe:
 
-```text
-app/globals.css
-```
+- incluir copy en ambos idiomas;
+- usar enlaces localizados cuando cambie la ruta;
+- añadir metadata/alternates si crea páginas;
+- mantener `DocumentLanguage` y atributos accesibles coherentes.
 
-Define:
+## SEO, analítica y cookies
 
-- Variables de color.
-- Fuentes.
-- Utilidades visuales.
-- Animaciones.
-- Respeto a `prefers-reduced-motion`.
+- Metadata raíz: `app/layout.tsx`.
+- Metadata inglesa: rutas bajo `app/en`.
+- JSON-LD: `lib/schema.ts`.
+- Sitemap, robots y manifest: archivos homónimos en `app/`.
+- Eventos: `lib/analytics.ts` y `TrackedLink`.
+- Consentimiento: `CookieConsent`; Analytics solo debe activarse conforme a la elección del usuario.
 
-Tailwind se usa principalmente mediante clases en componentes. Las variables CSS funcionan como tokens de diseño.
+## Convenciones para nuevas secciones
 
-## Convenciones
-
-- Mantener las secciones modulares.
-- Evitar meter contenido hardcodeado si pertenece a `lib/data.ts`.
-- Evitar librerías pesadas para interacciones simples.
-- Mantener la home como composición editorial, no como landing corporativa.
-- Añadir nuevas páginas como rutas dentro de `app/`.
+- Crear un componente modular.
+- Reutilizar `SectionWrapper`, `SectionLabel` y `FadeIn` cuando encajen.
+- Añadir el contenido estático a `lib/site-content.ts` en español e inglés.
+- Usar repositorio/servicio/API si el contenido debe administrarse.
+- No acceder a JSON directamente desde componentes.
+- Mantener el componente de servidor salvo que necesite estado, efectos o eventos de navegador.
+- Registrar CTAs relevantes con la taxonomía existente.
+- Revisar cabecera, footer, IDs, numeración y enlaces profundos.
+- Leer la guía local de Next.js en `node_modules/next/dist/docs/` antes de introducir APIs o convenciones nuevas.

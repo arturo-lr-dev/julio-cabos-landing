@@ -14,7 +14,7 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
       <div className="space-y-12 md:space-y-16">
         <div className="grid grid-cols-12 gap-8 md:gap-12 lg:gap-20 items-end">
           <FadeIn className="col-span-12 lg:col-span-5">
-            <SectionLabel index="08" label={about.title} className="mb-6" />
+            <SectionLabel index="09" label={about.title} className="mb-6" />
             <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
               {ui.about.heading[0]}
               <span className="font-display-italic block text-accent/95">

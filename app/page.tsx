@@ -11,6 +11,7 @@ import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import DocumentLanguage from "@/components/DocumentLanguage";
+import LibraryTeaser from "@/components/LibraryTeaser";
 import { getActiveCoursesFromContent } from "@/lib/course-content";
 import { getSelectedGalleryWorksFromContent } from "@/lib/work-content";
 import type { Locale } from "@/lib/site-content";
@@ -33,6 +34,7 @@ export async function PublicHome({ locale = "es" }: { locale?: Locale }) {
         <CommissionsSection locale={locale} />
         <GalleryGrid works={galleryWorks} locale={locale} />
         <TextBlock locale={locale} />
+        <LibraryTeaser locale={locale} />
         <WaitlistSection locale={locale} />
         <AboutSection locale={locale} />
         <ContactSection locale={locale} />

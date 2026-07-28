@@ -78,7 +78,7 @@ export default function WaitlistSection({ locale = "es" }: { locale?: Locale }) 
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-5">
           <SectionLabel
-            index="07"
+            index="08"
             label={ui.sections.waitlist}
             className="mb-6"
           />

@@ -1,185 +1,116 @@
-# Image Guide
+# Guía de imágenes
 
 ## Principio central
 
-Las imágenes son el activo principal de la web. La interfaz debe darles espacio, contraste y calma.
+Las imágenes son el activo principal. Deben tener espacio, contraste, nitidez y un recorte intencional. Una imagen mediocre o mal encuadrada perjudica más que un pequeño defecto de layout.
 
-Una imagen mediocre o mal recortada afecta más a esta web que un pequeño ajuste de layout.
+## Ubicaciones
 
-## Carpetas
+| Ruta | Uso |
+| --- | --- |
+| `public/images/` | Imágenes curadas y estables de la interfaz |
+| `public/images/gallery/` | Galería histórica optimizada |
+| `public/uploads/works/` | Obras subidas desde el panel |
+| `public/uploads/courses/` | Carteles de cursos |
+| `public/uploads/instagram/` | Candidatos manuales de Instagram |
+| `public/images/library/covers/` | Portadas públicas normalizadas de Biblioteca |
+| `public/images/library/madre-buho/` | Portada y muestras derivadas del tutorial |
+| `public/files/` | Originales, CV, PDFs y material fuente |
 
-### Imágenes optimizadas para la web
+No todo el material de `public/files` está preparado para servirse directamente.
 
-```text
-public/images/
-```
+### Material privado de Biblioteca
 
-Uso actual:
+El PDF completo de *Madre Búho* es material comercial privado. No debe copiarse a `public/`, enlazarse desde JSON ni incluirse en un despliegue. La web usa únicamente:
 
-```text
-public/images/hero.webp
-public/images/about.webp
-public/images/gallery/*.webp
-```
+- `cover.webp`.
+- `tree-detail.webp`.
+- `eyes-detail.webp`.
+- `final-detail.webp`.
 
-Estas son las imágenes que usan los componentes.
+Los recortes muestran la calidad y variedad del contenido sin publicar páginas completas o una secuencia reproducible del tutorial.
 
-### Material fuente
+## Hero y trayectoria
 
-```text
-public/files/
-```
+El hero se define en `siteContent.hero.backgroundImage` y usa `next/image`, `fill`, carga prioritaria, máscaras, gradientes y un Ken Burns sutil. Revisar siempre:
 
-Contiene imágenes originales, PDFs, CV y material de trabajo. No todo lo que hay aquí debe mostrarse directamente en la web.
+- Móvil estrecho y móvil grande.
+- Desktop panorámico.
+- Posición del sujeto tras `object-cover`/`object-contain`.
+- Legibilidad del texto.
+- Peso del archivo y Largest Contentful Paint.
 
-## Hero
+La trayectoria usa varias imágenes editoriales desde `siteContents.<locale>.ui.about.story`. Cada imagen necesita alt localizado y un papel narrativo real.
 
-Archivo actual:
+## Obras
 
-```text
-public/images/hero.webp
-```
+Cada obra admite varias imágenes, limitadas por `MAX_IMAGES_PER_WORK`. Una imagen es `principal` y las demás `detalle`. La principal debe representar la pieza sin depender del lightbox.
 
-Referencia en:
-
-```ts
-siteContent.hero.backgroundImage
-```
-
-Requisitos:
-
-- Imagen de alto impacto.
-- Buen comportamiento en formato panorámico.
-- Sujeto reconocible aunque haya overlay oscuro.
-- Sin banners, textos, logos incrustados ni elementos promocionales.
-
-Componente:
-
-```text
-components/HeroSection.tsx
-```
-
-El hero usa `object-cover`, así que la imagen puede recortarse según pantalla. Revisar siempre desktop y móvil.
-
-## About
-
-Archivo actual:
-
-```text
-public/images/about.webp
-```
-
-Referencia en:
+Cada entrada guarda:
 
 ```ts
-siteContent.about.image
+{
+  src: string;
+  alt: string;
+  aspectRatio: "4/5" | "3/4" | "1/1" | "3/5";
+  kind: "principal" | "detalle";
+}
 ```
 
-Debe presentar a Julio con autoridad y cercanía. Evitar imágenes excesivamente casuales o poco nítidas.
+Elegir `aspectRatio` según composición; cambiar primero este metadato antes de introducir CSS específico.
 
-## Galería
+## Uploads del panel
 
-Carpeta:
+Los nombres se normalizan a slugs y los archivos se guardan en una carpeta por propietario. El sistema no transforma automáticamente el contenido a WebP: la extensión de fallback no convierte los bytes. Por tanto, optimizar el archivo antes de subirlo y no asumir que un JPG/PNG se convierte por cambiar el nombre.
 
-```text
-public/images/gallery/
-```
+Al reemplazar o borrar una entidad, comprobar si quedan archivos huérfanos. El flujo actual no documenta una limpieza automática completa de carpetas.
 
-Datos:
+## Formatos y tamaños orientativos
 
-```text
-lib/data.ts
-```
+- WebP o AVIF para activos preparados.
+- JPG de alta calidad cuando la fotografía lo requiera.
+- PNG solo para transparencia o gráficos que lo necesiten.
+- Hero: 1800–2400 px de ancho.
+- Obra: 1200–1800 px en el lado largo.
+- Cartel: resolución suficiente para ampliar sin subir originales desmesurados.
 
-La galería usa `galleryImages`.
-
-La home muestra las primeras 9 imágenes:
-
-```ts
-const INITIAL_COUNT = 9;
-```
-
-Por eso el orden de `galleryImages` define qué piezas tienen más visibilidad.
+Next.js negocia WebP/AVIF para imágenes procesadas, según `next.config.ts`, pero el original sigue ocupando almacenamiento y puede servirse directamente en ciertos contextos.
 
 ## Naming
 
-Usar nombres simples, en minúsculas y sin espacios:
+Usar minúsculas, guiones y nombres descriptivos:
 
 ```text
-samurai.webp
-samurai-2.webp
-templario.webp
-templario-2.webp
+samurai-heian.webp
+samurai-heian-detalle-02.webp
+curso-intensivo-madrid.jpg
 ```
 
-Evitar:
-
-```text
-IMG_0698 final bueno.webp
-foto nueva (1).webp
-```
-
-## Formato recomendado
-
-- WebP para imágenes web.
-- JPG/PNG originales pueden conservarse en `public/files/`.
-- Evitar imágenes enormes en producción si no aportan detalle real.
-
-Recomendaciones orientativas:
-
-- Hero: 1800-2400 px de ancho.
-- Galería: 1200-1800 px en el lado largo.
-- Miniaturas muy verticales: cuidar que no pierdan detalle en móvil.
-
-## `aspectRatio`
-
-Cada imagen de galería define proporción:
-
-```ts
-aspectRatio: "4/5" | "3/4" | "1/1" | "3/5"
-```
-
-Elegir según la composición:
-
-- `4/5`: figura vertical estándar.
-- `3/4`: vertical algo más abierta.
-- `3/5`: figura muy vertical.
-- `1/1`: detalle o composición cuadrada.
-
-Si la imagen queda con demasiado aire o demasiado apretada, probar otra proporción antes de tocar CSS.
+Evitar espacios, nombres de cámara, “final”, “bueno” o sufijos ambiguos.
 
 ## Alt text
 
-El `alt` debe describir la imagen y ayudar al SEO:
+- Describir la pieza o la acción visible.
+- Incluir autoría solo cuando aporte contexto.
+- No usar “imagen de”.
+- No repetir exactamente un caption adyacente si no aporta información.
+- En imágenes puramente decorativas, valorar `alt=""`.
 
-```ts
-alt: "Samurái - miniatura pintada por Julio Cabos"
-```
+## No usar
 
-Buenas prácticas:
-
-- Nombrar la pieza.
-- Indicar que es miniatura o figura pintada.
-- Evitar frases genéricas como "imagen 1".
-
-## Qué no usar
-
-No subir imágenes con:
-
-- Texto promocional incrustado.
-- Banners de Patreon.
-- Marcas de agua agresivas.
-- Fondos con mucho ruido.
-- Recortes que corten partes importantes de la pieza.
+- Banners o mensajes promocionales incrustados.
+- Logos o marcas de agua agresivas.
+- Fondos ruidosos que compitan con la figura.
+- Recortes que eliminen partes significativas.
 - Compresión visible.
+- Imágenes extraídas de terceros sin permiso.
 
-## Checklist al cambiar imágenes
+## Checklist
 
-- La imagen existe en `public/images`.
-- La ruta en `lib/data.ts` es correcta.
-- El `alt` tiene sentido.
-- El `aspectRatio` funciona.
-- La home no pierde fuerza visual.
-- `/galeria` carga bien.
-- El lightbox muestra la imagen correctamente.
-- Móvil y desktop se ven bien.
+- Ruta válida y archivo versionado o persistido.
+- Principal correcta y orden de detalles lógico.
+- Alt y proporción revisados.
+- Peso razonable.
+- Home, galería y lightbox comprobados.
+- Móvil y desktop comprobados.
+- Sin archivos huérfanos ni referencias rotas.

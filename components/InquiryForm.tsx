@@ -66,8 +66,21 @@ export default function InquiryForm({
   useEffect(() => {
     function syncSourceFromHash() {
       const source = sourceByHash[window.location.hash];
+      const libraryRequest = new URLSearchParams(window.location.search).get(
+        "consulta"
+      );
 
-      if (source) {
+      if (libraryRequest === "madre-buho") {
+        setFormData((current) => ({
+          ...current,
+          source: "course",
+          message:
+            current.message ||
+            (locale === "en"
+              ? "I would like to request the Madre Búho digital tutorial."
+              : "Me interesa solicitar el tutorial digital Madre Búho."),
+        }));
+      } else if (source) {
         setFormData((current) => ({ ...current, source }));
       }
     }
@@ -76,7 +89,7 @@ export default function InquiryForm({
     window.addEventListener("hashchange", syncSourceFromHash);
 
     return () => window.removeEventListener("hashchange", syncSourceFromHash);
-  }, []);
+  }, [locale]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();

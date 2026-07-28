@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Julio Cabos — web y portfolio
 
-## Getting Started
+Web profesional de Julio Cabos: portfolio de pintura de miniaturas, formación, obras por encargo, colaboraciones y canal de contacto. Incluye home y galería bilingües, formularios, analítica consentida y un panel privado para gestionar contenido.
 
-First, run the development server:
+## Stack
+
+- Next.js 16.2 con App Router y Turbopack.
+- React 19 y TypeScript.
+- Tailwind CSS 4.
+- Resend para avisos de nuevas consultas.
+- OAuth de Google para el acceso al panel.
+- Persistencia actual en archivos JSON y uploads locales.
+
+## Desarrollo local
+
+Requisitos: Node.js LTS y npm.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir `http://localhost:3000`. Si el puerto está ocupado, Next.js elegirá el siguiente disponible.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Comprobaciones:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm run start
+```
 
-## Learn More
+## Variables de entorno
 
-To learn more about Next.js, take a look at the following resources:
+Copiar `.env.example` a `.env.local` y completar lo necesario:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_GA_ID=
+RESEND_API_KEY=
+INQUIRIES_NOTIFICATION_EMAIL=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+AUTH_SECRET=
+ADMIN_ALLOWED_EMAILS=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+No versionar secretos. `AUTH_SECRET` debe ser largo y aleatorio en producción.
 
-## Deploy on Vercel
+## Rutas principales
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `/` y `/en`: home pública.
+- `/galeria` y `/en/galeria`: portfolio completo.
+- `/politica-de-cookies`: política de cookies.
+- `/admin`: panel privado.
+- `/api/inquiries`: registro de consultas y lista de espera.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Persistencia y despliegue
+
+El panel modifica `content/*.json` y escribe imágenes en `public/uploads`. Por tanto, el despliegue debe ofrecer un sistema de archivos persistente y escribible, o el proyecto debe migrar esos datos a una base de datos y almacenamiento de objetos antes de usar una plataforma con filesystem efímero o de solo lectura.
+
+La guía operativa completa está en [docs/README.md](docs/README.md).

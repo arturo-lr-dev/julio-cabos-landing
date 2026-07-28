@@ -15,7 +15,9 @@ export type AnalyticsEventName =
   | "inicio_formulario"
   | "envio_formulario"
   | "clic_red_social"
-  | "cambio_idioma";
+  | "cambio_idioma"
+  | "vista_publicacion"
+  | "clic_publicacion";
 
 type AnalyticsParameter = string | number | boolean;
 export type AnalyticsParameters = Record<string, AnalyticsParameter | undefined>;
