@@ -35,7 +35,7 @@ npm run start
 Copiar `.env.example` a `.env.local` y completar lo necesario:
 
 ```text
-NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_SITE_URL=https://www.juliocabos.es
 NEXT_PUBLIC_GA_ID=
 RESEND_API_KEY=
 INQUIRIES_NOTIFICATION_EMAIL=
