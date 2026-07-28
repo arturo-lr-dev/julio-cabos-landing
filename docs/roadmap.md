@@ -1,165 +1,76 @@
 # Roadmap
 
-## Fase actual: MVP
+## Estado actual
 
-Objetivo:
+La web pública, el portfolio bilingüe y el panel operativo están implementados. El siguiente trabajo no consiste en añadir funciones indiscriminadamente, sino en consolidar persistencia, seguridad, contenido y operación.
 
-- Home completa.
-- Galería funcional.
-- Contacto.
-- Lista de espera.
-- Base técnica limpia.
+## Prioridad 0 — producción fiable
 
-Estado:
+- Elegir hosting compatible con escritura persistente o migrar almacenamiento.
+- Automatizar backups de `content/` y `public/uploads/`.
+- Configurar dominio, OAuth, `AUTH_SECRET`, Resend y destinatario final.
+- Verificar remitente propio de email.
+- Completar pruebas responsive, accesibilidad, lint y build.
+- Revisar copy y traducción inglesa definitiva.
 
-- Implementado en gran parte.
-- Pendiente de revisión visual final y checklist de producción.
+## Prioridad 1 — seguridad y datos
 
-## Fase 1: Publicación
+- Rate limit y anti-spam en consultas.
+- Validación mediante esquemas y límites de payload.
+- Política de privacidad, retención y borrado de datos.
+- Comparación de firmas de sesión resistente a timing attacks.
+- Mejor gestión de errores en APIs administrativas.
+- Control de concurrencia o almacenamiento transaccional.
 
-Prioridad alta:
+## Prioridad 2 — persistencia escalable
 
-- Confirmar dominio.
-- Configurar `NEXT_PUBLIC_SITE_URL`.
-- Configurar Resend.
-- Cambiar destinatario final de waitlist.
-- Revisar Open Graph.
-- Ejecutar `npm run lint`.
-- Ejecutar `npm run build`.
-- Revisar responsive real.
+Migrar cuando el panel vaya a utilizarse en producción de forma regular:
 
-Resultado esperado:
+- Obras, cursos, eventos y consultas a base de datos.
+- Imágenes a almacenamiento de objetos/CDN.
+- Migración reproducible desde JSON.
+- Eliminación segura de archivos huérfanos.
+- Backups y restauración probados.
 
-- Web pública estable.
-- Contacto y formulario funcionando.
+El patrón de repositorios y servicios ya separa buena parte de este cambio de la interfaz.
 
-## Fase 2: Contenido y portfolio
+## Prioridad 3 — portfolio y venta
 
-Objetivo:
+- Fichas individuales de obra si aportan contexto y SEO.
+- Descripciones, técnica, escala, año y marca más curados.
+- Flujo claro para disponibilidad, reserva y venta.
+- Consulta contextual que incluya automáticamente la obra seleccionada.
+- Evitar convertir la galería en un catálogo pesado.
 
-- Convertir la galería en un portfolio más curado.
+## Prioridad 4 — formación y calendario público
 
-Posibles mejoras:
+- Página de formación o cursos.
+- Programa, metodología, fechas, plazas, precio y FAQ.
+- Calendario público solo si ayuda a reservar o asistir.
+- Decidir inscripción por email, formulario, Stripe o plataforma externa.
+- Formación online únicamente cuando exista producto y soporte definidos.
 
-- Fichas por pieza.
-- Agrupar por series.
-- Añadir año, escala, marca o técnica.
-- Mejorar captions.
-- Seleccionar menos imágenes pero más potentes en home.
-- Añadir publicaciones o premios si aportan autoridad.
+## Prioridad 5 — contenido y comunidad
 
-Precaución:
+- Integración real de Instagram solo si la API y permisos compensan el coste.
+- Newsletter con consentimiento explícito.
+- Comunidad o Patreon integrado con discreción y propuesta clara.
+- CMS únicamente si la frecuencia y equipo editorial lo justifican.
 
-- No convertir la galería en un catálogo pesado.
+## Ideas asistidas por IA
 
-## Fase 3: Formación
+- Borradores de descripciones y alt text con revisión humana.
+- Etiquetado de obras cuando el catálogo crezca.
+- Ayuda SEO para fichas y cursos.
+- Chatbot solo con contenido suficiente, mantenimiento y límites claros.
 
-Objetivo:
+## Principio de priorización
 
-- Pasar de sección informativa a producto formativo.
-
-Posibles rutas:
-
-```text
-/formacion
-/cursos
-```
-
-Contenido posible:
-
-- Cursos presenciales.
-- Programa online.
-- Niveles.
-- Metodología.
-- Fechas.
-- Plazas.
-- Precio.
-- Preguntas frecuentes.
-
-Decisión pendiente:
-
-- Si la inscripción se gestionará por email, formulario, Stripe o plataforma externa.
-
-## Fase 4: Comunidad / Patreon
-
-Objetivo:
-
-- Integrar una comunidad o producto recurrente si existe.
-
-Posibles rutas:
-
-```text
-/patreon
-/comunidad
-```
-
-Precaución:
-
-- No añadir Patreon como banner invasivo.
-- Mantener el tono de taller/portfolio.
-- Integrarlo solo cuando haya propuesta clara.
-
-## Fase 5: CMS
-
-El briefing original menciona Sanity, Contentful o Strapi.
-
-Ahora mismo no hay CMS. El contenido vive en código, principalmente en `lib/data.ts`.
-
-Cuándo merece la pena añadir CMS:
-
-- Julio o el equipo necesitan editar contenido sin tocar código.
-- La galería crece mucho.
-- Hay posts, cursos o eventos frecuentes.
-- Se necesita publicar contenido con calendario.
-
-Cuándo no merece la pena:
-
-- La web cambia poco.
-- Solo hay una landing y una galería.
-- El coste de mantenimiento del CMS supera el beneficio.
-
-## Fase 6: Pagos y cursos
-
-Opciones:
-
-- Stripe Checkout.
-- Plataforma externa de cursos.
-- Área privada propia.
-- Descargas digitales.
-
-Decisiones necesarias:
-
-- Tipo de producto.
-- Precio.
-- Acceso.
-- Soporte.
-- Facturación.
-- Política de reembolsos.
-
-No implementar pagos hasta tener claro el flujo de negocio.
-
-## Ideas futuras con IA
-
-El briefing menciona:
-
-- Auto-tagging de imágenes.
-- Descripciones automáticas.
-- SEO automático.
-- Chatbot básico.
-
-Prioridad recomendada:
-
-1. Descripciones asistidas para galería.
-2. SEO para piezas y cursos.
-3. Auto-tagging si la galería crece mucho.
-4. Chatbot solo si hay suficiente contenido y preguntas frecuentes.
-
-## Principio para futuras fases
-
-Cada nueva función debe reforzar una de estas tres cosas:
+Cada iniciativa debe mejorar al menos una de estas áreas:
 
 - Mostrar mejor la obra.
 - Facilitar aprender con Julio.
-- Facilitar contactar o contratar.
+- Facilitar contactar, reservar o contratar.
+- Reducir el riesgo operativo del proyecto.
 
 Si no cumple ninguna, probablemente sobra.

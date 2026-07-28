@@ -52,5 +52,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
+    {
+      url: `${SITE_URL}/biblioteca`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/biblioteca`,
+          en: `${SITE_URL}/en/biblioteca`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/biblioteca`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${SITE_URL}/biblioteca`,
+          en: `${SITE_URL}/en/biblioteca`,
+        },
+      },
+    },
   ];
 }

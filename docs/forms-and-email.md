@@ -1,146 +1,85 @@
-# Forms And Email
+# Formularios, consultas y email
 
-## Formulario actual
+## Flujo actual
 
-El proyecto incluye un formulario de lista de espera para cursos online.
+Los formularios públicos convergen en `POST /api/inquiries`:
 
-Componente:
+1. El cliente envía nombre, email, mensaje y contexto opcional.
+2. La API normaliza la fuente y valida los campos obligatorios.
+3. Se crea una consulta con estado `new` en `content/inquiries.json`.
+4. Si existe `RESEND_API_KEY`, se intenta enviar un aviso interno.
+5. La respuesta incluye el resultado del registro y de la notificación.
+6. El panel permite cambiar estado y añadir notas internas.
 
-```text
-components/WaitlistSection.tsx
-```
+`POST /api/waitlist` reexporta el mismo handler por compatibilidad. `WaitlistSection` ya usa `/api/inquiries` con origen `waitlist`.
 
-Endpoint:
+## Formularios públicos
 
-```text
-app/api/waitlist/route.ts
-```
+- `InquiryForm`: encargos, colaboraciones, formación y consultas generales.
+- `WaitlistSection`: cursos, plazas y proyectos.
 
-Proveedor:
+Ambos registran eventos de inicio y envío en la capa de analítica.
 
-```text
-Resend
-```
+## Datos
 
-## Campos
+Campos base:
 
-El formulario pide:
+- `name`.
+- `email`.
+- `message`.
 
-- `nombre`
-- `email`
-- `nivel`
+Opcionales:
 
-Niveles actuales:
+- `phone`.
+- `source`.
+- `subject`.
+- `level`.
+- `course`.
 
-- Principiante
-- Intermedio
-- Avanzado
+La API añade ID, estado, notas vacías y timestamps. Las fuentes y estados admitidos están en `lib/inquiry-types.ts`.
 
-## Flujo
-
-1. El usuario rellena el formulario.
-2. `WaitlistSection` hace POST a `/api/waitlist`.
-3. El endpoint valida campos obligatorios.
-4. El endpoint valida formato de email.
-5. Resend envía un email interno con los datos.
-6. La UI muestra éxito o error.
-
-## Variables de entorno
-
-El endpoint necesita:
-
-```text
-RESEND_API_KEY
-```
-
-Debe estar en `.env.local` para desarrollo y configurada en el proveedor de deploy para producción.
-
-El proyecto también usa:
-
-```text
-NEXT_PUBLIC_SITE_URL
-```
-
-Se usa para metadata y JSON-LD. En producción debe apuntar al dominio real.
-
-## `.env.example`
-
-Mantener `.env.example` actualizado con las variables necesarias, sin valores secretos.
-
-Ejemplo:
+## Variables
 
 ```text
 RESEND_API_KEY=
-NEXT_PUBLIC_SITE_URL=
+INQUIRIES_NOTIFICATION_EMAIL=
 ```
 
-## Estado actual del destinatario
+También se admite `CONTACT_EMAIL` como fallback no incluido en `.env.example`. Si no se configura destino, el código usa actualmente `manuelmoralesg2@gmail.com`; debe definirse expresamente en producción.
 
-En `app/api/waitlist/route.ts` el destinatario actual es:
+## Resend
 
-```text
-manuelmoralesg2@gmail.com
-```
+El remitente actual es `Julio Cabos <onboarding@resend.dev>`. Antes de producción:
 
-Hay un TODO para cambiarlo a:
-
-```text
-Juliocabosg@gmail.com
-```
-
-Esto debe revisarse antes de producción.
-
-## Dominio de envío
-
-Actualmente el `from` usa:
-
-```text
-Lista de Espera <onboarding@resend.dev>
-```
-
-Para producción lo ideal es:
-
-1. Verificar dominio en Resend.
+1. Verificar el dominio en Resend.
 2. Configurar DNS.
-3. Cambiar `from` a una dirección del dominio real.
-4. Probar recepción.
+3. Cambiar el remitente a una dirección del dominio.
+4. Definir el destinatario por variable.
+5. Probar entrega y carpeta de spam.
 
-No usar una dirección definitiva hasta que el dominio esté verificado.
+La consulta se guarda aunque Resend no esté configurado o el aviso falle. Esto evita perder el lead, pero requiere revisar el panel.
 
-## Seguridad y validación
+## Seguridad y privacidad
 
-Validación actual:
+Validación vigente: campos obligatorios y regex básica de email. Pendientes recomendados:
 
-- Campos obligatorios.
-- Regex básica de email.
-
-Pendientes recomendables si el formulario recibe tráfico real:
-
-- Honeypot anti-spam.
-- Rate limit por IP.
-- Mensaje de privacidad más completo.
-- Registro persistente en base de datos o herramienta externa.
-- Consentimiento explícito si se usa para comunicaciones comerciales.
-
-## Posible evolución
-
-Opciones futuras:
-
-- Guardar leads en Airtable, Notion, Google Sheets o base de datos.
-- Enviar email de confirmación al usuario.
-- Integrar newsletter.
-- Añadir etiquetas por nivel.
-- Añadir origen de campaña.
+- Rate limit.
+- Honeypot o protección anti-bot.
+- Límites explícitos de longitud.
+- Validación de teléfono y payload con esquema.
+- Política de privacidad completa y base legal.
+- Retención y eliminación de consultas.
+- Evitar incluir datos sensibles en logs.
+- Confirmación al usuario si se adopta una lista comercial.
 
 ## Checklist de prueba
 
-Antes de publicar:
-
-- `.env.local` contiene `RESEND_API_KEY`.
-- El endpoint responde sin errores.
-- El email llega al destinatario correcto.
-- El remitente está permitido por Resend.
-- El formulario muestra error si falta un campo.
-- El formulario muestra error si el email es inválido.
-- El formulario muestra éxito al enviar.
-- No aparece la API key en cliente ni en logs públicos.
+- Envío válido desde ambos idiomas.
+- Error visible con campos incompletos o email inválido.
+- Registro en `content/inquiries.json`.
+- Aparición en `/admin/consultas`.
+- Cambio de estado y notas.
+- Aviso recibido en el destinatario correcto.
+- Funcionamiento controlado sin `RESEND_API_KEY`.
+- Eventos de analítica solo con consentimiento aplicable.
+- Navegación por teclado y labels correctos.

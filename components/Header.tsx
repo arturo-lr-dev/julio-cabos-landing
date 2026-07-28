@@ -44,7 +44,7 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
             />
           </a>
 
-          <ul className="hidden md:flex items-center gap-6 lg:gap-8">
+          <ul className="hidden xl:flex items-center gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
@@ -73,13 +73,13 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
                 ubicacion: "cabecera_escritorio",
               })
             }
-            className="hidden md:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
+            className="hidden xl:inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
             aria-label={`${ui.language}: ${ui.alternateLanguage}`}
           >
             {ui.alternateLanguage}
           </Link>
 
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-4 xl:hidden">
             <Link
               href={ui.alternateHref}
               className="inline-flex min-h-9 items-center border border-rule-strong px-3 eyebrow text-foreground-muted transition-colors hover:border-accent hover:text-accent"
@@ -126,7 +126,7 @@ export default function Header({ locale = "es" }: { locale?: Locale }) {
       </header>
 
       <div
-        className={`fixed inset-0 z-40 bg-background flex flex-col px-6 pt-28 pb-12 transition-opacity duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-background flex flex-col px-6 pt-28 pb-12 transition-opacity duration-500 xl:hidden ${
           menuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"

@@ -12,7 +12,7 @@ export default function ContactSection({ locale = "es" }: { locale?: Locale }) {
     <SectionWrapper id="contacto" topRule>
       <div className="grid grid-cols-12 gap-8 md:gap-12 items-start">
         <FadeIn className="col-span-12 md:col-span-7">
-          <SectionLabel index="09" label={ui.sections.contact} className="mb-6" />
+          <SectionLabel index="10" label={ui.sections.contact} className="mb-6" />
           <h2 className="font-display text-foreground text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight">
             {ui.contact.heading[0]}
             <span className="font-display-italic block text-accent/95">

@@ -139,10 +139,10 @@ export default function GalleryPageClient({
             </span>
           </Link>
           <Link
-            href={locale === "en" ? "/en" : "/"}
+            href={locale === "en" ? "/en#galeria" : "/#galeria"}
             onClick={() =>
               trackAnalyticsEvent("clic_navegacion", {
-                destino: locale === "en" ? "/en" : "/",
+                destino: locale === "en" ? "/en#galeria" : "/#galeria",
                 ubicacion: "cabecera_galeria",
                 idioma: locale,
               })

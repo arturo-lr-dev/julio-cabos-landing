@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private source material — never deploy the complete paid tutorial
+/assets/biblioteca/portadas/tutorial-digital-bosque-Madre-buho.pdf

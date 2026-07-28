@@ -1,207 +1,130 @@
-# Content Guide
+# Guía de contenido
 
-## Dónde se cambia el contenido
+## Dos tipos de contenido
 
-El archivo principal para textos, enlaces y datos visibles es:
+### Copy estático y bilingüe
 
-```text
-lib/data.ts
-```
+Vive en `lib/site-content.ts`, dentro de `siteContents.es` y `siteContents.en`:
 
-Antes de editar un componente, revisar si el texto ya está centralizado ahí.
+- Hero y CTAs.
+- Cifras de autoridad.
+- Caminos de entrada.
+- Formación, encargos y colaboraciones.
+- Manifiesto, trayectoria y contacto.
+- Navegación, labels, estados de interfaz y formularios.
+- Footer y redes.
 
-## `siteContent`
+Antes de hardcodear un texto en un componente, comprobar si pertenece aquí. Cualquier cambio público debe revisarse en ambos idiomas, aunque la traducción inglesa pueda requerir adaptación editorial y no una traducción literal.
 
-`siteContent` agrupa el contenido de las secciones principales.
+### Contenido administrable
 
-### Hero
+Vive en `content/*.json` y se gestiona desde `/admin`:
 
-```ts
-siteContent.hero
-```
+- Obras.
+- Cursos.
+- Eventos.
+- Consultas.
+- Candidatos de Instagram.
+- Publicaciones de Biblioteca, mediante `content/library-publications.json`.
 
-Campos:
+Los componentes no deben importar estos JSON directamente. Deben usar las fachadas `lib/*-content.ts`, repositorios y servicios.
 
-- `title`: nombre principal.
-- `subtitle`: frase de posicionamiento.
-- `description`: descripción breve.
-- `cta`: texto del CTA.
-- `ctaHref`: destino del CTA.
-- `backgroundImage`: imagen de fondo.
+## Biblioteca
 
-Criterio editorial:
+La Biblioteca distingue la existencia confirmada de una participación y el crédito específico documentado:
 
-- Título corto.
-- Subtítulo con autoridad, no promocional.
-- Descripción de una o dos líneas.
-- CTA orientado a acción clara.
+- `participationConfirmed`: Julio ha confirmado que participó en la publicación.
+- `creditStatus: documented`: conocemos su función concreta.
+- `creditStatus: undocumented`: la participación está confirmada, pero no debe inventarse autoría, dirección o función.
 
-### Mensaje
+Las secciones públicas son capítulos narrativos, no categorías comerciales:
 
-```ts
-siteContent.message.text
-```
+- `on-the-table`: publicación actual destacada.
+- `workshop-notebooks`: tutoriales y colecciones didácticas.
+- `main-shelf`: autoría o contribución central documentada.
+- `editorial-archive`: artículos, trabajos colectivos y colaboraciones históricas.
 
-Es el bloque conceptual de la web. Debe explicar la mirada de Julio sobre la pintura.
-
-Mantenerlo breve. Si se vuelve largo, pierde fuerza.
-
-### Formación
-
-```ts
-siteContent.training
-```
-
-Campos principales:
-
-- `title`
-- `text`
-- `primaryCta`
-- `primaryHref`
-- `secondaryCta`
-- `secondaryHref`
-
-Estado actual:
-
-- Presencial: activo.
-- Online: próximamente.
-
-Cuando exista una página específica de cursos, cambiar `primaryHref` o `secondaryHref` a la ruta correspondiente.
-
-### Sobre Julio
-
-```ts
-siteContent.about
-```
-
-Incluye imagen, texto biográfico y enlace al CV.
-
-Criterio:
-
-- Priorizar trayectoria relevante.
-- No convertirlo en currículum completo.
-- El CV completo debe vivir como archivo descargable.
-
-### Contacto
-
-```ts
-siteContent.contact
-```
-
-Incluye título, texto, email y CTA.
-
-Email actual:
-
-```text
-Juliocabosg@gmail.com
-```
-
-Si se cambia el email visible, revisar también:
-
-- `app/api/waitlist/route.ts`
-- proveedor de email
-- configuración de dominio
-
-### Footer
-
-```ts
-siteContent.footer
-```
-
-Incluye nombre y redes sociales.
-
-Revisar que los enlaces sean definitivos antes de publicar.
-
-## Galería
-
-La galería se define en:
-
-```ts
-galleryImages
-```
-
-Cada imagen tiene:
-
-```ts
-{
-  src: "/images/gallery/samurai.webp",
-  alt: "Samurái - miniatura pintada por Julio Cabos",
-  category: "box-art",
-  aspectRatio: "4/5",
-  series: "samurai"
-}
-```
-
-Campos:
-
-- `src`: ruta pública de la imagen.
-- `alt`: texto alternativo y base para caption.
-- `category`: filtro de galería.
-- `aspectRatio`: proporción visual del contenedor.
-- `series`: agrupación opcional por pieza.
-
-Categorías actuales:
-
-- `box-art`
-- `encargo`
-- `detalle`
-- `coleccion`
-
-Etiquetas visibles:
-
-```ts
-categoryLabels
-```
-
-## Cómo añadir una imagen a la galería
-
-1. Optimizar la imagen y guardarla en `public/images/gallery/`.
-2. Añadir una entrada en `galleryImages`.
-3. Escribir un `alt` descriptivo.
-4. Asignar una categoría existente.
-5. Elegir `aspectRatio`.
-6. Revisar la home y `/galeria`.
-
-La home muestra solo las primeras imágenes de `galleryImages`, así que el orden importa.
-
-## Textos hardcodeados
-
-Algunos textos siguen viviendo dentro de componentes porque son específicos de layout o estado:
-
-- `TrainingSection.tsx`: descripciones internas de presencial/online.
-- `WaitlistSection.tsx`: labels, mensajes del formulario y estados.
-- `app/galeria/page.tsx`: copy de cabecera y filtros.
-
-Si esos textos empiezan a cambiar con frecuencia, moverlos a `lib/data.ts`.
+Los estados internos de documentación no se muestran como advertencias al visitante. La ficha usa un texto general de participación cuando el crédito exacto todavía no está documentado.
 
 ## Tono de voz
 
-La web debe sonar:
+La web debe sonar clara, sobria, artística, profesional y cercana. La autoridad se expresa desde la experiencia y el criterio.
 
-- Clara.
-- Sobria.
-- Artística.
-- Profesional.
-- Cercana, pero no comercial agresiva.
+Conceptos propios:
+
+- Aprender a mirar.
+- Pintar con criterio.
+- Entender luz, color, volumen y decisiones.
+- Obra realizada con dedicación y acabado profesional.
 
 Evitar:
 
-- Frases de academia genérica.
-- Promesas exageradas.
-- Mucho texto explicativo.
-- Copy tipo marketing corporativo.
+- Lenguaje de academia genérica.
+- Promesas exageradas o urgencia artificial.
+- Copy corporativo.
+- Párrafos largos sin respiración.
+- Repetir el mismo argumento en secciones contiguas.
 
-Mejor:
+## Jerarquía y longitud
 
-- "Aprender a ver".
-- "Pintar con criterio".
-- "Entender luz, volumen y decisiones".
+- Un único `h1` por página.
+- Titulares breves y expresivos.
+- Descripciones de una o dos ideas.
+- Labels editoriales cortos.
+- CTAs con verbo y destino inequívoco.
+- El texto nunca debe competir con una imagen principal.
 
-## Revisión antes de publicar contenido
+## Navegación y anclas
 
-- Comprobar acentos y caracteres especiales.
-- Revisar enlaces.
-- Confirmar emails.
-- Revisar alt text.
-- Revisar que los CTAs lleven a secciones existentes.
-- Verificar que el contenido no rompe layout en móvil.
+La navegación vive en `siteContents.<locale>.ui.nav`. Al añadir o mover una sección:
+
+1. Definir un ID estable y único.
+2. Actualizar navegación móvil y desktop mediante el array compartido.
+3. Revisar el footer, que deriva enlaces de esa navegación.
+4. Comprobar todos los CTAs que apunten a la sección.
+5. Revisar `scroll-mt` si el header fijo tapa el destino.
+6. Mantener rutas inglesas localizadas (`/en`, `/en/galeria`).
+
+## Obras y galería
+
+La descripción vigente de una obra está en `Work` (`lib/work-types.ts`). Campos principales:
+
+- Identidad: `title`, `slug`, `description`.
+- Clasificación: `category`, `scale`, `brand`, `year`.
+- Publicación: `status`, `featured`, `showOnHome`.
+- Venta: `saleStatus`, `salePrice`, `saleNote`.
+- Medios: `images` con principal/detalle, alt y proporción.
+
+La primera imagen principal actúa como portada. La home usa obras publicadas marcadas para home; la galería completa usa todas las publicadas. El orden del panel importa.
+
+El `alt` debe describir pieza y contexto sin rellenar palabras clave. Los datos técnicos visibles deben ser exactos.
+
+## Cursos
+
+Los cursos activos pueden aparecer en la home con fecha, ubicación, nivel, precio, plazas, descripción, cartel y enlace de reserva. No anunciar una fecha, precio o disponibilidad que aún no esté confirmada; usar el estado y los campos preparados para ello.
+
+## SEO
+
+Revisar cuando cambie el posicionamiento:
+
+- `app/layout.tsx`.
+- Metadata de rutas inglesas.
+- `lib/schema.ts`.
+- `app/sitemap.ts`.
+- `app/robots.ts`.
+- `app/manifest.ts`.
+- `public/og-image.jpg`.
+
+Una página nueva necesita title, description, canonical, alternates de idioma cuando proceda y presencia en sitemap si debe indexarse.
+
+## Checklist editorial
+
+- Español e inglés completos.
+- Acentos, puntuación y capitalización revisados.
+- Enlaces y anclas existentes.
+- Emails y redes confirmados.
+- CTAs coherentes con el estado real del servicio.
+- Alt text útil.
+- Cifras y credenciales verificadas.
+- Sin desbordes en móvil.
+- Sin duplicar contenido administrable en código.

@@ -1,3 +1,7 @@
+# Briefing original (documento histórico)
+
+> Este documento conserva el encargo inicial. Varias decisiones evolucionaron durante el desarrollo: ahora existen versión inglesa, panel de administración, datos JSON, cursos, calendario, consultas, analítica y gestión comercial de obras. Para el estado vigente, empezar por `docs/README.md`.
+
 WEB JULIO CABOS
 1. Objetivo del proyecto
 Crear una web profesional para Julio Cabos que:
