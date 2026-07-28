@@ -117,7 +117,7 @@ export default function LibraryPageClient({
 
       <main>
         <section className="relative min-h-[92svh] overflow-hidden px-6 pb-20 pt-28 md:px-12 md:pt-36">
-          <div className="mx-auto grid min-h-[70svh] max-w-6xl grid-cols-12 items-center gap-10 lg:gap-16">
+          <div className="mx-auto grid min-h-[70svh] max-w-6xl grid-cols-12 items-center gap-x-0 gap-y-10 lg:gap-16">
             <div className="col-span-12 lg:col-span-5">
               <p className="eyebrow text-accent">{copy.eyebrow}</p>
               <h1 className="mt-7 font-display text-[clamp(3.75rem,5.8vw,5.75rem)] leading-[0.9] text-foreground">
@@ -152,7 +152,7 @@ export default function LibraryPageClient({
         {grouped.table ? (
           <section className="px-6 py-20 md:px-12 md:py-28">
             <div className="rule-t mx-auto max-w-6xl pt-12 md:pt-16">
-              <div className="grid grid-cols-12 gap-10 md:gap-14">
+              <div className="grid grid-cols-12 gap-x-0 gap-y-10 lg:gap-14">
                 <div className="col-span-12 lg:col-span-4">
                   <p className="eyebrow text-foreground-muted">01 · {copy.sections.table}</p>
                   <h2 className="mt-6 font-display text-4xl leading-tight text-foreground md:text-6xl">
@@ -210,7 +210,7 @@ export default function LibraryPageClient({
         {madreBuho ? (
           <section className="bg-background-elevated px-6 py-20 md:px-12 md:py-28">
             <div className="mx-auto max-w-6xl">
-              <div className="grid grid-cols-12 gap-10 md:gap-14">
+              <div className="grid grid-cols-12 gap-x-0 gap-y-10 lg:gap-14">
                 <div className="col-span-12 lg:col-span-4">
                   <p className="eyebrow text-foreground-muted">02 · {copy.sections.notebooks}</p>
                   <h2 className="mt-6 font-display text-4xl leading-tight text-foreground md:text-6xl">
@@ -301,7 +301,7 @@ export default function LibraryPageClient({
 
         <section className="px-6 py-20 md:px-12 md:py-28">
           <div className="mx-auto max-w-6xl">
-            <div className="grid grid-cols-12 gap-10">
+            <div className="grid grid-cols-12 gap-x-0 gap-y-10 lg:gap-10">
               <div className="col-span-12 lg:col-span-4">
                 <p className="eyebrow text-foreground-muted">03 · {copy.sections.shelf}</p>
                 <h2 className="mt-6 font-display text-4xl leading-tight text-foreground md:text-6xl">
@@ -315,7 +315,7 @@ export default function LibraryPageClient({
                     key={publication.id}
                     type="button"
                     onClick={() => openPublication(publication)}
-                    className={`group text-left outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    className={`group min-w-0 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                       index < 2 ? "lg:col-span-3" : "lg:col-span-2"
                     }`}
                   >
