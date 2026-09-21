@@ -1,4 +1,7 @@
+import type { Viewport } from "next";
 import { cookies } from "next/headers";
+import "@/app/globals.css";
+import { rootClassName } from "@/app/root-config";
 import {
   ADMIN_SESSION_COOKIE,
   verifyAdminSessionCookie,
@@ -7,6 +10,11 @@ import { getInquiriesFromContent } from "@/lib/inquiry-content";
 import AdminShell from "./AdminShell";
 
 export const dynamic = "force-dynamic";
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
 
 export default async function AdminLayout({
   children,
@@ -23,13 +31,17 @@ export default async function AdminLayout({
   ).length;
 
   return (
-    <AdminShell
-      adminName={adminSession?.name || "Administrador"}
-      adminEmail={adminSession?.email || ""}
-      adminPicture={adminSession?.picture}
-      unreadInquiryCount={unreadInquiryCount}
-    >
-      {children}
-    </AdminShell>
+    <html lang="es" className={rootClassName}>
+      <body className="min-h-screen bg-background text-foreground font-sans">
+        <AdminShell
+          adminName={adminSession?.name || "Administrador"}
+          adminEmail={adminSession?.email || ""}
+          adminPicture={adminSession?.picture}
+          unreadInquiryCount={unreadInquiryCount}
+        >
+          {children}
+        </AdminShell>
+      </body>
+    </html>
   );
 }

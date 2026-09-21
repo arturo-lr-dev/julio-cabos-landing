@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PublicLibraryPage } from "@/app/biblioteca/page";
+import { PublicLibraryPage } from "@/app/(es)/biblioteca/page";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Library — Julio Cabos",
@@ -8,17 +9,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/en/biblioteca",
     languages: {
+      "x-default": "/biblioteca",
       es: "/biblioteca",
       en: "/en/biblioteca",
       it: "/it/biblioteca",
     },
   },
-  openGraph: {
+  ...getSocialMetadata({
     title: "Library — Julio Cabos",
     description: "The editorial archive of Julio Cabos's studio.",
-    url: "/en/biblioteca",
     locale: "en_GB",
-  },
+    path: "/en/biblioteca",
+  }),
 };
 
 export default function EnglishLibraryPage() {

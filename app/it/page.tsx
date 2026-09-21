@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PublicHome } from "@/app/page";
+import { PublicHome } from "@/app/(es)/page";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -10,19 +11,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/it",
     languages: {
+      "x-default": "/",
       es: "/",
       en: "/en",
       it: "/it",
     },
   },
-  openGraph: {
+  ...getSocialMetadata({
     title: "Julio Cabos — Pittura di miniature",
     description: "Pittura di miniature con sensibilità artistica.",
     locale: "it_IT",
-    url: "/it",
-  },
+    path: "/it",
+  }),
 };
 
-export default async function ItalianHome() {
+export default function ItalianHome() {
   return <PublicHome locale="it" />;
 }

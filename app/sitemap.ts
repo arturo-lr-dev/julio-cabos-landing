@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/`,
           es: `${SITE_URL}/`,
           en: `${SITE_URL}/en`,
           it: `${SITE_URL}/it`,
@@ -24,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/`,
           es: `${SITE_URL}/`,
           en: `${SITE_URL}/en`,
           it: `${SITE_URL}/it`,
@@ -37,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/`,
           es: `${SITE_URL}/`,
           en: `${SITE_URL}/en`,
           it: `${SITE_URL}/it`,
@@ -50,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/galeria`,
           es: `${SITE_URL}/galeria`,
           en: `${SITE_URL}/en/galeria`,
           it: `${SITE_URL}/it/galeria`,
@@ -63,6 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/galeria`,
           es: `${SITE_URL}/galeria`,
           en: `${SITE_URL}/en/galeria`,
           it: `${SITE_URL}/it/galeria`,
@@ -76,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/galeria`,
           es: `${SITE_URL}/galeria`,
           en: `${SITE_URL}/en/galeria`,
           it: `${SITE_URL}/it/galeria`,
@@ -89,6 +95,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/biblioteca`,
           es: `${SITE_URL}/biblioteca`,
           en: `${SITE_URL}/en/biblioteca`,
           it: `${SITE_URL}/it/biblioteca`,
@@ -102,6 +109,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/biblioteca`,
           es: `${SITE_URL}/biblioteca`,
           en: `${SITE_URL}/en/biblioteca`,
           it: `${SITE_URL}/it/biblioteca`,
@@ -115,6 +123,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/biblioteca`,
           es: `${SITE_URL}/biblioteca`,
           en: `${SITE_URL}/en/biblioteca`,
           it: `${SITE_URL}/it/biblioteca`,
@@ -128,7 +137,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.2,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/politica-de-cookies`,
           es: `${SITE_URL}/politica-de-cookies`,
+          en: `${SITE_URL}/en/politica-de-cookies`,
           it: `${SITE_URL}/it/politica-de-cookies`,
         },
       },
@@ -140,7 +151,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.2,
       alternates: {
         languages: {
+          "x-default": `${SITE_URL}/politica-de-cookies`,
           es: `${SITE_URL}/politica-de-cookies`,
+          en: `${SITE_URL}/en/politica-de-cookies`,
+          it: `${SITE_URL}/it/politica-de-cookies`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/politica-de-cookies`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.2,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/politica-de-cookies`,
+          es: `${SITE_URL}/politica-de-cookies`,
+          en: `${SITE_URL}/en/politica-de-cookies`,
           it: `${SITE_URL}/it/politica-de-cookies`,
         },
       },

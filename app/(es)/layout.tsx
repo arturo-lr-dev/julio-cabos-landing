@@ -1,70 +1,33 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight } from "next/font/google";
-import "./globals.css";
-import { getJsonLd } from "@/lib/schema";
+import "@/app/globals.css";
+import { GA_ID, rootClassName, SITE_URL } from "@/app/root-config";
 import CookieConsent from "@/components/CookieConsent";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.juliocabos.es";
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  display: "swap",
-  axes: ["opsz", "SOFT"],
-});
-
-const inter = Inter_Tight({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import { getJsonLd } from "@/lib/schema";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Julio Cabos — Pintura de miniaturas",
   description:
     "Pintura de miniaturas con criterio artístico. Formación presencial y online, galería y contacto.",
-  keywords: [
-    "pintura de miniaturas",
-    "Julio Cabos",
-    "miniature painting",
-    "cursos pintura miniaturas",
-    "formación miniaturas",
-  ],
   authors: [{ name: "Julio Cabos" }],
   creator: "Julio Cabos",
   alternates: {
     canonical: "/",
     languages: {
+      "x-default": "/",
       es: "/",
       en: "/en",
       it: "/it",
     },
   },
   robots: { index: true, follow: true },
-  openGraph: {
+  ...getSocialMetadata({
     title: "Julio Cabos — Pintura de miniaturas",
     description: "Pintura de miniaturas con criterio artístico.",
-    type: "website",
     locale: "es_ES",
-    siteName: "Julio Cabos",
-    url: "/",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Julio Cabos — Pintura de miniaturas",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Julio Cabos — Pintura de miniaturas",
-    description: "Pintura de miniaturas con criterio artístico.",
-    images: ["/og-image.jpg"],
-  },
+    path: "/",
+  }),
 };
 
 export const viewport: Viewport = {
@@ -72,7 +35,7 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({
+export default function SpanishRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -80,10 +43,7 @@ export default function RootLayout({
   const jsonLd = getJsonLd(SITE_URL);
 
   return (
-    <html
-      lang="es"
-      className={`${fraunces.variable} ${inter.variable} antialiased`}
-    >
+    <html lang="es" className={rootClassName}>
       <body className="min-h-screen bg-background text-foreground font-sans">
         <script
           type="application/ld+json"

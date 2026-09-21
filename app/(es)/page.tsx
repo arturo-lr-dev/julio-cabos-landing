@@ -10,7 +10,6 @@ import WaitlistSection from "@/components/WaitlistSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import DocumentLanguage from "@/components/DocumentLanguage";
 import LibraryTeaser from "@/components/LibraryTeaser";
 import { getActiveCoursesFromContent } from "@/lib/course-content";
 import { getSelectedGalleryWorksFromContent } from "@/lib/work-content";
@@ -24,7 +23,6 @@ export async function PublicHome({ locale = "es" }: { locale?: Locale }) {
 
   return (
     <>
-      <DocumentLanguage locale={locale} />
       <Header locale={locale} />
       <main>
         <HeroSection locale={locale} />

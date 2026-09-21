@@ -1,5 +1,6 @@
-import { PublicHome } from "@/app/page";
+import { PublicHome } from "@/app/(es)/page";
 import type { Metadata } from "next";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -10,19 +11,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/en",
     languages: {
+      "x-default": "/",
       es: "/",
       en: "/en",
       it: "/it",
     },
   },
-  openGraph: {
+  ...getSocialMetadata({
     title: "Julio Cabos — Miniature painting",
     description: "Miniature painting with artistic judgement.",
     locale: "en_GB",
-    url: "/en",
-  },
+    path: "/en",
+  }),
 };
 
-export default async function EnglishHome() {
+export default function EnglishHome() {
   return <PublicHome locale="en" />;
 }

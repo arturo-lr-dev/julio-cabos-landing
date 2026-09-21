@@ -1,9 +1,9 @@
-import GalleryPageClient from "./GalleryPageClient";
+import GalleryPageClient from "@/app/galeria/GalleryPageClient";
 import { getGalleryWorksFromContent } from "@/lib/work-content";
 import type { Locale } from "@/lib/site-content";
 import type { GalleryCategory } from "@/lib/work-types";
-import DocumentLanguage from "@/components/DocumentLanguage";
 import type { Metadata } from "next";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -14,11 +14,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/galeria",
     languages: {
+      "x-default": "/galeria",
       es: "/galeria",
       en: "/en/galeria",
       it: "/it/galeria",
     },
   },
+  ...getSocialMetadata({
+    title: "Galería — Julio Cabos",
+    description:
+      "Obras publicadas de Julio Cabos con categoría, escala y datos de cada proyecto.",
+    locale: "es_ES",
+    path: "/galeria",
+  }),
 };
 
 type GalleryFilter = GalleryCategory | "todas" | "disponibles";
@@ -37,14 +45,11 @@ export async function PublicGalleryPage({
   const galleryWorks = await getGalleryWorksFromContent();
 
   return (
-    <>
-      <DocumentLanguage locale={locale} />
-      <GalleryPageClient
-        galleryWorks={galleryWorks}
-        initialFilter={getInitialFilter(filter)}
-        locale={locale}
-      />
-    </>
+    <GalleryPageClient
+      galleryWorks={galleryWorks}
+      initialFilter={getInitialFilter(filter)}
+      locale={locale}
+    />
   );
 }
 

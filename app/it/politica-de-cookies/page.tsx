@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "@/components/Footer";
-import DocumentLanguage from "@/components/DocumentLanguage";
+import { getSocialMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Informativa sui cookie — Julio Cabos",
@@ -10,16 +10,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/it/politica-de-cookies",
     languages: {
+      "x-default": "/politica-de-cookies",
       es: "/politica-de-cookies",
+      en: "/en/politica-de-cookies",
       it: "/it/politica-de-cookies",
     },
   },
+  ...getSocialMetadata({
+    title: "Informativa sui cookie — Julio Cabos",
+    description:
+      "Informazioni sui cookie necessari e analitici utilizzati dal sito di Julio Cabos.",
+    locale: "it_IT",
+    path: "/it/politica-de-cookies",
+  }),
 };
 
 export default function ItalianCookiePolicyPage() {
   return (
     <>
-      <DocumentLanguage locale="it" />
       <main className="px-6 pb-24 pt-14 md:px-12 md:pb-32 md:pt-20">
         <article className="mx-auto max-w-3xl">
           <Link

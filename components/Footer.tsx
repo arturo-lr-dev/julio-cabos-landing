@@ -7,9 +7,17 @@ export default function Footer({ locale = "es" }: { locale?: Locale }) {
   const { footer, ui } = getSiteContent(locale);
   const year = new Date().getFullYear();
   const cookiePolicyHref =
-    locale === "it" ? "/it/politica-de-cookies" : "/politica-de-cookies";
+    locale === "it"
+      ? "/it/politica-de-cookies"
+      : locale === "en"
+        ? "/en/politica-de-cookies"
+        : "/politica-de-cookies";
   const cookiePolicyLabel =
-    locale === "it" ? "Informativa sui cookie" : "Política de cookies";
+    locale === "it"
+      ? "Informativa sui cookie"
+      : locale === "en"
+        ? "Cookie policy"
+        : "Política de cookies";
 
   return (
     <footer className="relative px-6 md:px-12 pt-16 pb-10 rule-t">

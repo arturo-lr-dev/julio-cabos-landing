@@ -48,6 +48,30 @@ const cookieCopy = {
     save: "Guardar preferencias",
     policyHref: "/politica-de-cookies",
   },
+  en: {
+    aria: "Cookie consent",
+    eyebrow: "Privacy and analytics",
+    title: "You decide about analytical cookies",
+    intro:
+      "Necessary cookies are always active. Google Analytics will only load if you accept analytics cookies. You can change your choice at any time.",
+    policy: "Cookie policy",
+    accept: "Accept analytics",
+    reject: "Reject",
+    configure: "Configure",
+    preferences: "Preferences",
+    settingsTitle: "Configure cookies",
+    close: "Close cookie settings",
+    settingsDescription:
+      "Choose whether to allow anonymous statistical measurement of website usage. Necessary cookies cannot be disabled.",
+    necessary: "Necessary cookies",
+    necessaryDescription: "Allow the technical and secure operation of the website.",
+    alwaysActive: "Always active",
+    analytics: "Analytics cookies",
+    analyticsDescription: "Google Analytics 4 for usage statistics.",
+    viewPolicy: "View the cookie policy",
+    save: "Save preferences",
+    policyHref: "/en/politica-de-cookies",
+  },
   it: {
     aria: "Consenso ai cookie",
     eyebrow: "Privacy e statistiche",
@@ -149,7 +173,11 @@ export default function CookieConsent({
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
   const isAdminRoute = pathname.startsWith("/admin");
-  const copy = pathname.startsWith("/it") ? cookieCopy.it : cookieCopy.es;
+  const copy = pathname.startsWith("/it")
+    ? cookieCopy.it
+    : pathname.startsWith("/en")
+      ? cookieCopy.en
+      : cookieCopy.es;
 
   useEffect(() => {
     let cancelled = false;

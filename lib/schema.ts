@@ -16,7 +16,7 @@ export function getJsonLd(siteUrl: string) {
         description: siteContent.about.text.join(" "),
         url: siteUrl,
         image: `${siteUrl}${siteContent.about.image}`,
-        email: `mailto:${siteContent.contact.email}`,
+        email: siteContent.contact.email,
         sameAs: [siteContent.footer.instagram],
         knowsAbout: [
           "Pintura de miniaturas",
