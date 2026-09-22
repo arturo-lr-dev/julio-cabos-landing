@@ -110,7 +110,7 @@ export const siteContents = {
       "Hoy combina obra por encargo, colaboraciones profesionales y formación para alumnos que quieren pintar con más seguridad, criterio y libertad.",
     ],
     cta: "Ver trayectoria",
-    ctaHref: "/files/CV-Julio-Cabos.pdf",
+    ctaHref: "/sobre-julio/trayectoria",
   },
   contact: {
     title: "Contacto",
@@ -180,7 +180,6 @@ export const siteContents = {
       imageAlt: "Julio Cabos en su taller",
       caption: "Taller · Madrid · España",
       closing: "Más que un currículum, una forma de trabajar.",
-      pdfSuffix: "profesional (PDF)",
       story: [
         {
           label: "El oficio",
@@ -384,7 +383,7 @@ export const siteContents = {
         "Today he combines commissioned work, professional collaborations and training for students who want to paint with greater confidence, judgement and freedom.",
       ],
       cta: "View career",
-      ctaHref: "/files/CV-Julio-Cabos.pdf",
+      ctaHref: "/en/sobre-julio/trayectoria",
     },
     contact: {
       title: "Contact",
@@ -455,7 +454,6 @@ export const siteContents = {
         imageAlt: "Julio Cabos in his studio",
         caption: "Studio · Madrid · Spain",
         closing: "More than a CV, a way of working.",
-        pdfSuffix: "professional (PDF)",
         story: [
           {
             label: "The craft",
@@ -658,6 +656,7 @@ const italianSiteContent: typeof siteContents.es = {
       "Oggi unisce opere su commissione, collaborazioni professionali e formazione per allievi che desiderano dipingere con maggiore sicurezza, consapevolezza e libertà.",
     ],
     cta: "Vedi il percorso",
+    ctaHref: "/it/sobre-julio/trayectoria",
   },
   contact: {
     ...siteContents.es.contact,
@@ -726,7 +725,6 @@ const italianSiteContent: typeof siteContents.es = {
       imageAlt: "Julio Cabos nel suo atelier",
       caption: "Atelier · Madrid · Spagna",
       closing: "Più di un curriculum, un modo di lavorare.",
-      pdfSuffix: "professionale (PDF)",
       story: [
         {
           ...siteContents.es.ui.about.story[0],

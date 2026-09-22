@@ -131,6 +131,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: `${SITE_URL}/sobre-julio/trayectoria`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.7,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/sobre-julio/trayectoria`,
+          es: `${SITE_URL}/sobre-julio/trayectoria`,
+          en: `${SITE_URL}/en/sobre-julio/trayectoria`,
+          it: `${SITE_URL}/it/sobre-julio/trayectoria`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/sobre-julio/trayectoria`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.7,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/sobre-julio/trayectoria`,
+          es: `${SITE_URL}/sobre-julio/trayectoria`,
+          en: `${SITE_URL}/en/sobre-julio/trayectoria`,
+          it: `${SITE_URL}/it/sobre-julio/trayectoria`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/it/sobre-julio/trayectoria`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.7,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/sobre-julio/trayectoria`,
+          es: `${SITE_URL}/sobre-julio/trayectoria`,
+          en: `${SITE_URL}/en/sobre-julio/trayectoria`,
+          it: `${SITE_URL}/it/sobre-julio/trayectoria`,
+        },
+      },
+    },
+    {
       url: `${SITE_URL}/politica-de-cookies`,
       lastModified: new Date(),
       changeFrequency: "yearly",

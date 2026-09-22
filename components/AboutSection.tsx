@@ -110,17 +110,15 @@ export default function AboutSection({ locale = "es" }: { locale?: Locale }) {
           <div className="col-span-12 md:col-span-5 md:text-right">
             <TrackedLink
               href={about.ctaHref}
-              target="_blank"
-              rel="noopener noreferrer"
               eventName="clic_llamada_accion"
               eventParameters={{
-                nombre_accion: "descargar_curriculum",
+                nombre_accion: "ver_trayectoria",
                 destino: about.ctaHref,
                 idioma: locale,
               }}
               className="group inline-flex items-center gap-4 eyebrow text-foreground hover:text-accent transition-colors duration-300"
             >
-              <span>{about.cta} {ui.about.pdfSuffix}</span>
+              <span>{about.cta}</span>
               <span
                 aria-hidden
                 className="block w-8 h-px bg-current transition-all duration-500 group-hover:w-14"
