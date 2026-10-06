@@ -105,10 +105,19 @@ export async function GET(request: Request) {
     name: userInfo.name,
     picture: userInfo.picture,
   });
-  // Finish the OAuth callback with a "See Other" redirect. A 307 can preserve
-  // the cross-site redirect chain in a way that causes browsers to discard the
-  // newly issued session cookie before the first /admin request.
-  const response = NextResponse.redirect(new URL("/admin", request.url), 303);
+  // Finish OAuth with a normal HTML response instead of setting the session
+  // cookie on a cross-site redirect response. Some browsers discard cookies
+  // set on that redirect chain before the first /admin request.
+  const response = new NextResponse(
+    "<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0;url=/admin\"><title>Accediendo…</title></head><body><p>Accediendo al panel…</p><script>window.location.replace(\"/admin\");</script></body></html>",
+    {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store",
+        "Content-Type": "text/html; charset=utf-8",
+      },
+    }
+  );
 
   response.cookies.set(ADMIN_SESSION_COOKIE, sessionCookie, {
     ...getSecureCookieOptions(),
