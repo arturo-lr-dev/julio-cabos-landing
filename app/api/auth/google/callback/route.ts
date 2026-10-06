@@ -25,7 +25,10 @@ function getGoogleClientSecret() {
 }
 
 function redirectToLogin(request: Request, error: string) {
-  return NextResponse.redirect(new URL(`/admin/login?error=${error}`, request.url));
+  return NextResponse.redirect(
+    new URL(`/admin/login?error=${error}`, request.url),
+    303
+  );
 }
 
 export async function GET(request: Request) {
@@ -102,7 +105,10 @@ export async function GET(request: Request) {
     name: userInfo.name,
     picture: userInfo.picture,
   });
-  const response = NextResponse.redirect(new URL("/admin", request.url));
+  // Finish the OAuth callback with a "See Other" redirect. A 307 can preserve
+  // the cross-site redirect chain in a way that causes browsers to discard the
+  // newly issued session cookie before the first /admin request.
+  const response = NextResponse.redirect(new URL("/admin", request.url), 303);
 
   response.cookies.set(ADMIN_SESSION_COOKIE, sessionCookie, {
     ...getSecureCookieOptions(),
