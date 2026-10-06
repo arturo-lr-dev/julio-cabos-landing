@@ -109,7 +109,7 @@ export async function GET(request: Request) {
   // cookie on a cross-site redirect response. Some browsers discard cookies
   // set on that redirect chain before the first /admin request.
   const response = new NextResponse(
-    "<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><meta http-equiv=\"refresh\" content=\"0;url=/admin\"><title>Accediendo…</title></head><body><p>Accediendo al panel…</p><script>window.location.replace(\"/admin\");</script></body></html>",
+    "<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><title>Accediendo…</title></head><body><p>Accediendo al panel…</p><p><a href=\"/admin\">Continuar al panel</a></p><script>setTimeout(function(){ window.location.replace(\"/admin\"); }, 1000);</script></body></html>",
     {
       status: 200,
       headers: {
