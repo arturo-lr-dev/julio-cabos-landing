@@ -117,7 +117,11 @@ export async function verifyAdminSessionCookie(
 export function getSecureCookieOptions() {
   return {
     httpOnly: true,
-    sameSite: "lax" as const,
+    // Google returns to this origin from accounts.google.com. Explicitly allow
+    // the OAuth cross-site navigation; Secure is always enabled in production.
+    sameSite: (process.env.NODE_ENV === "production" ? "none" : "lax") as
+      | "none"
+      | "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
   };
