@@ -34,8 +34,6 @@ export async function GET(request: Request) {
   googleUrl.searchParams.set("response_type", "code");
   googleUrl.searchParams.set("scope", "openid email profile");
   googleUrl.searchParams.set("state", state);
-  googleUrl.searchParams.set("prompt", "select_account");
-
   const response = NextResponse.redirect(googleUrl);
   response.cookies.set(ADMIN_OAUTH_STATE_COOKIE, state, {
     ...getSecureCookieOptions(),
