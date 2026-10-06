@@ -12,6 +12,7 @@ const errorMessages: Record<string, string> = {
   "invalid-state": "La sesion de acceso ha caducado. Intentalo de nuevo.",
   "google-token": "Google no ha podido confirmar el acceso.",
   "google-user": "No se ha podido leer el perfil de Google.",
+  "invalid-session": "No se ha podido crear la sesión del panel.",
   "not-allowed": "Ese correo no tiene permiso para entrar en el panel.",
 };
 

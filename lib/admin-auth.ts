@@ -90,6 +90,48 @@ export async function createAdminSessionCookie(
   return `${encodedPayload}.${signature}`;
 }
 
+export async function createAdminSessionHandoffToken(
+  sessionCookie: string,
+  maxAgeSeconds = 60
+) {
+  const payload = JSON.stringify({
+    sessionCookie,
+    exp: Math.floor(Date.now() / 1000) + maxAgeSeconds,
+  });
+  const encodedPayload = base64UrlEncode(payload);
+  const signature = await sign(encodedPayload);
+
+  return `${encodedPayload}.${signature}`;
+}
+
+export async function verifyAdminSessionHandoffToken(
+  token?: string | null
+) {
+  if (!token) return null;
+
+  const [encodedPayload, signature] = token.split(".");
+  if (!encodedPayload || !signature) return null;
+
+  const expectedSignature = await sign(encodedPayload);
+  if (signature !== expectedSignature) return null;
+
+  try {
+    const payload = JSON.parse(base64UrlDecode(encodedPayload)) as {
+      sessionCookie?: string;
+      exp?: number;
+    };
+    const now = Math.floor(Date.now() / 1000);
+
+    if (!payload.sessionCookie || !payload.exp || payload.exp < now) {
+      return null;
+    }
+
+    return payload.sessionCookie;
+  } catch {
+    return null;
+  }
+}
+
 export async function verifyAdminSessionCookie(
   cookieValue?: string | null
 ): Promise<AdminSession | null> {

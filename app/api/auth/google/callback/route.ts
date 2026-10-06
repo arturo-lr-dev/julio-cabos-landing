@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import {
   ADMIN_OAUTH_STATE_COOKIE,
-  ADMIN_SESSION_COOKIE,
   createAdminSessionCookie,
-  getSecureCookieOptions,
+  createAdminSessionHandoffToken,
   isAllowedAdminEmail,
 } from "@/lib/admin-auth";
 
@@ -105,11 +104,12 @@ export async function GET(request: Request) {
     name: userInfo.name,
     picture: userInfo.picture,
   });
+  const handoffToken = await createAdminSessionHandoffToken(sessionCookie);
   // Finish OAuth with a normal HTML response instead of setting the session
   // cookie on a cross-site redirect response. Some browsers discard cookies
   // set on that redirect chain before the first /admin request.
   const response = new NextResponse(
-    "<!doctype html><html lang=\"es\"><head><meta charset=\"utf-8\"><title>Accediendo…</title></head><body><p>Accediendo al panel…</p><p><a href=\"/admin\">Continuar al panel</a></p><script>setTimeout(function(){ window.location.replace(\"/admin\"); }, 1000);</script></body></html>",
+    `<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Accediendo…</title></head><body><p>Accediendo al panel…</p><form id="session-handoff" method="post" action="/api/auth/google/complete"><input type="hidden" name="handoff" value="${handoffToken}"><noscript><button type="submit">Continuar al panel</button></noscript></form><script>document.getElementById("session-handoff").submit();</script></body></html>`,
     {
       status: 200,
       headers: {
@@ -119,10 +119,6 @@ export async function GET(request: Request) {
     }
   );
 
-  response.cookies.set(ADMIN_SESSION_COOKIE, sessionCookie, {
-    ...getSecureCookieOptions(),
-    maxAge: 60 * 60 * 24 * 7,
-  });
   response.cookies.delete(ADMIN_OAUTH_STATE_COOKIE);
 
   return response;
