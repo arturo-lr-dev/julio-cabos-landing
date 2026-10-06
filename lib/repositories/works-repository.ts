@@ -5,15 +5,42 @@ import {
   MAX_PUBLISHED_WORKS,
 } from "@/lib/work-options";
 import type { GalleryImage, GalleryWork, Work } from "@/lib/work-types";
+import { getAdminFirestore } from "@/lib/firebase-admin";
 import { readJsonFile, writeJsonFile } from "./json-file";
 
 const worksPath = path.join(process.cwd(), "content", "works.json");
+const worksDocument = "content/works";
+
+function isFirestoreConfigured() {
+  return Boolean(
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+      (process.env.FIREBASE_PROJECT_ID &&
+        process.env.FIREBASE_CLIENT_EMAIL &&
+        process.env.FIREBASE_PRIVATE_KEY)
+  );
+}
 
 export async function getWorks(): Promise<Work[]> {
+  if (isFirestoreConfigured()) {
+    const snapshot = await getAdminFirestore().doc(worksDocument).get();
+    if (snapshot.exists) {
+      return (snapshot.data()?.items as Work[] | undefined) ?? [];
+    }
+
+    const initialWorks = await readJsonFile<Work[]>(worksPath);
+    await getAdminFirestore().doc(worksDocument).set({ items: initialWorks });
+    return initialWorks;
+  }
+
   return readJsonFile<Work[]>(worksPath);
 }
 
 export async function saveWorks(works: Work[]) {
+  if (isFirestoreConfigured()) {
+    await getAdminFirestore().doc(worksDocument).set({ items: works });
+    return;
+  }
+
   await writeJsonFile(worksPath, works);
 }
 

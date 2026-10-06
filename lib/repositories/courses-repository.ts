@@ -1,14 +1,41 @@
 import path from "node:path";
 import type { Course } from "@/lib/work-types";
+import { getAdminFirestore } from "@/lib/firebase-admin";
 import { readJsonFile, writeJsonFile } from "./json-file";
 
 const coursesPath = path.join(process.cwd(), "content", "courses.json");
+const coursesDocument = "content/courses";
+
+function isFirestoreConfigured() {
+  return Boolean(
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+      (process.env.FIREBASE_PROJECT_ID &&
+        process.env.FIREBASE_CLIENT_EMAIL &&
+        process.env.FIREBASE_PRIVATE_KEY)
+  );
+}
 
 export async function getCourses(): Promise<Course[]> {
+  if (isFirestoreConfigured()) {
+    const snapshot = await getAdminFirestore().doc(coursesDocument).get();
+    if (snapshot.exists) {
+      return (snapshot.data()?.items as Course[] | undefined) ?? [];
+    }
+
+    const initialCourses = await readJsonFile<Course[]>(coursesPath);
+    await getAdminFirestore().doc(coursesDocument).set({ items: initialCourses });
+    return initialCourses;
+  }
+
   return readJsonFile<Course[]>(coursesPath);
 }
 
 export async function saveCourses(courses: Course[]) {
+  if (isFirestoreConfigured()) {
+    await getAdminFirestore().doc(coursesDocument).set({ items: courses });
+    return;
+  }
+
   await writeJsonFile(coursesPath, courses);
 }
 
