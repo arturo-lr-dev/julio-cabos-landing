@@ -163,6 +163,11 @@ export function getSecureCookieOptions() {
     // safely on the return to this site and avoids third-party-cookie rules.
     sameSite: "lax" as const,
     secure: process.env.NODE_ENV === "production",
+    // The public domain redirects between apex and www in some flows. Share
+    // the admin cookie across both hostnames so navigation cannot lose it.
+    ...(process.env.NODE_ENV === "production"
+      ? { domain: ".juliocabos.es" }
+      : {}),
     path: "/",
   };
 }
