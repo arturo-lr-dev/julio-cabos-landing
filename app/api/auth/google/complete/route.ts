@@ -4,15 +4,19 @@ import {
   ADMIN_SESSION_COOKIE,
   getSecureCookieOptions,
   verifyAdminSessionCookie,
+  verifyAdminSessionHandoffToken,
 } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
-  const sessionValue = formData.get("session");
+  const handoff = formData.get("handoff");
+  const sessionValue = await verifyAdminSessionHandoffToken(
+    typeof handoff === "string" ? handoff : null
+  );
   const session = await verifyAdminSessionCookie(
-    typeof sessionValue === "string" ? sessionValue : null
+    sessionValue
   );
 
   if (!session) {
