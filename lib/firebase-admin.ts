@@ -1,5 +1,6 @@
 import { applicationDefault, cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
 function getFirebaseApp() {
   const existingApp = getApps()[0];
@@ -21,9 +22,15 @@ function getFirebaseApp() {
 
   return initializeApp({
     credential: cert({ projectId, clientEmail, privateKey }),
+    storageBucket:
+      process.env.FIREBASE_STORAGE_BUCKET || `${projectId}.firebasestorage.app`,
   });
 }
 
 export function getAdminFirestore() {
   return getFirestore(getFirebaseApp());
+}
+
+export function getAdminStorageBucket() {
+  return getStorage(getFirebaseApp()).bucket();
 }
