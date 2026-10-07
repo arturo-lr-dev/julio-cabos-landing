@@ -1,7 +1,6 @@
-import { randomUUID } from "node:crypto";
 import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { getAdminStorageBucket } from "@/lib/firebase-admin";
+import { v2 as cloudinary } from "cloudinary";
 import { slugify } from "@/lib/services/slug";
 
 export type UploadFolder = "works" | "courses" | "instagram";
@@ -48,39 +47,55 @@ function getPublicFilePath(publicPath: string) {
   return path.join(process.cwd(), "public", publicPath.replace(/^\/+/, ""));
 }
 
-function isFirebaseStorageConfigured() {
+function isCloudinaryConfigured() {
   return Boolean(
-    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
-      (process.env.FIREBASE_PROJECT_ID &&
-        process.env.FIREBASE_CLIENT_EMAIL &&
-        process.env.FIREBASE_PRIVATE_KEY)
+    process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET
   );
 }
 
-async function saveFileToFirebase(
+function configureCloudinary() {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+}
+
+async function saveFileToCloudinary(
   buffer: Buffer,
   target: UploadTarget,
   filename: string,
   contentType?: string
 ) {
-  const storagePath = `uploads/${target.folder}/${target.ownerSlug}/${filename}`;
-  const downloadToken = randomUUID();
-  const bucket = getAdminStorageBucket();
-  const file = bucket.file(storagePath);
+  configureCloudinary();
+  const extension = path.extname(filename);
+  const publicId = path.basename(filename, extension);
+  const folder = `julio-cabos/${target.folder}/${target.ownerSlug}`;
 
-  await file.save(buffer, {
-    resumable: false,
-    metadata: {
-      contentType: contentType || "application/octet-stream",
-      cacheControl: "public,max-age=31536000,immutable",
-      metadata: { firebaseStorageDownloadTokens: downloadToken },
-    },
+  const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
+    const upload = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        public_id: publicId,
+        resource_type: "image",
+        overwrite: true,
+        context: contentType ? { contentType } : undefined,
+      },
+      (error, response) => {
+        if (error || !response?.secure_url) {
+          reject(error ?? new Error("Cloudinary no ha devuelto una URL."));
+          return;
+        }
+        resolve({ secure_url: response.secure_url });
+      }
+    );
+    upload.end(buffer);
   });
 
-  return {
-    filename,
-    publicPath: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(storagePath)}?alt=media&token=${downloadToken}`,
-  };
+  return { filename, publicPath: result.secure_url };
 }
 
 export async function saveUploadedFile({
@@ -97,8 +112,8 @@ export async function saveUploadedFile({
   );
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  if (isFirebaseStorageConfigured()) {
-    return saveFileToFirebase(buffer, { folder, ownerSlug }, filename, file.type);
+  if (isCloudinaryConfigured()) {
+    return saveFileToCloudinary(buffer, { folder, ownerSlug }, filename, file.type);
   }
 
   const uploadDirectory = getUploadDirectory({ folder, ownerSlug });
@@ -106,10 +121,7 @@ export async function saveUploadedFile({
   await mkdir(uploadDirectory, { recursive: true });
   await writeFile(destination, buffer);
 
-  return {
-    filename,
-    publicPath: getPublicUploadPath({ folder, ownerSlug }, filename),
-  };
+  return { filename, publicPath: getPublicUploadPath({ folder, ownerSlug }, filename) };
 }
 
 export async function copyPublicUpload({
@@ -118,7 +130,7 @@ export async function copyPublicUpload({
   ownerSlug,
   filename,
 }: CopyPublicUploadInput) {
-  if (isFirebaseStorageConfigured()) {
+  if (isCloudinaryConfigured()) {
     const sourceUrl = fromPublicPath.startsWith("http")
       ? fromPublicPath
       : `${process.env.NEXT_PUBLIC_SITE_URL || "https://www.juliocabos.es"}${fromPublicPath}`;
@@ -127,7 +139,7 @@ export async function copyPublicUpload({
       throw new Error(`No se ha podido leer la imagen original (${sourceResponse.status}).`);
     }
 
-    return saveFileToFirebase(
+    return saveFileToCloudinary(
       Buffer.from(await sourceResponse.arrayBuffer()),
       { folder, ownerSlug },
       filename,
@@ -140,8 +152,5 @@ export async function copyPublicUpload({
   await mkdir(uploadDirectory, { recursive: true });
   await copyFile(getPublicFilePath(fromPublicPath), destination);
 
-  return {
-    filename,
-    publicPath: getPublicUploadPath({ folder, ownerSlug }, filename),
-  };
+  return { filename, publicPath: getPublicUploadPath({ folder, ownerSlug }, filename) };
 }
