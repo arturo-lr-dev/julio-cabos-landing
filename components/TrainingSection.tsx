@@ -6,6 +6,7 @@ import { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
 import FadeIn from "./FadeIn";
+import MiniatureCoachPromo from "./MiniatureCoachPromo";
 import { getSiteContent, type Locale } from "@/lib/site-content";
 import type { Course } from "@/lib/work-types";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -280,6 +281,8 @@ export default function TrainingSection({
               </span>
             </div>
           </div>
+
+          <MiniatureCoachPromo locale={locale} />
         </FadeIn>
       </div>
 
