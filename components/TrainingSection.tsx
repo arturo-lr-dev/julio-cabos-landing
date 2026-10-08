@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SectionLabel from "./SectionLabel";
@@ -8,6 +9,33 @@ import FadeIn from "./FadeIn";
 import { getSiteContent, type Locale } from "@/lib/site-content";
 import type { Course } from "@/lib/work-types";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+
+const workshopNoteCopy: Record<
+  Locale,
+  { eyebrow: string; title: string; description: string; cta: string; href: string }
+> = {
+  es: {
+    eyebrow: "Notas de Julio · Técnica",
+    title: "El color se construye por capas",
+    description: "Las veladuras permiten construir matices y transiciones sin perder contraste.",
+    cta: "Ver proceso",
+    href: "/biblioteca/cuadernos/el-color-se-construye-por-capas",
+  },
+  en: {
+    eyebrow: "Julio's Notes · Technique",
+    title: "Color Is Built in Layers",
+    description: "Glazing makes it possible to build subtle color variations and transitions without losing contrast.",
+    cta: "View process",
+    href: "/en/biblioteca/cuadernos/el-color-se-construye-por-capas",
+  },
+  it: {
+    eyebrow: "Note di Julio · Tecnica",
+    title: "Il colore si costruisce a strati",
+    description: "Le velature permettono di costruire sfumature e transizioni senza perdere contrasto.",
+    cta: "Vedi il processo",
+    href: "/it/biblioteca/cuadernos/el-color-se-construye-por-capas",
+  },
+};
 
 function formatCourseDate(course: Course, locale: Locale) {
   const { ui } = getSiteContent(locale);
@@ -62,6 +90,7 @@ export default function TrainingSection({
   locale?: Locale;
 }) {
   const { training, ui } = getSiteContent(locale);
+  const noteCopy = workshopNoteCopy[locale];
   const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
 
   return (
@@ -75,6 +104,51 @@ export default function TrainingSection({
               {ui.training.heading[1]}
             </span>
           </h2>
+
+          {noteCopy ? (
+            <article className="mt-14 max-w-[23rem] grid grid-cols-1 gap-5 sm:grid-cols-[minmax(0,14rem)_4.5rem] sm:gap-5">
+              <div>
+                <p className="eyebrow text-accent">{noteCopy.eyebrow}</p>
+                <h3 className="mt-4 font-display text-2xl leading-tight text-foreground">
+                  {noteCopy.title}
+                </h3>
+                <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground-muted">
+                  {noteCopy.description}
+                </p>
+              </div>
+
+              <div className="order-2 grid grid-cols-2 gap-2 sm:h-[11rem] sm:grid-cols-1 sm:grid-rows-2">
+                <div className="relative aspect-[4/3] overflow-hidden bg-surface sm:aspect-auto">
+                  <Image
+                    src="/images/notas-julio/veladuras/03-busto-proceso-02.jpeg"
+                    alt="Busto en proceso de pintura"
+                    fill
+                    sizes="(max-width: 639px) 50vw, 88px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative aspect-[4/3] overflow-hidden bg-surface sm:aspect-auto">
+                  <Image
+                    src="/images/notas-julio/veladuras/01-carta-color-barba-ojos.jpeg"
+                    alt="Carta de color manuscrita para barba y ojos"
+                    fill
+                    sizes="(max-width: 639px) 50vw, 88px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+
+              <Link
+                href={noteCopy.href}
+                className="group order-3 inline-flex items-center gap-3 eyebrow text-foreground transition-colors hover:text-accent sm:col-start-1"
+              >
+                <span>{noteCopy.cta}</span>
+                <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </article>
+          ) : null}
         </FadeIn>
 
         <FadeIn delay={150} className="col-span-12 md:col-span-7 md:pt-4">

@@ -51,6 +51,38 @@
     "sortOrder": 2
   },
   {
+    "id": "el-color-se-construye-por-capas",
+    "title": "El color se construye por capas",
+    "subtitle": {
+      "es": "Veladuras, variedad cromática y control del pincel",
+      "en": "Glazing, chromatic variation and brush control",
+      "it": "Velature, varietà cromatica e controllo del pennello"
+    },
+    "publisher": "Nota de taller",
+    "year": "",
+    "languages": ["es"],
+    "type": "technical-guide",
+    "roleLabel": { "es": "Nota de taller", "en": "Workshop note", "it": "Nota di laboratorio" },
+    "contribution": { "es": "Contenido gratuito de Julio Cabos.", "en": "Free content by Julio Cabos.", "it": "Contenuto gratuito di Julio Cabos." },
+    "description": {
+      "es": "Veladuras, variedad cromática y control del pincel para conseguir transiciones suaves sin perder definición ni contraste.",
+      "en": "Glazing, chromatic variation and brush control to achieve smooth transitions without losing definition or contrast.",
+      "it": "Velature, varietà cromatica e controllo del pennello per ottenere transizioni morbide senza perdere definizione e contrasto."
+    },
+    "coverImage": "/images/notas-julio/veladuras/03-busto-proceso-02.jpeg",
+    "contentKind": "workshop-note",
+    "internalUrl": "/biblioteca/cuadernos/el-color-se-construye-por-capas",
+    "availabilityLabel": { "es": "Gratuito", "en": "Free", "it": "Gratuito" },
+    "displaySection": "workshop-notebooks",
+    "featured": false,
+    "purchaseMode": "none",
+    "tags": ["veladuras", "color", "pintura"],
+    "participationConfirmed": true,
+    "creditStatus": "documented",
+    "status": "published",
+    "sortOrder": 2.5
+  },
+  {
     "id": "minipedia",
     "title": "MiniPedia",
     "subtitle": { "es": "Colección Aprende a pintar miniaturas", "en": "Learn to paint miniatures collection" },

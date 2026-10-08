@@ -172,12 +172,11 @@ export function getLocalizedPublication(
   const fallbackLocale = locale === "it" ? "es" : locale;
   return {
     ...publication,
-    subtitle: publication.subtitle[locale] ?? publication.subtitle[fallbackLocale],
-    roleLabel: publication.roleLabel[locale] ?? publication.roleLabel[fallbackLocale],
+    subtitle: publication.subtitle[locale] ?? publication.subtitle[fallbackLocale] ?? publication.subtitle.es,
+    roleLabel: publication.roleLabel[locale] ?? publication.roleLabel[fallbackLocale] ?? publication.roleLabel.es,
     contribution:
-      publication.contribution[locale] ?? publication.contribution[fallbackLocale],
-    description:
-      publication.description[locale] ?? publication.description[fallbackLocale],
+      publication.contribution[locale] ?? publication.contribution[fallbackLocale] ?? publication.contribution.es,
+    description: publication.description[locale] ?? publication.description[fallbackLocale] ?? publication.description.es,
   };
 }
 
@@ -232,6 +231,7 @@ export const libraryCopy = {
       "Trabajos colectivos, artículos y colaboraciones que documentan distintas etapas de una trayectoria editorial.",
     viewAk: "Ver publicación en AK Interactive",
     request: "Solicitar a Julio",
+    workshopNoteCta: "Ver proceso",
     pdfMeta: "Tutorial PDF en español · 32 páginas",
     direct: "Disponible directamente a través de Julio.",
     preview: "Una mirada al interior",
@@ -270,6 +270,7 @@ export const libraryCopy = {
       "Collective works, articles and collaborations documenting different stages of an editorial career.",
     viewAk: "View publication at AK Interactive",
     request: "Request from Julio",
+    workshopNoteCta: "View process",
     pdfMeta: "Spanish-language PDF tutorial · 32 pages",
     direct: "Available directly from Julio.",
     preview: "A look inside",
@@ -308,6 +309,7 @@ export const libraryCopy = {
       "Opere collettive, articoli e collaborazioni che documentano diverse fasi di un percorso editoriale.",
     viewAk: "Vedi la pubblicazione su AK Interactive",
     request: "Richiedi a Julio",
+    workshopNoteCta: "Vedi il processo",
     pdfMeta: "Tutorial PDF in spagnolo · 32 pagine",
     direct: "Disponibile direttamente tramite Julio.",
     preview: "Uno sguardo all'interno",

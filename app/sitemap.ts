@@ -103,6 +103,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          es: `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          es: `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/it/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          es: `${SITE_URL}/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/el-color-se-construye-por-capas`,
+        },
+      },
+    },
+    {
       url: `${SITE_URL}/en/biblioteca`,
       lastModified: new Date(),
       changeFrequency: "monthly",

@@ -57,6 +57,11 @@ export default function LibraryPageClient({
 
   const madreBuho = grouped.notebooks.find((item) => item.id === "madre-buho");
   const minipedia = grouped.notebooks.find((item) => item.id === "minipedia");
+  const workshopNotes = grouped.notebooks.filter(
+    (item) =>
+      item.contentKind === "workshop-note" &&
+      (locale === "es" || Boolean(item.subtitle[locale]))
+  );
 
   useEffect(() => {
     if (!selected) return;
@@ -294,24 +299,75 @@ export default function LibraryPageClient({
                 </article>
               </div>
 
-              {minipedia ? (
-                <button
-                  type="button"
-                  onClick={() => openPublication(minipedia)}
-                  className="mt-16 grid w-full gap-8 border-t border-rule pt-10 text-left outline-none md:grid-cols-[1.1fr_0.9fr] md:items-center focus-visible:ring-2 focus-visible:ring-accent"
-                >
-                  <div className="relative aspect-[1735/1485] overflow-hidden bg-foreground">
-                    <PublicationCover publication={minipedia} sizes="600px" />
-                  </div>
-                  <div>
-                    <p className="eyebrow text-accent">{minipedia.publisher}</p>
-                    <h3 className="mt-4 font-display text-3xl text-foreground md:text-4xl">{minipedia.title}</h3>
-                    <p className="mt-4 leading-relaxed text-foreground-muted">
-                      {getLocalizedPublication(minipedia, locale).description}
-                    </p>
-                  </div>
-                </button>
-              ) : null}
+              <>
+                  {workshopNotes.map((note) => {
+                    if (!note.internalUrl) return null;
+
+                    const localizedNote = getLocalizedPublication(note, locale);
+                    const availabilityLabel =
+                      note.availabilityLabel?.[locale] ?? note.availabilityLabel?.es;
+
+                    return (
+                      <article
+                        key={note.id}
+                        className="mt-16 grid w-full gap-8 border-t border-rule pt-10 md:grid-cols-[1.1fr_0.9fr] md:items-center"
+                      >
+                        <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                          <PublicationCover publication={note} sizes="600px" />
+                        </div>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                            <p className="eyebrow text-accent">{localizedNote.roleLabel}</p>
+                            {availabilityLabel ? (
+                              <p className="eyebrow text-foreground-faint">{availabilityLabel}</p>
+                            ) : null}
+                          </div>
+                          <h3 className="mt-4 font-display text-3xl text-foreground md:text-4xl">
+                            {note.title}
+                          </h3>
+                          <p className="mt-4 leading-relaxed text-foreground-muted">
+                            {localizedNote.description}
+                          </p>
+                          <Link
+                            href={note.internalUrl}
+                            onClick={() =>
+                              trackAnalyticsEvent("clic_publicacion", {
+                                id_publicacion: note.id,
+                                tipo_accion: "enlace_interno",
+                                idioma: locale,
+                              })
+                            }
+                            className="group mt-7 inline-flex items-center gap-4 eyebrow text-foreground transition-colors hover:text-accent"
+                          >
+                            <span>{copy.workshopNoteCta}</span>
+                            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+                              →
+                            </span>
+                          </Link>
+                        </div>
+                      </article>
+                    );
+                  })}
+
+                {minipedia ? (
+                  <button
+                    type="button"
+                    onClick={() => openPublication(minipedia)}
+                    className="mt-16 grid w-full gap-8 border-t border-rule pt-10 text-left outline-none md:grid-cols-[1.1fr_0.9fr] md:items-center focus-visible:ring-2 focus-visible:ring-accent"
+                  >
+                    <div className="relative aspect-[1735/1485] overflow-hidden bg-foreground">
+                      <PublicationCover publication={minipedia} sizes="600px" />
+                    </div>
+                    <div>
+                      <p className="eyebrow text-accent">{minipedia.publisher}</p>
+                      <h3 className="mt-4 font-display text-3xl text-foreground md:text-4xl">{minipedia.title}</h3>
+                      <p className="mt-4 leading-relaxed text-foreground-muted">
+                        {getLocalizedPublication(minipedia, locale).description}
+                      </p>
+                    </div>
+                  </button>
+                ) : null}
+              </>
             </div>
           </section>
         ) : null}
