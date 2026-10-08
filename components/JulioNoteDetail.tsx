@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import type { Locale } from "@/lib/site-content";
+import useArticleAnalytics from "@/hooks/useArticleAnalytics";
 
 const noteImages = [
   "/images/notas-julio/veladuras/01-carta-color-barba-ojos.jpeg",
@@ -140,8 +143,18 @@ function NoteImage({ src, alt, sizes }: { src: string; alt: string; sizes: strin
   );
 }
 
-export default function JulioNoteDetail({ locale = "es" }: { locale?: Locale }) {
+export default function JulioNoteDetail({
+  articleId,
+  locale = "es",
+}: {
+  articleId: string;
+  locale?: Locale;
+}) {
   const copy = noteCopy[locale];
+  const { articleReadMarkerRef, trackArticleCta } = useArticleAnalytics({
+    articleId,
+    locale,
+  });
 
   return (
     <>
@@ -200,6 +213,8 @@ export default function JulioNoteDetail({ locale = "es" }: { locale?: Locale }) 
           </div>
         </section>
 
+        <div ref={articleReadMarkerRef} aria-hidden="true" className="h-px w-full" />
+
         <section className="px-6 pb-24 pt-8 md:px-12 md:pb-32 md:pt-12">
           <div className="mx-auto max-w-6xl border-t border-rule pt-12 md:pt-16">
             <div className="grid grid-cols-12 gap-x-0 gap-y-12 lg:gap-16">
@@ -211,6 +226,7 @@ export default function JulioNoteDetail({ locale = "es" }: { locale?: Locale }) 
                 <p className="mt-6 max-w-md leading-relaxed text-foreground-muted">{copy.learnText}</p>
                 <Link
                   href={copy.formationPath}
+                  onClick={() => trackArticleCta("training")}
                   className="group mt-8 inline-flex items-center gap-4 eyebrow text-foreground transition-colors hover:text-accent"
                 >
                   <span>{copy.coursesCta}</span>
@@ -222,6 +238,7 @@ export default function JulioNoteDetail({ locale = "es" }: { locale?: Locale }) 
                 <p className="leading-relaxed text-foreground-muted">{copy.contactQuestion}</p>
                 <Link
                   href={copy.contactPath}
+                  onClick={() => trackArticleCta("contact")}
                   className="group mt-5 inline-flex items-center gap-4 eyebrow text-foreground transition-colors hover:text-accent"
                 >
                   <span>{copy.contactCta}</span>

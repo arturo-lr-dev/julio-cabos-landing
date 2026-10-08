@@ -17,7 +17,11 @@ export type AnalyticsEventName =
   | "clic_red_social"
   | "cambio_idioma"
   | "vista_publicacion"
-  | "clic_publicacion";
+  | "clic_publicacion"
+  | "miniature_coach_click"
+  | "article_view"
+  | "article_read"
+  | "article_cta_click";
 
 type AnalyticsParameter = string | number | boolean;
 export type AnalyticsParameters = Record<string, AnalyticsParameter | undefined>;
