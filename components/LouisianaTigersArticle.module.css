@@ -1,0 +1,296 @@
+.page {
+  background: #101110;
+  color: #d8d5cc;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1.78;
+  padding-top: 80px;
+}
+
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: center;
+  gap: 28px;
+  padding: 80px 32px 100px;
+}
+
+.hero h1 {
+  margin: 14px 0;
+  color: #f4f0e6;
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.eyebrow {
+  color: #b89a69;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+}
+
+.heroSubtitle {
+  margin: 0;
+  color: #c7a977;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+
+.meta {
+  color: #c5a977;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.09em;
+  line-height: 2.1;
+}
+
+.heroImage {
+  position: relative;
+  width: 100%;
+  height: min(720px, 70vh);
+}
+
+.containImage,
+.slideImage {
+  object-fit: contain;
+}
+
+.wrap {
+  max-width: 830px;
+  margin: 0 auto;
+  padding: 0 28px 120px;
+}
+
+.article {
+  padding: 60px 0 45px;
+  border-top: 1px solid #3a3934;
+}
+
+.article h2 {
+  margin: 18px 0 28px;
+  color: #f0e9db;
+  font-size: clamp(29px, 4vw, 42px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.article h3 {
+  margin-top: 55px;
+  color: #f0e9db;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.article p {
+  margin: 0 0 22px;
+}
+
+.article aside {
+  margin: 40px 0;
+  padding: 24px 28px;
+  border-left: 2px solid #c7a977;
+  background: #1c1b19;
+}
+
+.article aside span {
+  color: #c7a977;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.article aside p {
+  margin: 12px 0 0;
+}
+
+.carousel {
+  margin: 44px 0 50px;
+  padding: 20px 0 24px;
+  border-top: 1px solid #514737;
+  border-bottom: 1px solid #514737;
+  outline: none;
+}
+
+.carousel + .carousel {
+  margin-top: 55px;
+}
+
+.carousel:focus-visible {
+  box-shadow: 0 0 0 2px #d6b982;
+}
+
+.carouselHead,
+.controls,
+.carouselNote,
+.slide figcaption,
+.controls button {
+  font-family: Arial, sans-serif;
+}
+
+.carouselHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #c7a977;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.carouselCount {
+  white-space: nowrap;
+}
+
+.track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: start;
+  background: #191a18;
+}
+
+.slideMedia {
+  position: relative;
+  width: 100%;
+  height: min(70vh, 570px);
+  background: #262624;
+}
+
+.slide figcaption {
+  padding: 10px 14px;
+  color: #b5afa2;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.controls button {
+  padding: 10px 12px;
+  border: 1px solid #62563e;
+  background: transparent;
+  color: #e4d6ba;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.controls button:hover,
+.controls button:focus-visible {
+  border-color: #d6b982;
+  color: #fff;
+  outline: none;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #66645e;
+}
+
+.dots button[aria-current="true"] {
+  width: 11px;
+  height: 11px;
+  background: #d6b982;
+}
+
+.carouselNote {
+  margin: 18px 0 0;
+  color: #aaa49a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.readMarker {
+  height: 1px;
+}
+
+.backLink {
+  padding-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.backLink a {
+  color: #b5afa2;
+  text-decoration: none;
+}
+
+.backLink a:hover,
+.backLink a:focus-visible {
+  color: #d6b982;
+}
+
+@media (max-width: 680px) {
+  .page {
+    font-size: 17px;
+    padding-top: 64px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 45px 22px;
+  }
+
+  .heroImage {
+    height: 500px;
+  }
+
+  .wrap {
+    padding: 0 22px 70px;
+  }
+
+  .article {
+    padding-top: 40px;
+  }
+
+  .slideMedia {
+    height: 420px;
+  }
+
+  .controls button {
+    padding: 9px 8px;
+    font-size: 11px;
+  }
+
+  .carouselHead {
+    font-size: 10px;
+  }
+
+  .dots {
+    gap: 6px;
+  }
+}

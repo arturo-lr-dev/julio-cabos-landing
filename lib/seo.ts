@@ -7,11 +7,13 @@ export function getSocialMetadata({
   description,
   path,
   locale,
+  image = "/og-image.jpg",
 }: {
   title: string;
   description: string;
   path: string;
   locale: (typeof SOCIAL_LOCALES)[number];
+  image?: string;
 }): Pick<Metadata, "openGraph" | "twitter"> {
   return {
     openGraph: {
@@ -24,7 +26,7 @@ export function getSocialMetadata({
       url: path,
       images: [
         {
-          url: "/og-image.jpg",
+          url: image,
           width: 1200,
           height: 630,
           alt: title,
@@ -35,7 +37,7 @@ export function getSocialMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/og-image.jpg"],
+      images: [image],
     },
   };
 }

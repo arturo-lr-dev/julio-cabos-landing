@@ -22,6 +22,12 @@ export const metadata: Metadata = {
   description: noteDescription,
   alternates: {
     canonical: notePath,
+    languages: {
+      "x-default": "/biblioteca/cuadernos/el-color-se-construye-por-capas",
+      es: "/biblioteca/cuadernos/el-color-se-construye-por-capas",
+      en: notePath,
+      it: "/it/biblioteca/cuadernos/el-color-se-construye-por-capas",
+    },
   },
   ...getSocialMetadata({
     title: noteTitle,

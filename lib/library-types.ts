@@ -23,6 +23,7 @@ export type PublicationRole =
 export interface LibraryPublication {
   id: string;
   title: string;
+  localizedTitle?: Partial<Record<Locale, string>>;
   subtitle: LocalizedText;
   publisher: string;
   year: string;

@@ -172,6 +172,8 @@ export function getLocalizedPublication(
   const fallbackLocale = locale === "it" ? "es" : locale;
   return {
     ...publication,
+    title:
+      publication.localizedTitle?.[locale] ?? publication.title,
     subtitle: publication.subtitle[locale] ?? publication.subtitle[fallbackLocale] ?? publication.subtitle.es,
     roleLabel: publication.roleLabel[locale] ?? publication.roleLabel[fallbackLocale] ?? publication.roleLabel.es,
     contribution:

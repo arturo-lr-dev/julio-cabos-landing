@@ -117,6 +117,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          es: `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/en/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          es: `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/it/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: {
+          "x-default": `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          es: `${SITE_URL}/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          en: `${SITE_URL}/en/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+          it: `${SITE_URL}/it/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862`,
+        },
+      },
+    },
+    {
       url: `${SITE_URL}/en/biblioteca/cuadernos/el-color-se-construye-por-capas`,
       lastModified: new Date(),
       changeFrequency: "monthly",

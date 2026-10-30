@@ -53,6 +53,10 @@
   {
     "id": "el-color-se-construye-por-capas",
     "title": "El color se construye por capas",
+    "localizedTitle": {
+      "en": "Color Is Built in Layers",
+      "it": "Il colore si costruisce a strati"
+    },
     "subtitle": {
       "es": "Veladuras, variedad cromática y control del pincel",
       "en": "Glazing, chromatic variation and brush control",
@@ -60,7 +64,7 @@
     },
     "publisher": "Nota de taller",
     "year": "",
-    "languages": ["es"],
+    "languages": ["es", "en", "it"],
     "type": "technical-guide",
     "roleLabel": { "es": "Nota de taller", "en": "Workshop note", "it": "Nota di laboratorio" },
     "contribution": { "es": "Contenido gratuito de Julio Cabos.", "en": "Free content by Julio Cabos.", "it": "Contenuto gratuito di Julio Cabos." },
@@ -81,6 +85,42 @@
     "creditStatus": "documented",
     "status": "published",
     "sortOrder": 2.5
+  },
+  {
+    "id": "louisiana-tigers-special-battalion-1862",
+    "title": "Louisiana Tigers — Special Battalion 1862",
+    "localizedTitle": {
+      "en": "Louisiana Tigers — Special Battalion 1862",
+      "it": "Louisiana Tigers — Battaglione Speciale 1862"
+    },
+    "publisher": "Nota de taller",
+    "year": "2026",
+    "languages": ["es", "en", "it"],
+    "type": "technical-guide",
+    "roleLabel": { "es": "Nota de taller", "en": "Workshop note", "it": "Nota di laboratorio" },
+    "contribution": { "es": "Contenido de Julio Cabos.", "en": "Content by Julio Cabos.", "it": "Contenuto di Julio Cabos." },
+    "description": {
+      "es": "Proceso de pintura, documentación histórica y obra terminada del Louisiana Tigers — Special Battalion 1862.",
+      "en": "Painting process, historical documentation and finished work for Louisiana Tigers — Special Battalion 1862.",
+      "it": "Processo di pittura, documentazione storica e opera terminata dei Louisiana Tigers — Battaglione Speciale 1862."
+    },
+    "coverImage": "/images/notas-julio/louisiana-tigers/portada.jpeg",
+    "contentKind": "workshop-note",
+    "internalUrl": "/biblioteca/cuadernos/louisiana-tigers-special-battalion-1862",
+    "availabilityLabel": { "es": "Gratuito", "en": "Free", "it": "Gratuito" },
+    "subtitle": {
+      "es": "Proceso de pintura y documentación histórica",
+      "en": "Painting process and historical documentation",
+      "it": "Processo di pittura e documentazione storica"
+    },
+    "displaySection": "workshop-notebooks",
+    "featured": false,
+    "purchaseMode": "none",
+    "tags": ["figuras históricas", "proceso de pintura", "aerógrafo", "AK Interactive"],
+    "participationConfirmed": true,
+    "creditStatus": "documented",
+    "status": "published",
+    "sortOrder": 2.6
   },
   {
     "id": "minipedia",

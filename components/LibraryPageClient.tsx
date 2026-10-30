@@ -323,7 +323,7 @@ export default function LibraryPageClient({
                             ) : null}
                           </div>
                           <h3 className="mt-4 font-display text-3xl text-foreground md:text-4xl">
-                            {note.title}
+                            {localizedNote.title}
                           </h3>
                           <p className="mt-4 leading-relaxed text-foreground-muted">
                             {localizedNote.description}
